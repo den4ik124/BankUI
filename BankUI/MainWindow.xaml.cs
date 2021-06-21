@@ -20,9 +20,19 @@ namespace BankUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<Client> Clients { get; set; }
+        
         public MainWindow()
         {
+            Clients = new List<Client> {
+        new Person("surName 1","personal code #1","phone number 1"),
+        new Person("surName 2","personal code #2","phone number 2"),
+        new Person("surName 3","personal code #3","phone number 3")};
+
+
             InitializeComponent();
+
+
         }
     }
 }
