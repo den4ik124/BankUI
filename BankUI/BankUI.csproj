@@ -55,25 +55,53 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="Account.cs" />
-    <Compile Include="AccountDB.cs" />
+    <Compile Include="Interfaces\IClient.cs" />
+    <Compile Include="Models\DepositModel.cs" />
+    <Compile Include="ViewModels\CompanyViewModel.cs" />
+    <Compile Include="ViewModels\NewClientsViewModel.cs" />
+    <Compile Include="ViewModels\NewDepositViewModel.cs" />
+    <Compile Include="ViewModels\PersonViewModel.cs" />
+    <Compile Include="Views\MainWindow_View.xaml.cs">
+      <DependentUpon>MainWindow_View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DataProvider.cs" />
+    <Compile Include="DAL\DialogService.cs" />
+    <Compile Include="HelpClasses\Generator.cs" />
+    <Compile Include="Interfaces\IDataProvider.cs" />
+    <Compile Include="Interfaces\IDialogService.cs" />
+    <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\AccountDBModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Client.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Models\ClientModel.cs" />
+    <Compile Include="Models\ClientsDBModel.cs" />
+    <Compile Include="Models\CompanyModel.cs" />
+    <Compile Include="ViewModels\ClientViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="Views\NewClientsView.xaml.cs">
+      <DependentUpon>NewClientsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NewDepositView.xaml.cs">
+      <DependentUpon>NewDepositView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\MainWindow_View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewClientsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewDepositView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Person.cs" />
+    <Compile Include="Models\PersonModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -91,7 +119,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="BankUI_Models_ClassDiagram.cd" />
+    <None Include="BankUI_ViewModels_ClassDiagram.cd" />
+    <None Include="BankUI_Views_ClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -100,5 +130,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
