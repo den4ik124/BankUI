@@ -1,80 +1,93 @@
 ﻿using BankUI.Models;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace BankUI.ViewModels
 {
-    internal class PersonViewModel : INotifyPropertyChanged
+    internal class PersonViewModel : ClientViewModel//, INotifyPropertyChanged
     {
         #region Fields
 
-        private PersonModel _client;
+        private PersonModel _person;
         //private string _backgroundColor;
 
         #endregion Fields
 
         #region Constructors
 
-        public PersonViewModel(ClientModel client)
+        public PersonViewModel(ClientModel person)
         {
-            this._client = client as PersonModel;
+            this._person = person as PersonModel;
         }
 
         #endregion Constructors
 
         #region Events
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion Events
 
         #region Properties
 
-        public int Id
+        public override int Id
         {
-            get => _client.Id;
+            get => _person.Id;
             set
             {
-                if (_client.Id == value)
+                if (_person.Id == value)
                     return;
-                _client.Id = value;
+                _person.Id = value;
                 OnPropertyChanged();
             }
         }
 
-        public string Name
+        public override string Name
         {
-            get => _client.Name;
+            get => _person.Name;
             set
             {
-                if (_client.Name == value)
+                if (_person.Name == value)
                     return;
-                _client.Name = value;
+                _person.Name = value;
                 OnPropertyChanged();
             }
         }
 
-        public bool IsVIP
+        public override bool IsVIP
         {
-            get => _client.IsVIP;
+            get => _person.IsVIP;
             set
             {
-                if (_client.IsVIP == value)
+                if (_person.IsVIP == value)
                     return;
 
-                _client.IsVIP = value;
+                _person.IsVIP = value;
                 OnPropertyChanged();
             }
         }
 
-        public string PhoneNumber
+        public new string PhoneNumber
         {
-            get => _client.PhoneNumber;
+            get => _person.PhoneNumber;
             set
             {
-                if (_client.PhoneNumber == value)
+                if (_person.PhoneNumber == value)
                     return;
-                _client.PhoneNumber = value;
+                _person.PhoneNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IList<AccountModel> AccountsList
+        {
+            get => _person.AccountsList;
+            set
+            {
+                if (_person.AccountsList == value)
+                    return;
+                _person.AccountsList = value;
                 OnPropertyChanged();
             }
         }
@@ -86,31 +99,31 @@ namespace BankUI.ViewModels
         //        return IsVIP ? Color.FromRgb(255, 215, 0) : Color.FromRgb(0, 0, 0);
         //    }
         //}
-        public string BackgroundColor
-        {
-            get
-            {
-                return IsVIP ? "LemonChiffon" : "White";
-            }
-            //set
-            //{
-            //    if (_client.IsVIP == false)
-            //        _backgroundColor = "White";
-            //    else
-            //        _backgroundColor = "Gold";
+        //public string BackgroundColor
+        //{
+        //    get
+        //    {
+        //        return IsVIP ? "LemonChiffon" : "White";
+        //    }
+        //    //set
+        //    //{
+        //    //    if (_client.IsVIP == false)
+        //    //        _backgroundColor = "White";
+        //    //    else
+        //    //        _backgroundColor = "Gold";
 
-            //    OnPropertyChanged();
-            //}
-        }
+        //    //    OnPropertyChanged();
+        //    //}
+        //}
 
         #endregion Properties
 
         #region Methods
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        //private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
 
         #endregion Methods
     }

@@ -46,17 +46,6 @@ namespace BankUI.DAL
             return isTestData ? GetTestClientsData() : _clients;
         }
 
-        public IEnumerable<PersonModel> GetPersons(bool isTestData = false)
-        {
-            return isTestData ? GetTestPersonsData() : _persons;
-        }
-
-        //public IEnumerable<Client> GetTestClients()
-        //{
-        //    GetTestClientsData();
-        //    return _clients;
-        //}
-
         private IList<ClientModel> GetTestClientsData()
         {
             _clients.Clear();
@@ -65,16 +54,6 @@ namespace BankUI.DAL
                 _clients.Add(client);
             }
             return _clients;
-        }
-
-        private IList<PersonModel> GetTestPersonsData()
-        {
-            _persons.Clear();
-            foreach (var person in Generator.GetPersonsList())
-            {
-                _persons.Add(person);
-            }
-            return _persons;
         }
 
         public void GetTestAccountsData()

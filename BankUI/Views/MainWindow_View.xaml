@@ -56,7 +56,9 @@
                             x:Name="dgClients"
                             Margin="5"
                             AutoGenerateColumns="False"
-                            ItemsSource="{Binding Persons}">
+                            IsSynchronizedWithCurrentItem="True"
+                            ItemsSource="{Binding Persons}"
+                            SelectedItem="{Binding DataContext.ConcreteClient, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
                                     <Setter Property="Background" Value="{Binding BackgroundColor}" />
@@ -65,19 +67,19 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn
                                     Width="100*"
-                                    Binding="{Binding Id}"
+                                    Binding="{Binding Id, Mode=TwoWay}"
                                     Header="Id" />
                                 <DataGridTextColumn
                                     Width="100*"
-                                    Binding="{Binding Name}"
+                                    Binding="{Binding Name, Mode=TwoWay}"
                                     Header="Name" />
                                 <DataGridTextColumn
                                     Width="100*"
-                                    Binding="{Binding PhoneNumber}"
+                                    Binding="{Binding PhoneNumber, Mode=TwoWay}"
                                     Header="Phone" />
                                 <DataGridCheckBoxColumn
                                     Width="100*"
-                                    Binding="{Binding IsVIP}"
+                                    Binding="{Binding IsVIP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Header="VIP" />
                             </DataGrid.Columns>
                         </DataGrid>
@@ -100,7 +102,7 @@
                             ItemsSource="{Binding Companies}">
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
-                                    <Setter Property="Background" Value="{Binding BackgroundColor}" />
+                                    <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}" />
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
@@ -143,15 +145,18 @@
                 Width="5"
                 HorizontalAlignment="Stretch"
                 ResizeDirection="Columns" />
+            <!--  Переделать UI этого элемента, чтобы не было привязки к dgClients  -->
             <Grid
                 Grid.Column="2"
                 Margin="10"
+                Background="{Binding ElementName=dgClients, Path=SelectedItem.BackgroundColor, UpdateSourceTrigger=PropertyChanged}"
                 ShowGridLines="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -182,6 +187,12 @@
                     VerticalAlignment="Center"
                     Text="VIP" />
                 <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="Accounts" />
+                <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"
                     HorizontalAlignment="Center"
@@ -204,7 +215,33 @@
                     Grid.Column="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    IsChecked="{Binding ElementName=dgClients, Path=SelectedItem.IsVIP}" />
+                    IsChecked="{Binding ElementName=dgClients, Path=SelectedItem.IsVIP, Mode=TwoWay}" />
+                <StackPanel
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <ComboBox
+                        Width="75"
+                        Margin="30,0,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding ElementName=dgClients, Path=SelectedItem.AccountsList, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Id}" />
+                                    <TextBlock Margin="10,0,0,0" Text="{Binding Balance, StringFormat='{} {0}$'}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button
+                        Height="30"
+                        Margin="30,0,0,0"
+                        Command="{Binding AddNewAccount}"
+                        Content="Add new acc" />
+                </StackPanel>
             </Grid>
         </Grid>
     </Grid>

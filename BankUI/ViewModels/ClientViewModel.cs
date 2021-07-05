@@ -6,13 +6,14 @@ using System.Windows.Media;
 
 namespace BankUI.ViewModels
 {
-    internal class ClientViewModel : INotifyPropertyChanged
+    public class ClientViewModel : INotifyPropertyChanged
     {
         #region Fields
 
         private readonly ClientModel _client;
         private readonly PersonModel _person;
-        private bool _isPerson = true;
+        //private ClientModel _concreteClient;
+        //private bool _isPerson = true;
 
         //public Color _backgroundColor;
 
@@ -35,27 +36,38 @@ namespace BankUI.ViewModels
 
         public ClientViewModel()
         {
-            _person = new PersonModel();// ?? throw new ArgumentNullException(nameof(client));
+            //_person = new PersonModel();// ?? throw new ArgumentNullException(nameof(client));
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public ClientModel ConcreteClient { get; set; }
+        //public ClientModel ConcreteClient
+        //{
+        //    get => _concreteClient;
+
+        //    set
+        //    {
+        //        if (_concreteClient == value)
+        //            return;
+        //        _concreteClient = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         //public int Id => _client.Id;
-        public int Id => _person.Id;
+        public virtual int Id { get; set; }
 
-        public string Name
+        public virtual string Name
         {
             //get => _client.Name;
-            get => _person.Name;
+            get => _client.Name;
             set
             {
-                if (_person.Name == value)
+                if (_client.Name == value)
                     return;
-                _person.Name = value;
+                _client.Name = value;
                 OnPropertyChanged();
             }
         }
@@ -121,15 +133,15 @@ namespace BankUI.ViewModels
         //        OnPropertyChanged();
         //    }
         //}
-        public bool IsVIP
+        public virtual bool IsVIP
         {
-            get => _person.IsVIP;
+            get => _client.IsVIP;
             set
             {
-                if (_person.IsVIP == value)
+                if (_client.IsVIP == value)
                     return;
 
-                _person.IsVIP = value;
+                _client.IsVIP = value;
                 OnPropertyChanged();
             }
         }
@@ -137,11 +149,11 @@ namespace BankUI.ViewModels
         public bool IsPerson { get; set; }
         public bool CanBeClosed { get; set; }
 
-        public Color BackgroundColor
+        public string BackgroundColor
         {
             get
             {
-                return IsVIP ? Color.FromRgb(255, 215, 0) : Color.FromRgb(0, 0, 0);
+                return IsVIP ? "LemonChiffon" : "White";
             }
         }
 
@@ -150,11 +162,11 @@ namespace BankUI.ViewModels
 
         private void NewClientAdd()
         {
-            if (IsPerson)
-                ConcreteClient = new PersonModel(Name, IsVIP, SurName, PersonalCode, PhoneNumber);
-            else
-                ConcreteClient = new CompanyModel(Name, CompanyCode: "some test code");//TODO добавить обработку нового клиента
-            CanBeClosed = true;
+            //    if (IsPerson)
+            //        ConcreteClient = new PersonModel(Name, IsVIP, SurName, PersonalCode, PhoneNumber);
+            //    else
+            //        ConcreteClient = new CompanyModel(Name, CompanyCode: "some test code", true);//TODO добавить обработку нового клиента
+            //    CanBeClosed = true;
         }
 
         private bool CanAddNewClient()
@@ -166,7 +178,7 @@ namespace BankUI.ViewModels
 
         #region Methods
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

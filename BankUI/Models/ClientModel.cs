@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace BankUI.Models
 {
@@ -9,12 +10,11 @@ namespace BankUI.Models
         private int _id;
         private bool _isVIP;
         private string _name;
-        private DepositModel _deposit;
-        private decimal _balance;
-        private int _depositDuration;
 
         private IList<AccountModel> _accountsList;
         private static int nextId = 1;
+
+        private static Random random = new Random();
 
         //private IList<Account<string>> accountsList;
 
@@ -22,17 +22,22 @@ namespace BankUI.Models
 
         #region Constructors
 
-        public ClientModel()
-        {
-        }
+        //public ClientModel()
+        //{
+        //}
 
-        public ClientModel(string name, decimal balance = 0, bool isVIP = false, IList<AccountModel> accounts = null)
+        public ClientModel(string name, bool isVIP = false)
         {
             _id = nextId++;
             _name = name;
             _isVIP = isVIP;
-            _balance = balance;
-            _deposit = null;
+            _accountsList = new List<AccountModel>();
+            for (int i = 0; i < random.Next(5); i++)
+            {
+                AddNewAccount(random.Next(1000));
+            }
+            //_balance = balance;
+            //_deposit = null;
             //_accountsList = accounts;
         }
 
@@ -44,27 +49,16 @@ namespace BankUI.Models
         public bool IsVIP { get => _isVIP; set => _isVIP = value; }
         public string Name { get => _name; set => _name = value; }
 
-        public DepositModel Deposit
-        {
-            get => _deposit;
-            set
-            {
-                if (_deposit == value)
-                    return;
-                _deposit = value;
-            }
-        }
-
-        //public IList<Account> AccountsList { get => _accountsList; set => _accountsList = value; }
+        public IList<AccountModel> AccountsList { get => _accountsList; set => _accountsList = value; }
         //public IList<Account<string>> AccountsList { get => accountsList; set => accountsList = value; }
 
         #endregion Properties
 
         #region Methods
 
-        public void OpenDeposit(decimal startBalance, int duration, double interestRateYear)
+        public void AddNewAccount(decimal balance = 0)
         {
-            _deposit = new DepositModel(startBalance, duration, interestRateYear);
+            _accountsList.Add(new AccountModel(this, balance));
         }
 
         #endregion Methods

@@ -13,22 +13,22 @@ namespace BankUI.HelpClasses
         public static IList<ClientModel> GetClientsList()
         {
             List<ClientModel> clients = new List<ClientModel>();
-            for (int i = 0; i < random.Next(10); i++)
+            for (int i = 0; i < random.Next(100); i++)
             {
                 clients.Add(GetClient());
             }
             return clients;
         }
 
-        public static IList<PersonModel> GetPersonsList()
-        {
-            List<PersonModel> clients = new List<PersonModel>();
-            for (int i = 0; i < random.Next(15); i++)
-            {
-                clients.Add(GetPerson());
-            }
-            return clients;
-        }
+        //public static IList<PersonModel> GetPersonsList()
+        //{
+        //    List<PersonModel> clients = new List<PersonModel>();
+        //    for (int i = 0; i < random.Next(15); i++)
+        //    {
+        //        clients.Add(GetPerson());
+        //    }
+        //    return clients;
+        //}
 
         public static IList<AccountModel> GetAccountsList()
         {
@@ -42,18 +42,25 @@ namespace BankUI.HelpClasses
 
         private static AccountModel GetAccount()
         {
-            return new AccountModel(GetClient(), (decimal)random.NextDouble() * 1000);
+            return new AccountModel(GetClient());
         }
 
         private static ClientModel GetClient()
         {
-            return new PersonModel(RandomName(), isVIP: RandomVIP(), RandomSurname(), random.Next(0, 101).ToString(), $"+380({random.Next(10, 100)})-{random.Next(100, 1000)}-{random.Next(10, 100)}-{random.Next(10, 100)}");
+            switch (random.Next(0, 2))
+            {
+                case 0:
+                    return new PersonModel(RandomName(), isVIP: RandomVIP(), RandomSurname(), random.Next(0, 101).ToString(), $"+380({random.Next(10, 100)})-{random.Next(100, 1000)}-{random.Next(10, 100)}-{random.Next(10, 100)}");
+
+                default:
+                    return new CompanyModel($"Company #{random.Next(100)}", Guid.NewGuid().ToString(), random.Next(0, 2) == 1);
+            }
         }
 
-        private static PersonModel GetPerson()
-        {
-            return new PersonModel(RandomName(), isVIP: RandomVIP(), RandomSurname(), random.Next(0, 101).ToString(), $"+380({random.Next(10, 100)})-{random.Next(100, 1000)}-{random.Next(10, 100)}-{random.Next(10, 100)}");
-        }
+        //private static PersonModel GetPerson()
+        //{
+        //    return new PersonModel(RandomName(), isVIP: RandomVIP(), RandomSurname(), random.Next(0, 101).ToString(), $"+380({random.Next(10, 100)})-{random.Next(100, 1000)}-{random.Next(10, 100)}-{random.Next(10, 100)}");
+        //}
 
         private static bool RandomVIP()
         {

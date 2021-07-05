@@ -11,14 +11,14 @@ namespace testProject
     {
         private static void Main(string[] args)
         {
-            PersonModel test = new PersonModel();
-            decimal startBalance = 1000;
-            int duration = 7;
-            double interestRateYear = 8.5;
-            test.OpenDeposit(startBalance, duration, interestRateYear);
+            //PersonModel test = new PersonModel();
+            //decimal startBalance = 1000;
+            //int duration = 7;
+            //double interestRateYear = 8.5;
+            //test.OpenDeposit(startBalance, duration, interestRateYear);
 
-            var result = test.Deposit.GetBalanceAtMonth(duration);
-            Console.WriteLine();
+            //var result = test.Deposit.GetBalanceAtMonth(duration);
+            //Console.WriteLine();
         }
     }
 }

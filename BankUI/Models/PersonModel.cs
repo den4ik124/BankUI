@@ -12,11 +12,11 @@
 
         #region Constructors
 
-        public PersonModel()
-        {
-        }
+        //public PersonModel()
+        //{
+        //}
 
-        public PersonModel(string Name, bool isVIP, string SurName, string PersonalCode, string PhoneNumber) : base(Name, 0, isVIP)
+        public PersonModel(string Name, bool isVIP, string SurName, string PersonalCode, string PhoneNumber) : base(Name, isVIP)
         {
             surName = SurName;
             personalCode = PersonalCode;
