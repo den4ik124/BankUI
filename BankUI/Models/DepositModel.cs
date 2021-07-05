@@ -42,11 +42,16 @@ namespace BankUI.Models
 
         public decimal GetBalanceAtMonth(int monthCount)
         {
-            decimal noCapitalizationResult = _startBalance;
-            if (monthCount > 12)
-                noCapitalizationResult = _startBalance * (decimal)Math.Pow((1 + _interestRateYear / 100), monthCount / 12);
+            return _isCapitalization ? Capitalization(monthCount) : NoCapitalization(monthCount);
+        }
 
-            return _isCapitalization ? _startBalance * (decimal)Math.Pow((1 + _interestRateYear / 12 / 100), monthCount) : noCapitalizationResult;
+        private decimal Capitalization(int monthCount)
+        {
+            return _startBalance * (decimal)Math.Pow((1 + _interestRateYear / 12 / 100), monthCount);
+        }
+        private decimal NoCapitalization(int monthCount)
+        {
+            return monthCount >= 12 ? _startBalance * (decimal)Math.Pow((1 + _interestRateYear / 100), monthCount / 12) : _startBalance;
         }
 
         #endregion Methods

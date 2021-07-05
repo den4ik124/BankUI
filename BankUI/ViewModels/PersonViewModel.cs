@@ -80,6 +80,18 @@ namespace BankUI.ViewModels
             }
         }
 
+        public override decimal TotalBalance
+        {
+            get => _person.TotalBalance;
+            set
+            {
+                if (_person.TotalBalance == value)
+                    return;
+                _person.TotalBalance = value;
+                OnPropertyChanged();
+            }
+        }
+
         public IList<AccountModel> AccountsList
         {
             get => _person.AccountsList;

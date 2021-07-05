@@ -10,7 +10,7 @@ namespace BankUI.Models
         private int _id;
         private bool _isVIP;
         private string _name;
-
+        private decimal _totalBalance;
         private IList<AccountModel> _accountsList;
         private static int nextId = 1;
 
@@ -36,6 +36,7 @@ namespace BankUI.Models
             {
                 AddNewAccount(random.Next(1000));
             }
+
             //_balance = balance;
             //_deposit = null;
             //_accountsList = accounts;
@@ -48,6 +49,7 @@ namespace BankUI.Models
         public int Id { get => _id; set => _id = value; }
         public bool IsVIP { get => _isVIP; set => _isVIP = value; }
         public string Name { get => _name; set => _name = value; }
+        public decimal TotalBalance { get => _totalBalance; set => _totalBalance = value; }
 
         public IList<AccountModel> AccountsList { get => _accountsList; set => _accountsList = value; }
         //public IList<Account<string>> AccountsList { get => accountsList; set => accountsList = value; }
@@ -59,6 +61,16 @@ namespace BankUI.Models
         public void AddNewAccount(decimal balance = 0)
         {
             _accountsList.Add(new AccountModel(this, balance));
+            TotalBalanceCalc();
+        }
+
+        private void TotalBalanceCalc()
+        {
+            _totalBalance = 0;
+            foreach (var account in _accountsList)
+            {
+                _totalBalance += account.Balance;
+            }
         }
 
         #endregion Methods

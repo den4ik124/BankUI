@@ -29,6 +29,8 @@ namespace BankUI.ViewModels
         private RelayCommand _showTestClients;
         private RelayCommand _addNewClient;
         private RelayCommand _addNewAccount;
+        private RelayCommand _showVIPOnly;
+        private bool _isVIPSeleceted;
 
         private static Random random = new Random();
 
@@ -72,6 +74,9 @@ namespace BankUI.ViewModels
         public RelayCommand AddNewAccount => _addNewAccount ??
             (_addNewAccount = new RelayCommand(AddNewAcc, CanShow));
 
+        public RelayCommand ShowVIPOnly => _showVIPOnly ??
+            (_showVIPOnly = new RelayCommand(OnlyVIPShow, CanVIPShow));
+
         #endregion Commands
 
         public ICollectionView Clients { get; }
@@ -87,6 +92,18 @@ namespace BankUI.ViewModels
                 if (_concreteClient == value)
                     return;
                 _concreteClient = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsVIPSeleceted
+        {
+            get => _isVIPSeleceted;
+            set
+            {
+                //if (isVIPSeleceted == value)
+                //    return;
+                _isVIPSeleceted = !_isVIPSeleceted;
                 OnPropertyChanged();
             }
         }
@@ -107,9 +124,43 @@ namespace BankUI.ViewModels
             Companies.Refresh();
         }
 
+        private void DataCollectionsClear()
+        {
+            _clients.Clear();
+            _persons.Clear();
+            _companies.Clear();
+        }
+
+        private bool CanVIPShow()
+        {
+            return _clients.Count > 0;
+        }
+
         private bool CanShow()
         {
             return true;
+        }
+
+        private void OnlyVIPShow()
+        {
+            if (_isVIPSeleceted == true)
+            {
+                DataCollectionsClear();
+                IEnumerable<ClientModel> clients = _dataProvider.GetClients().Where(client => client.IsVIP == true);
+                var persons = clients.OfType<PersonModel>().Where(person => person.IsVIP == true);
+                var companies = clients.OfType<CompanyModel>().Where(company => company.IsVIP == true);
+
+                foreach (var client in clients)
+                    _clients.Add(new ClientViewModel(client));
+                foreach (var person in persons)
+                    _persons.Add(new PersonViewModel(person));
+                foreach (var company in companies)
+                    _companies.Add(new CompanyViewModel(company));
+
+                DataCollectionsRefresh();
+            }
+            else
+                UpdateClients();
         }
 
         private void AddNewAcc()
@@ -147,14 +198,18 @@ namespace BankUI.ViewModels
         private void TestClientsShow()
         {
             //UpdatePersons(true);
+            _isVIPSeleceted = false;
+            OnPropertyChanged();
             UpdateClients(true);
         }
 
+        /// <summary>
+        /// Обновляет список всех клиентов банка
+        /// </summary>
+        /// <param name="isTestData">Загрузить новые тестовые данные или нет</param>
         private void UpdateClients(bool isTestData = false)
         {
-            _clients.Clear();
-            _persons.Clear();
-            _companies.Clear();
+            DataCollectionsClear();
             IEnumerable<ClientModel> clients = _dataProvider.GetClients(isTestData);
             var persons = clients.OfType<PersonModel>();
             var companies = clients.OfType<CompanyModel>();

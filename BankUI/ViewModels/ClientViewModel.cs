@@ -121,18 +121,6 @@ namespace BankUI.ViewModels
         //    }
         //}
 
-        //public bool IsVIP
-        //{
-        //    get => _client.IsVIP;
-        //    set
-        //    {
-        //        if (_client.IsVIP == value)
-        //            return;
-
-        //        _client.IsVIP = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
         public virtual bool IsVIP
         {
             get => _client.IsVIP;
@@ -154,6 +142,18 @@ namespace BankUI.ViewModels
             get
             {
                 return IsVIP ? "LemonChiffon" : "White";
+            }
+        }
+
+        public virtual decimal TotalBalance
+        {
+            get => _client.TotalBalance;
+            set
+            {
+                if (_client.TotalBalance == value)
+                    return;
+                _client.TotalBalance = value;
+                OnPropertyChanged();
             }
         }
 
