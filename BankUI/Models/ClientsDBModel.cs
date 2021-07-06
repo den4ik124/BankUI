@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace BankUI.Models
 {
-    public static class ClientsDBModel
+    public static class ClientsDBModel// : IDataProcessor
     {
         #region Fields
 
@@ -78,7 +78,7 @@ namespace BankUI.Models
             //Serialization(_clients);
         }
 
-        private static void Serialization(object toSerializeObject)
+        private static void Serialization<T>(T toSerializeObject)
         {
             string json = JsonConvert.SerializeObject(toSerializeObject, jsonSettings);
             if (Path == defaultFileName)
@@ -88,7 +88,8 @@ namespace BankUI.Models
             Debug.WriteLine($"\nДанные записаны в файл:\n{Path}\n");
         }
 
-        public static void DeserializationJSON()
+        //public static IList<T> DeserializationJSON<T>(string path = "")
+        public static void DeserializationJSON<T>(string path = "")
         {
             try
             {
@@ -97,26 +98,21 @@ namespace BankUI.Models
                     //MessageBox.Show("File does not exist!", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message + "\n");
-            }
-
-            string json = File.ReadAllText(Path);
-            try
-            {
-                var result = JsonConvert.DeserializeObject<IList<ClientModel>>(json, jsonSettings);
-
-                foreach (var client in result)
+                else
                 {
-                    _clients.Add(client);
+                    string json = File.ReadAllText(Path);
+                    IList<T> result = JsonConvert.DeserializeObject<IList<T>>(json, jsonSettings);
+                    foreach (T client in result)
+                    {
+                        _clients.Add(client as ClientModel);
+                    }
                 }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(new string('=', 50) + "\n" + e.Message + "\n" + new string('=', 50));
                 MessageBox.Show(e.Message + "\n" + e.Source + "\n" + e.TargetSite, "Load canceled", MessageBoxButton.OK, MessageBoxImage.Stop);
+                return;
             }
         }
 

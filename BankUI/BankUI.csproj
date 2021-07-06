@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IClient.cs" />
     <Compile Include="Interfaces\IDataSaver.cs" />
+    <Compile Include="Interfaces\IDataProcessor.cs" />
     <Compile Include="Models\DepositModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\NewClientsViewModel.cs" />

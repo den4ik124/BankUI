@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BankUI.DAL
 {
-    internal class DataProvider : IDataProvider
+    internal class DataProvider : IDataProvider<ClientModel>
     {
         #region Fields
 
@@ -40,8 +40,9 @@ namespace BankUI.DAL
         public void Load()
         {
             //TODO Логика считывания коллекции. Десериализация json
-            ClientsDBModel.DeserializationJSON();
+            //var clientsList = ClientsDBModel.DeserializationJSON<ClientModel>();
             _clients.Clear();
+            ClientsDBModel.DeserializationJSON<ClientModel>();
             foreach (var client in ClientsDBModel.Clients)
             {
                 _clients.Add(client);

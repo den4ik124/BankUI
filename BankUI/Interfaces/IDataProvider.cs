@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace BankUI.Interfaces
 {
-    internal interface IDataProvider
+    internal interface IDataProvider<T>
     {
-        IEnumerable<ClientModel> GetClients(bool isTestData = false);
+        IEnumerable<T> GetClients(bool isTestData = false);
 
-        IList<ClientModel> DeleteClient(ClientModel client);
+        IList<T> DeleteClient(T client);
 
         //IEnumerable<Client> GetTestClients();
         void Load();

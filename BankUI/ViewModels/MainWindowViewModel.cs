@@ -16,7 +16,7 @@ namespace BankUI.ViewModels
     {
         #region Fields
 
-        private IDataProvider _dataProvider;
+        private IDataProvider<ClientModel> _dataProvider;
         private IDialogService _dialogService;
 
         private IList<ClientViewModel> _clients;
