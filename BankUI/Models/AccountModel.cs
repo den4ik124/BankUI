@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -19,6 +20,9 @@ namespace BankUI.Models
         #endregion Fields
 
         #region Constructors
+
+        [JsonConstructor]
+        public AccountModel() { }
 
         public AccountModel(ClientModel client, decimal balance = 0)
         {

@@ -24,6 +24,8 @@ namespace BankUI.ViewModels
         private IList<PersonViewModel> _persons;
         private IList<CompanyViewModel> _companies;
         private ClientViewModel _concreteClient;
+
+        private AccountsDBModel _accountsDB;
         //private IList<Account> _accounts;
 
         private RelayCommand _showTestClients;
@@ -57,6 +59,15 @@ namespace BankUI.ViewModels
 
             _companies = new ObservableCollection<CompanyViewModel>();
             Companies = CollectionViewSource.GetDefaultView(_companies);
+
+            LoadClients();
+            //_dialogService.OpenFileDialog();
+            //ClientsDBModel.Path = _dialogService.FilePath;
+
+            //_accountsDB = new AccountsDBModel()
+            //{
+            //    Path = "clients.json"
+            //};
         }
 
         #endregion Constructors
@@ -201,6 +212,23 @@ namespace BankUI.ViewModels
             _isVIPSeleceted = false;
             OnPropertyChanged();
             UpdateClients(true);
+        }
+
+        private void LoadClients()
+        {
+            DataCollectionsClear();
+            IEnumerable<ClientModel> clients = _dataProvider.GetClients();
+            var persons = clients.OfType<PersonModel>();
+            var companies = clients.OfType<CompanyModel>();
+
+            foreach (var client in clients)
+                _clients.Add(new ClientViewModel(client));
+            foreach (var person in persons)
+                _persons.Add(new PersonViewModel(person));
+            foreach (var company in companies)
+                _companies.Add(new CompanyViewModel(company));
+
+            DataCollectionsRefresh();
         }
 
         /// <summary>

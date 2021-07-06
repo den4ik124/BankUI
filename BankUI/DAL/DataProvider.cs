@@ -22,6 +22,7 @@ namespace BankUI.DAL
             _clients = new List<ClientModel>();
             _persons = new List<PersonModel>();
             _accounts = new List<AccountModel>();
+            Load();
         }
 
         #endregion Constructors
@@ -39,10 +40,18 @@ namespace BankUI.DAL
         public void Load()
         {
             //TODO Логика считывания коллекции. Десериализация json
+            ClientsDBModel.DeserializationJSON();
+            _clients.Clear();
+            foreach (var client in ClientsDBModel.Clients)
+            {
+                _clients.Add(client);
+            }
         }
 
         public IEnumerable<ClientModel> GetClients(bool isTestData = false)
         {
+            //return isTestData ? GetTestClientsData() : _clients;
+
             return isTestData ? GetTestClientsData() : _clients;
         }
 
@@ -52,6 +61,7 @@ namespace BankUI.DAL
             foreach (var client in Generator.GetClientsList())
             {
                 _clients.Add(client);
+                ClientsDBModel.AddClient(client);
             }
             return _clients;
         }

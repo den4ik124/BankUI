@@ -2,7 +2,7 @@
 
 namespace BankUI.Models
 {
-    public class AccountsDB
+    public class AccountsDBModel
     {
         private IList<AccountModel> accounts;
 

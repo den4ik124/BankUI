@@ -5,7 +5,7 @@ namespace BankUI.DAL
 {
     internal class DialogService : IDialogService
     {
-        public string FilePath { get; private set; }
+        public string FilePath { get; set; }
 
         public bool OpenFileDialog()
         {
