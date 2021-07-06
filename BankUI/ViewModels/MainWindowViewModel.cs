@@ -32,6 +32,8 @@ namespace BankUI.ViewModels
         private RelayCommand _addNewClient;
         private RelayCommand _addNewAccount;
         private RelayCommand _showVIPOnly;
+        private RelayCommand _deleteClientCommand;
+
         private bool _isVIPSeleceted;
 
         private static Random random = new Random();
@@ -85,8 +87,31 @@ namespace BankUI.ViewModels
         public RelayCommand AddNewAccount => _addNewAccount ??
             (_addNewAccount = new RelayCommand(AddNewAcc, CanShow));
 
-        public RelayCommand ShowVIPOnly => _showVIPOnly ??
-            (_showVIPOnly = new RelayCommand(OnlyVIPShow, CanVIPShow));
+        public RelayCommand ShowVIPOnlyCommand => _showVIPOnly ??
+            (_showVIPOnly = new RelayCommand(ShowVIPOnly, CanVIPShow));
+
+        public RelayCommand DeleteClientCommand => _deleteClientCommand ??
+            (_deleteClientCommand = new RelayCommand(DeleteClient, CanShow));
+
+        private void DeleteClient()
+        {
+            DataCollectionsClear();
+            //TODO добавить удаление клиента
+            //==============================================
+            var clients = _dataProvider.DeleteClient(null);
+            //==============================================
+            var persons = clients.OfType<PersonModel>();
+            var companies = clients.OfType<CompanyModel>();
+
+            foreach (var client in clients)
+                _clients.Add(new ClientViewModel(client));
+            foreach (var person in persons)
+                _persons.Add(new PersonViewModel(person));
+            foreach (var company in companies)
+                _companies.Add(new CompanyViewModel(company));
+
+            DataCollectionsRefresh();
+        }
 
         #endregion Commands
 
@@ -152,7 +177,7 @@ namespace BankUI.ViewModels
             return true;
         }
 
-        private void OnlyVIPShow()
+        private void ShowVIPOnly()
         {
             if (_isVIPSeleceted == true)
             {
@@ -188,21 +213,22 @@ namespace BankUI.ViewModels
             //TODO разобраться как работать с окнами
             //NewClientsView addNewClient = new NewClientsView();
             //addNewClient.ShowDialog();
-
+            ClientModel client;
+            ClientViewModel clientVM;
             if (random.Next(0, 2) == 1)
             {
-                var newPerson = new PersonModel("test Name", random.Next(0, 2) == 1, "test Surname", "test111", "phone test");
-                var newPersonVM = new PersonViewModel(newPerson);
-                _persons.Add(newPersonVM);
-                _clients.Add(newPersonVM);
+                client = new PersonModel("test Name", random.Next(0, 2) == 1, "test Surname", "test111", "phone test");
+                clientVM = new PersonViewModel(client as PersonModel);
+                _persons.Add(clientVM as PersonViewModel);
             }
             else
             {
-                var newCompany = new CompanyModel("TEST COMPANY", "TEST CODE", random.Next(0, 2) == 1);
-                var newCompanyVM = new CompanyViewModel(newCompany);
-                _companies.Add(newCompanyVM);
-                _clients.Add(newCompanyVM);
+                client = new CompanyModel("TEST COMPANY", "TEST CODE", random.Next(0, 2) == 1);
+                clientVM = new CompanyViewModel(client as CompanyModel);
+                _companies.Add(clientVM as CompanyViewModel);
             }
+            _clients.Add(clientVM);
+            ClientsDBModel.AddClient(client);
             DataCollectionsRefresh();
         }
 

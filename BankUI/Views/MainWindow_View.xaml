@@ -70,7 +70,7 @@
             <RadioButton
                 Width="Auto"
                 Margin="5"
-                Command="{Binding ShowVIPOnly}"
+                Command="{Binding ShowVIPOnlyCommand}"
                 IsChecked="{Binding IsVIPSeleceted}"
                 IsEnabled="True"
                 Content="VIP only" />
@@ -96,6 +96,9 @@
                             IsSynchronizedWithCurrentItem="True"
                             ItemsSource="{Binding Persons}"
                             SelectedItem="{Binding DataContext.ConcreteClient, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
+                            <DataGrid.InputBindings>
+                                <KeyBinding Key="Delete" Command="{Binding DeleteClientCommand}" />
+                            </DataGrid.InputBindings>
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
                                     <Setter Property="Background" Value="{Binding BackgroundColor}" />

@@ -90,11 +90,19 @@ namespace BankUI.Models
 
         public static void DeserializationJSON()
         {
-            if (!File.Exists(Path))
+            try
             {
-                MessageBox.Show("File does not exist!", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                if (!File.Exists(Path))
+                {
+                    //MessageBox.Show("File does not exist!", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message + "\n");
+            }
+
             string json = File.ReadAllText(Path);
             try
             {

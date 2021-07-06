@@ -51,7 +51,8 @@ namespace BankUI.DAL
         public IEnumerable<ClientModel> GetClients(bool isTestData = false)
         {
             //return isTestData ? GetTestClientsData() : _clients;
-
+            if (isTestData == true)
+                ClientsDBModel.Clients.Clear();
             return isTestData ? GetTestClientsData() : _clients;
         }
 
@@ -63,6 +64,13 @@ namespace BankUI.DAL
                 _clients.Add(client);
                 ClientsDBModel.AddClient(client);
             }
+            return _clients;
+        }
+
+        public IList<ClientModel> DeleteClient(ClientModel client)
+        {
+            ClientsDBModel.Clients.Remove(client);
+            _clients = ClientsDBModel.Clients;
             return _clients;
         }
 
