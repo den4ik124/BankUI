@@ -115,22 +115,13 @@ namespace BankUI.ViewModels
         //================================================= ПЕРЕНЕСТИ =================================================
         private void DeleteClient()
         {
-            DataCollectionsClear();
             //TODO добавить удаление клиента
-            //==============================================
-            var clients = _dataProvider.DeleteClient(null);
-            //==============================================
-            var persons = clients.OfType<PersonModel>();
-            var companies = clients.OfType<CompanyModel>();
 
-            foreach (var client in clients)
-                _clients.Add(new ClientViewModel(client));
-            foreach (var person in persons)
-                _persons.Add(new PersonViewModel(person));
-            foreach (var company in companies)
-                _companies.Add(new CompanyViewModel(company));
+            //==============================================
 
-            DataCollectionsRefresh();
+            _dataProvider.DeleteClient(ConcreteClient);
+            //==============================================
+            UpdateClients();
         }
 
         //================================================= ПЕРЕНЕСТИ =================================================

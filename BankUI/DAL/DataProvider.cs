@@ -1,7 +1,9 @@
 ﻿using BankUI.HelpClasses;
 using BankUI.Interfaces;
 using BankUI.Models;
+using BankUI.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BankUI.DAL
 {
@@ -71,11 +73,21 @@ namespace BankUI.DAL
             return _clients;
         }
 
-        public IList<ClientModel> DeleteClient(ClientModel client)
+        public void DeleteClient(ClientViewModel clientVM)
         {
-            ClientsDBModel.Clients.Remove(client);
+            int index = -1;
+            foreach (var client in ClientsDBModel.Clients)
+            {
+                if (client.Id == clientVM.Id)
+                {
+                    index = ClientsDBModel.Clients.IndexOf(client);
+                    break;
+                }
+            }
+            ClientsDBModel.Clients.RemoveAt(index);
+            //ClientsDBModel.Clients.Remove(client);
             _clients = ClientsDBModel.Clients;
-            return _clients;
+            //return _clients;
         }
 
         public void GetTestAccountsData()

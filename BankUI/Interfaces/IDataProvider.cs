@@ -1,4 +1,5 @@
 ﻿using BankUI.Models;
+using BankUI.ViewModels;
 using System.Collections.Generic;
 
 namespace BankUI.Interfaces
@@ -7,7 +8,7 @@ namespace BankUI.Interfaces
     {
         IEnumerable<T> GetClients(bool isTestData = false);
 
-        IList<T> DeleteClient(T client);
+        void DeleteClient(ClientViewModel client);
 
         //IEnumerable<Client> GetTestClients();
         void Load();

@@ -97,7 +97,7 @@
                             AutoGenerateColumns="False"
                             IsSynchronizedWithCurrentItem="True"
                             ItemsSource="{Binding Persons}"
-                            SelectedItem="{Binding DataContext.ConcreteClient, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
+                            SelectedItem="{Binding DataContext.ConcreteClient, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                             <DataGrid.InputBindings>
                                 <KeyBinding Key="Delete" Command="{Binding DeleteClientCommand}" />
                             </DataGrid.InputBindings>
