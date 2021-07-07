@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using Newtonsoft.Json;
 
 namespace BankUI.Models
 {
@@ -25,6 +26,10 @@ namespace BankUI.Models
         //public ClientModel()
         //{
         //}
+        [JsonConstructor]
+        public ClientModel()
+        {
+        }
 
         public ClientModel(string name, bool isVIP = false)
         {
@@ -73,7 +78,7 @@ namespace BankUI.Models
             TotalBalanceCalc();
         }
 
-        private void TotalBalanceCalc()
+        public void TotalBalanceCalc()
         {
             _totalBalance = 0;
             foreach (var account in _accountsList)

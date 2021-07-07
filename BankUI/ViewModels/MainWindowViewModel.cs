@@ -23,6 +23,10 @@ namespace BankUI.ViewModels
         private IList<PersonViewModel> _persons;
         private IList<CompanyViewModel> _companies;
         private ClientViewModel _concreteClient;
+        private AccountModel _receiverAccount;
+        private AccountModel _senderAccount;
+
+        private decimal _transactionValue;
 
         //private AccountsDBModel _accountsDB;
         //private IList<Account> _accounts;
@@ -32,6 +36,7 @@ namespace BankUI.ViewModels
         private RelayCommand _addNewAccount;
         private RelayCommand _showVIPOnly;
         private RelayCommand _deleteClientCommand;
+        private RelayCommand _sendMoneyCommand;
 
         private bool _isVIPSeleceted;
 
@@ -92,6 +97,22 @@ namespace BankUI.ViewModels
         public RelayCommand DeleteClientCommand => _deleteClientCommand ??
             (_deleteClientCommand = new RelayCommand(DeleteClient, CanShow));
 
+        public RelayCommand SendMoneyCommand => _sendMoneyCommand ??
+            (_sendMoneyCommand = new RelayCommand(SendMoney, CanSend));
+
+        public decimal TransactionValue
+        {
+            get => _transactionValue;
+            set
+            {
+                if (_transactionValue == value)
+                    return;
+                _transactionValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //================================================= ПЕРЕНЕСТИ =================================================
         private void DeleteClient()
         {
             DataCollectionsClear();
@@ -112,6 +133,8 @@ namespace BankUI.ViewModels
             DataCollectionsRefresh();
         }
 
+        //================================================= ПЕРЕНЕСТИ =================================================
+
         #endregion Commands
 
         public ICollectionView Clients { get; }
@@ -127,6 +150,30 @@ namespace BankUI.ViewModels
                 if (_concreteClient == value)
                     return;
                 _concreteClient = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public AccountModel ReceiverAccount
+        {
+            get => _receiverAccount;
+            set
+            {
+                if (_receiverAccount == value)
+                    return;
+                _receiverAccount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public AccountModel SenderAccount
+        {
+            get { return _senderAccount; }
+            set
+            {
+                if (_senderAccount == value)
+                    return;
+                _senderAccount = value;
                 OnPropertyChanged();
             }
         }
@@ -172,6 +219,91 @@ namespace BankUI.ViewModels
             _clients.Clear();
             _persons.Clear();
             _companies.Clear();
+        }
+
+        private bool CanSend()
+        {
+            return TransactionValue > 0 && SenderAccount?.Balance >= TransactionValue;
+        }
+
+        private void SendMoney()
+        {
+            //TODO после десериализации креш при переводе денег
+            if (SenderAccount.Balance < TransactionValue)
+                return;
+
+            AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, TransactionValue);
+
+            int indexClientDB_sender = 0;
+            int indexClientDB_receiver = 0;
+
+            foreach (var client in ClientsDBModel.Clients)
+            {
+                if (client.Id == SenderAccount.ClientData.Id)
+                {
+                    indexClientDB_sender = ClientsDBModel.Clients.IndexOf(client);
+                }
+                else if (client.Id == ReceiverAccount.ClientData.Id)
+                {
+                    indexClientDB_receiver = ClientsDBModel.Clients.IndexOf(client);
+                }
+            }
+
+            //У конкретного клиента в БД клиентов (ОТПРАВИТЕЛЬ) меняем баланс на нужном аккаунте
+            foreach (var accSender in ClientsDBModel.Clients[indexClientDB_sender].AccountsList)
+            {
+                if (accSender.Id == SenderAccount.Id)
+                {
+                    accSender.Balance = SenderAccount.Balance;
+                    break;
+                }
+            }
+            //У конкретного клиента в БД клиентов (ПОЛУЧАТЕЛЬ) меняем баланс на нужном аккаунте
+            foreach (var accReceiver in ClientsDBModel.Clients[indexClientDB_receiver].AccountsList)
+            {
+                if (accReceiver.Id == ReceiverAccount.Id)
+                {
+                    accReceiver.Balance = ReceiverAccount.Balance;
+                    break;
+                }
+            }
+            ClientsDBModel.UpdateClients();
+
+            ////SenderAccount.Balance -= TransactionValue;
+            ////ReceiverAccount.Balance += TransactionValue;
+            //foreach (var acc in AccountsDBModel.Accounts)
+            //{
+            //    if (acc.Id == SenderAccount.Id)
+            //    {
+            //        acc.Balance -= TransactionValue;
+            //        SenderAccount = acc;
+            //    }
+            //    else if (acc.Id == ReceiverAccount.Id)
+            //    {
+            //        acc.Balance += TransactionValue;
+            //        ReceiverAccount = acc;
+            //    }
+
+            //    foreach (var client in ClientsDBModel.Clients)
+            //    {
+            //        if (client.Id == SenderAccount.ClientData.Id)
+            //            foreach (var account in client.AccountsList)
+            //            {
+            //                if (account.Id == SenderAccount.Id)
+            //                {
+            //                    account.Balance = SenderAccount.Balance;
+            //                    continue;
+            //                }
+            //                else if (client.Id == ReceiverAccount.ClientData.Id)
+            //                {
+            //                    account.Balance = ReceiverAccount.Balance;
+            //                    continue;
+            //                }
+            //            }
+            //        client.TotalBalanceCalc();
+            //    }
+            //    //Почему-то UI не обновляется после транзакции
+            //}
         }
 
         private bool CanVIPShow()

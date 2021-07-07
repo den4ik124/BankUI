@@ -75,6 +75,7 @@ namespace BankUI.Models
         public static void FillDataBase()
         {
             _clients.Clear();
+            AccountsDBModel.Accounts.Clear();
             foreach (var client in _dataProcessor.DeserializationJSON<ClientModel>())
             {
                 _clients.Add(client);
@@ -88,7 +89,6 @@ namespace BankUI.Models
                     }
                 //==============================================
             }
-            AccountsDBModel.Accounts.Clear();
         }
 
         //private static void Serialization<T>(T toSerializeObject)
@@ -129,7 +129,8 @@ namespace BankUI.Models
         //    }
         //}
 
-        private static void UpdateClients()
+        //private static void UpdateClients()
+        public static void UpdateClients()
         {
             _persons.Clear();
             _companies.Clear();

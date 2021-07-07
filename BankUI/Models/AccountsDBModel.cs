@@ -27,5 +27,11 @@ namespace BankUI.Models
         {
             _dataProcessor.Serialization(_accounts, FileName);
         }
+
+        public static void MoneyTransfer(AccountModel sender, AccountModel receiver, decimal transactionValue)
+        {
+            _accounts[_accounts.IndexOf(sender)].Balance -= transactionValue;
+            _accounts[_accounts.IndexOf(receiver)].Balance += transactionValue;
+        }
     }
 }

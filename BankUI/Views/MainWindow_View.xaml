@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:BankUI.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="testWindow"
-    Width="800"
+    Width="1200"
     Height="450"
     d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
     mc:Ignorable="d">
@@ -193,7 +193,7 @@
                     Width="Auto"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    IsExpanded="False"
+                    IsExpanded="True"
                     Style="{StaticResource ClientsDataExpanderStyle}">
                     <!--  Background="SkyBlue">  -->
                     <Expander.Header>
@@ -326,7 +326,7 @@
                             Margin="0,10,0,10"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Text="{Binding ElementName=dgClients, Path=SelectedItem.TotalBalance, StringFormat='{}{0} $'}" />
+                            Text="{Binding ElementName=dgClients, Path=SelectedItem.TotalBalance, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0} $'}" />
                     </Grid>
                 </Expander>
                 <Expander
@@ -411,6 +411,7 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition />
+                                    <RowDefinition />
                                 </Grid.RowDefinitions>
 
                                 <Label
@@ -420,32 +421,62 @@
                                 <TextBox
                                     Grid.Row="0"
                                     Grid.Column="1"
-                                    Width="50" />
+                                    Width="50"
+                                    Text="{Binding TransactionValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                </TextBox>
 
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="0"
-                                    Content="Cчёт" />
-                                <!--<TextBox
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Width="50" />-->
+                                    Content="Со счёта:" />
                                 <ComboBox
-                                    ItemsSource="{Binding AccountsList}"
-                                    SelectedItem="{Binding AccountsList[0]}"
+                                    ItemsSource="{Binding ElementName=dgClients, Path=SelectedItem.AccountsList, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedItem="{Binding SenderAccount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Width="Auto">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Id}" />
-                                                <TextBlock Text="{Binding Balance, StringFormat='{} {0}$'}" />
+                                                <GroupBox Header="Id">
+                                                    <TextBlock Text="{Binding Id}" />
+                                                </GroupBox>
+                                                <GroupBox Header="Balance">
+                                                    <TextBlock Text="{Binding Balance, StringFormat='{} {0}$'}" />
+                                                </GroupBox>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <Button Margin="0,10,0,5" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SendMoney}" Content="Перевести" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Content="На счёт:" />
+                                <!--<TextBox
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Width="50" />-->
+                                <!--SelectedItem="{Binding AccountsList[0]}"-->
+                                <ComboBox
+                                    ItemsSource="{Binding AccountsList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    SelectedItem="{Binding ReceiverAccount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Width="Auto">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <GroupBox Header="Id">
+                                                    <TextBlock Text="{Binding Id}" />
+                                                </GroupBox>
+                                                <GroupBox Header="Balance">
+                                                    <TextBlock Text="{Binding Balance, StringFormat='{} {0}$'}" />
+                                                </GroupBox>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button Margin="0,10,0,5" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SendMoneyCommand}" Content="Перевести" />
                             </Grid>
                         </Expander>
                     </StackPanel>
