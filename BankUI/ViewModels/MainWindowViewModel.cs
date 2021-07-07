@@ -112,20 +112,6 @@ namespace BankUI.ViewModels
             }
         }
 
-        //================================================= ПЕРЕНЕСТИ =================================================
-        private void DeleteClient()
-        {
-            //TODO добавить удаление клиента
-
-            //==============================================
-
-            _dataProvider.DeleteClient(ConcreteClient);
-            //==============================================
-            UpdateClients();
-        }
-
-        //================================================= ПЕРЕНЕСТИ =================================================
-
         #endregion Commands
 
         public ICollectionView Clients { get; }
@@ -360,6 +346,17 @@ namespace BankUI.ViewModels
             _clients.Add(clientVM);
             ClientsDBModel.AddClient(client);
             DataCollectionsRefresh();
+        }
+
+        private void DeleteClient()
+        {
+            if (_dialogService.DeleteClientWindow())
+            {
+                _dataProvider.DeleteClient(ConcreteClient);
+                UpdateClients();
+            }
+            else
+                return;
         }
 
         private void TestClientsShow()

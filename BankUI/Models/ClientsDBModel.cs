@@ -76,7 +76,10 @@ namespace BankUI.Models
         {
             _clients.Clear();
             AccountsDBModel.Accounts.Clear();
-            foreach (var client in _dataProcessor.DeserializationJSON<ClientModel>())
+            var deserializedClients = _dataProcessor.DeserializationJSON<ClientModel>();
+            if (deserializedClients == null)
+                return;
+            foreach (var client in deserializedClients)
             {
                 _clients.Add(client);
                 //TEST
