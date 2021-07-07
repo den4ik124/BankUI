@@ -18,7 +18,7 @@ namespace BankUI.ViewModels
         }
 
         public new string Name => _companyModel.Name;
-        public new string CompanyCode => _companyModel.CompanyCode;
+        public string CompanyCode => _companyModel.CompanyCode;
 
         #endregion Constructors
 

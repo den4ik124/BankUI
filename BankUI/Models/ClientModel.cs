@@ -60,7 +60,16 @@ namespace BankUI.Models
 
         public void AddNewAccount(decimal balance = 0)
         {
-            _accountsList.Add(new AccountModel(this, balance));
+            //TEST
+            //==============
+            if (this.GetType() == typeof(PersonModel))
+            {
+                //==============
+                AccountModel account = new AccountModel(this, balance);
+                _accountsList.Add(account);
+                AccountsDBModel.Accounts.Add(account);
+            }
+            //if (!AccountsDBModel.Accounts.Contains(account))
             TotalBalanceCalc();
         }
 

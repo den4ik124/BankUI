@@ -6,7 +6,7 @@ namespace BankUI.HelpClasses
 {
     public static class Generator
     {
-        private static Random random = new Random();
+        private readonly static Random random = new Random();
 
         #region Methods
 

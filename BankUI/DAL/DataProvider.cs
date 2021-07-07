@@ -12,6 +12,7 @@ namespace BankUI.DAL
         private IList<ClientModel> _clients;
         private IList<PersonModel> _persons;
         private IList<AccountModel> _accounts;
+        //private IDataProcessor _dataProcessor = new DataProcessor();
 
         #endregion Fields
 
@@ -22,6 +23,7 @@ namespace BankUI.DAL
             _clients = new List<ClientModel>();
             _persons = new List<PersonModel>();
             _accounts = new List<AccountModel>();
+
             Load();
         }
 
@@ -29,9 +31,9 @@ namespace BankUI.DAL
 
         #region Properties
 
-        private IEnumerable<ClientModel> Clients { get; set; }
-        private IEnumerable<PersonModel> Persons { get; set; }
-        private IEnumerable<AccountModel> Accounts { get; set; }
+        public IList<ClientModel> Clients { get => _clients; set => _clients = value; }
+        public IList<PersonModel> Persons { get => _persons; set => _persons = value; }
+        public IList<AccountModel> Accounts { get => _accounts; set => _accounts = value; }
 
         #endregion Properties
 
@@ -40,9 +42,8 @@ namespace BankUI.DAL
         public void Load()
         {
             //TODO Логика считывания коллекции. Десериализация json
-            //var clientsList = ClientsDBModel.DeserializationJSON<ClientModel>();
             _clients.Clear();
-            ClientsDBModel.DeserializationJSON<ClientModel>();
+            ClientsDBModel.FillDataBase();
             foreach (var client in ClientsDBModel.Clients)
             {
                 _clients.Add(client);
@@ -51,9 +52,11 @@ namespace BankUI.DAL
 
         public IEnumerable<ClientModel> GetClients(bool isTestData = false)
         {
-            //return isTestData ? GetTestClientsData() : _clients;
             if (isTestData == true)
+            {
                 ClientsDBModel.Clients.Clear();
+                AccountsDBModel.Accounts.Clear();
+            }
             return isTestData ? GetTestClientsData() : _clients;
         }
 

@@ -68,7 +68,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public new string PhoneNumber
+        public string PhoneNumber
         {
             get => _person.PhoneNumber;
             set

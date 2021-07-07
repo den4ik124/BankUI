@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DAL\DataProcessor.cs" />
     <Compile Include="Interfaces\IClient.cs" />
     <Compile Include="Interfaces\IDataSaver.cs" />
     <Compile Include="Interfaces\IDataProcessor.cs" />

@@ -1,7 +1,6 @@
 ﻿using BankUI.DAL;
 using BankUI.Interfaces;
 using BankUI.Models;
-using BankUI.Views;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -25,7 +24,7 @@ namespace BankUI.ViewModels
         private IList<CompanyViewModel> _companies;
         private ClientViewModel _concreteClient;
 
-        private AccountsDBModel _accountsDB;
+        //private AccountsDBModel _accountsDB;
         //private IList<Account> _accounts;
 
         private RelayCommand _showTestClients;
@@ -130,6 +129,14 @@ namespace BankUI.ViewModels
                 _concreteClient = value;
                 OnPropertyChanged();
             }
+        }
+
+        public IList<AccountModel> AccountsList
+        {
+            //TODO Можно ли так увязывать Model u ViewModel ?
+            get => AccountsDBModel.Accounts;
+
+            set => OnPropertyChanged();
         }
 
         public bool IsVIPSeleceted

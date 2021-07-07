@@ -11,7 +11,7 @@ namespace BankUI.ViewModels
         #region Fields
 
         private readonly ClientModel _client;
-        private readonly PersonModel _person;
+        //private readonly PersonModel _person;
         //private ClientModel _concreteClient;
         //private bool _isPerson = true;
 
@@ -72,41 +72,43 @@ namespace BankUI.ViewModels
             }
         }
 
-        public string SurName
-        {
-            get => _person.SurName;
-            set
-            {
-                if (_person.SurName == value)
-                    return;
-                _person.SurName = value;
-                OnPropertyChanged();
-            }
-        }
+        #region useless code
 
-        public string PhoneNumber
-        {
-            get => _person.PhoneNumber;
-            set
-            {
-                if (_person.PhoneNumber == value)
-                    return;
-                _person.PhoneNumber = value;
-                OnPropertyChanged();
-            }
-        }
+        //public string SurName
+        //{
+        //    get => _person.SurName;
+        //    set
+        //    {
+        //        if (_person.SurName == value)
+        //            return;
+        //        _person.SurName = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
-        public string PersonalCode
-        {
-            get => _person.PersonalCode;
-            set
-            {
-                if (_person.PersonalCode == value)
-                    return;
-                _person.PersonalCode = value;
-                OnPropertyChanged();
-            }
-        }
+        //public string PhoneNumber
+        //{
+        //    get => _person.PhoneNumber;
+        //    set
+        //    {
+        //        if (_person.PhoneNumber == value)
+        //            return;
+        //        _person.PhoneNumber = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
+        //public string PersonalCode
+        //{
+        //    get => _person.PersonalCode;
+        //    set
+        //    {
+        //        if (_person.PersonalCode == value)
+        //            return;
+        //        _person.PersonalCode = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         //TODO добавить _company
         //public string CompanyCode
@@ -120,6 +122,8 @@ namespace BankUI.ViewModels
         //        OnPropertyChanged();
         //    }
         //}
+
+        #endregion useless code
 
         public virtual bool IsVIP
         {
