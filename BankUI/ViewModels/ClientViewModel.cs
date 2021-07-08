@@ -1,7 +1,10 @@
-﻿using BankUI.Models;
+﻿using BankUI.DAL;
+using BankUI.Interfaces;
+using BankUI.Models;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Media;
 
 namespace BankUI.ViewModels
@@ -10,7 +13,9 @@ namespace BankUI.ViewModels
     {
         #region Fields
 
+        private Window _currentDialogWindow;
         private readonly ClientModel _client;
+        private IDialogService _dialogService;
         //private readonly PersonModel _person;
         //private ClientModel _concreteClient;
         //private bool _isPerson = true;
@@ -18,6 +23,8 @@ namespace BankUI.ViewModels
         //public Color _backgroundColor;
 
         private RelayCommand _addNewClient;
+
+        private RelayCommand _closeWindowCommand;
 
         #endregion Fields
 
@@ -29,14 +36,20 @@ namespace BankUI.ViewModels
 
         #region Constructors
 
+        public ClientViewModel()
+        {
+        }
+
+        public ClientViewModel(Window openedWindow)
+        {
+            _currentDialogWindow = openedWindow;
+            _dialogService = new DialogService();
+            //_person = new PersonModel();// ?? throw new ArgumentNullException(nameof(client));
+        }
+
         public ClientViewModel(ClientModel client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
-        }
-
-        public ClientViewModel()
-        {
-            //_person = new PersonModel();// ?? throw new ArgumentNullException(nameof(client));
         }
 
         #endregion Constructors
@@ -62,7 +75,7 @@ namespace BankUI.ViewModels
         public virtual string Name
         {
             //get => _client.Name;
-            get => _client.Name;
+            get => _client?.Name;
             set
             {
                 if (_client.Name == value)
@@ -125,15 +138,16 @@ namespace BankUI.ViewModels
 
         #endregion useless code
 
-        public virtual bool IsVIP
+        public virtual bool? IsVIP
         {
-            get => _client.IsVIP;
+            get => _client?.IsVIP;
             set
             {
-                if (_client.IsVIP == value)
+                if (_client?.IsVIP == value)
                     return;
 
-                _client.IsVIP = value;
+                //TODO креш при переключении CheckBox isVIP
+                _client.IsVIP = (bool)value;
                 OnPropertyChanged();
             }
         }
@@ -145,7 +159,7 @@ namespace BankUI.ViewModels
         {
             get
             {
-                return IsVIP ? "LemonChiffon" : "White";
+                return (bool)IsVIP ? "LemonChiffon" : "White";
             }
         }
 
@@ -164,6 +178,20 @@ namespace BankUI.ViewModels
         public RelayCommand AddNewClient => (_addNewClient) ??
             (_addNewClient = new RelayCommand(NewClientAdd, CanAddNewClient));
 
+        public RelayCommand CloseWindowCommand => (_closeWindowCommand) ??
+            (_closeWindowCommand = new RelayCommand(CloseWindow, CanAddNewClient));
+
+        public Window CurrentDialogWindow { get => _currentDialogWindow; set => _currentDialogWindow = value; }
+
+        #endregion Properties
+
+        #region Methods
+
+        private void CloseWindow()
+        {
+            _dialogService.CloseWindow(CurrentDialogWindow);
+        }
+
         private void NewClientAdd()
         {
             //    if (IsPerson)
@@ -177,10 +205,6 @@ namespace BankUI.ViewModels
         {
             return true;
         }
-
-        #endregion Properties
-
-        #region Methods
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {

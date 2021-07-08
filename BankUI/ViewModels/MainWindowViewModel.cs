@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using BankUI.Views;
 
 namespace BankUI.ViewModels
 {
@@ -37,6 +38,7 @@ namespace BankUI.ViewModels
         private RelayCommand _showVIPOnly;
         private RelayCommand _deleteClientCommand;
         private RelayCommand _sendMoneyCommand;
+        private RelayCommand _openWindowCommand;
 
         private bool _isVIPSeleceted;
 
@@ -99,6 +101,15 @@ namespace BankUI.ViewModels
 
         public RelayCommand SendMoneyCommand => _sendMoneyCommand ??
             (_sendMoneyCommand = new RelayCommand(SendMoney, CanSend));
+
+        public RelayCommand OpenWindowCommand => _openWindowCommand ??
+            (_openWindowCommand = new RelayCommand(OpenWindow, CanShow));
+
+        private void OpenWindow()
+        {
+            NewClientsView newClientWindow = new NewClientsView();
+            _dialogService.ShowDialog(newClientWindow);
+        }
 
         public decimal TransactionValue
         {
@@ -216,11 +227,11 @@ namespace BankUI.ViewModels
 
             foreach (var client in ClientsDBModel.Clients)
             {
-                if (client.Id == SenderAccount.ClientData.Id)
+                if (client.Id == SenderAccount.HostId)
                 {
                     indexClientDB_sender = ClientsDBModel.Clients.IndexOf(client);
                 }
-                else if (client.Id == ReceiverAccount.ClientData.Id)
+                else if (client.Id == ReceiverAccount.HostId)
                 {
                     indexClientDB_receiver = ClientsDBModel.Clients.IndexOf(client);
                 }

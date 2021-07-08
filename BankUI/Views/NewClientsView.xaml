@@ -10,9 +10,9 @@
     Height="450"
     d:DataContext="{d:DesignInstance local:ClientViewModel}"
     mc:Ignorable="d">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <local:ClientViewModel />
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <Style TargetType="Button">
@@ -136,6 +136,7 @@
         <Button
             Grid.Row="999"
             Grid.Column="1"
-            Content="Отмена" />
+            Content="Отмена"
+            Command="{Binding CloseWindowCommand}" />
     </Grid>
 </Window>

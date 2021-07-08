@@ -15,7 +15,9 @@ namespace BankUI.Models
         private decimal _balance;
         private DateTime _dateOfCreation;
 
-        private ClientModel _clientData;
+        //private ClientModel _clientData;
+        private int _hostID;
+
         private DepositModel _deposit;
 
         #endregion Fields
@@ -30,7 +32,8 @@ namespace BankUI.Models
             _id = "_A" + client.Id.ToString() + $"|{_nextId++}";
             this._balance = balance;
             DateOfCreation = DateTime.Now;
-            _clientData = client;
+            //_clientData = client;
+            _hostID = client.Id; //добавлена как замена _clientData = client; из-за проблемы с десериализацией
             _deposit = null;
             //TODO добавить кредитование
             //_credit = null;
@@ -43,7 +46,9 @@ namespace BankUI.Models
         public string Id { get => _id; set => _id = value; }
         public decimal Balance { get => _balance; set => _balance = value; }
         public DateTime DateOfCreation { get => _dateOfCreation; set => _dateOfCreation = value; }
-        public ClientModel ClientData { get => _clientData; set => _clientData = value; }
+
+        //public ClientModel ClientData { get => _clientData; set => _clientData = value; }
+        public int HostId { get => _hostID; set => _hostID = value; }
 
         public DepositModel Deposit
         {

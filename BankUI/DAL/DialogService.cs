@@ -32,5 +32,15 @@ namespace BankUI.DAL
         {
             MessageBox.Show(message, caption, button, icon);
         }
+
+        public void ShowDialog(Window dialogWindow)
+        {
+            dialogWindow?.ShowDialog();
+        }
+
+        public void CloseWindow(Window dialogWindow)
+        {
+            dialogWindow?.Close();
+        }
     }
 }

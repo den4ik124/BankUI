@@ -55,15 +55,15 @@ namespace BankUI.ViewModels
             }
         }
 
-        public override bool IsVIP
+        public override bool? IsVIP
         {
-            get => _person.IsVIP;
+            get => _person?.IsVIP;
             set
             {
-                if (_person.IsVIP == value)
+                if (_person?.IsVIP == value)
                     return;
 
-                _person.IsVIP = value;
+                _person.IsVIP = (bool)value;
                 OnPropertyChanged();
             }
         }

@@ -76,6 +76,12 @@
                 Content="VIP only"
                 IsChecked="{Binding IsVIPSeleceted}"
                 IsEnabled="True" />
+
+            <Button
+                Width="Auto"
+                Margin="5"
+                Command="{Binding OpenWindowCommand}"
+                Content="+ Open new window" />
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
