@@ -16,6 +16,9 @@ namespace BankUI.ViewModels
         private Window _currentDialogWindow;
         private readonly ClientModel _client;
         private IDialogService _dialogService;
+
+        private bool _isVIP;
+
         //private readonly PersonModel _person;
         //private ClientModel _concreteClient;
         //private bool _isPerson = true;
@@ -138,16 +141,18 @@ namespace BankUI.ViewModels
 
         #endregion useless code
 
-        public virtual bool? IsVIP
+        //public bool IsVIPSelected { get; set; } = false;
+
+        public virtual bool IsVIP
         {
-            get => _client?.IsVIP;
+            get => _isVIP;
             set
             {
-                if (_client?.IsVIP == value)
+                if (_isVIP == value)
                     return;
 
                 //TODO креш при переключении CheckBox isVIP
-                _client.IsVIP = (bool)value;
+                _isVIP = value;
                 OnPropertyChanged();
             }
         }
