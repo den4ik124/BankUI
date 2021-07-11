@@ -56,66 +56,66 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Имя" />
         <TextBox
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
             VerticalAlignment="Center"
             Text="{Binding Name}" />
 
         <TextBlock
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Фамилия"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"
             VerticalAlignment="Center"
             Text="{Binding SurName}"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBlock
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="ИНН"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="1"
             VerticalAlignment="Center"
             Text="{Binding PersonalCode}"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBlock
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Код фирмы"
             Visibility="{Binding ElementName=rbtnCompany, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="1"
             VerticalAlignment="Center"
             Text="тест Код фирмы"
             Visibility="{Binding ElementName=rbtnCompany, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBlock
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Номер телефона"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="1"
             VerticalAlignment="Center"
             Text="{Binding PhoneNumber}"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <StackPanel
-            Grid.Row="4"
+            Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             HorizontalAlignment="Center"
@@ -136,7 +136,7 @@
         <Button
             Grid.Row="999"
             Grid.Column="1"
-            Content="Отмена"
-            Command="{Binding CloseWindowCommand}" />
+            Command="{Binding CloseWindowCommand}"
+            Content="Отмена" />
     </Grid>
 </Window>

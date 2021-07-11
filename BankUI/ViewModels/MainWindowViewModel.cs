@@ -20,6 +20,7 @@ namespace BankUI.ViewModels
         private IDialogService _dialogService;
 
         private IList<ClientViewModel> _clients;
+        private IList<ClientViewModel> _dataToShow;
 
         private IList<PersonViewModel> _persons;
         private IList<CompanyViewModel> _companies;
@@ -35,12 +36,18 @@ namespace BankUI.ViewModels
         private RelayCommand _showTestClients;
         private RelayCommand _addNewClient;
         private RelayCommand _addNewAccount;
+
         private RelayCommand _showVIPOnly;
+        private RelayCommand _showPersonsOnlyCommand;
+        private RelayCommand _showCompaniesOnlyCommand;
+
         private RelayCommand _deleteClientCommand;
         private RelayCommand _sendMoneyCommand;
         private RelayCommand _openWindowCommand;
 
         private bool _isVIPSeleceted;
+        private bool _isPersonsSelected = true;
+        private bool _isCompaniesSelected = false;
 
         private static Random random = new Random();
 
@@ -68,7 +75,11 @@ namespace BankUI.ViewModels
             _companies = new ObservableCollection<CompanyViewModel>();
             Companies = CollectionViewSource.GetDefaultView(_companies);
 
+            _dataToShow = new ObservableCollection<ClientViewModel>();
+            DataToShow = CollectionViewSource.GetDefaultView(_dataToShow);
+
             LoadClients();
+
             //_dialogService.OpenFileDialog();
             //ClientsDBModel.Path = _dialogService.FilePath;
 
@@ -96,6 +107,12 @@ namespace BankUI.ViewModels
         public RelayCommand ShowVIPOnlyCommand => _showVIPOnly ??
             (_showVIPOnly = new RelayCommand(ShowVIPOnly, CanVIPShow));
 
+        public RelayCommand ShowPersonsOnlyCommand => _showPersonsOnlyCommand ??
+           (_showPersonsOnlyCommand = new RelayCommand(ShowPersonsOnly, CanVIPShow));
+
+        public RelayCommand ShowCompaniesOnlyCommand => _showCompaniesOnlyCommand ??
+           (_showCompaniesOnlyCommand = new RelayCommand(ShowCompaniesOnly, CanVIPShow));
+
         public RelayCommand DeleteClientCommand => _deleteClientCommand ??
             (_deleteClientCommand = new RelayCommand(DeleteClient, CanShow));
 
@@ -109,6 +126,7 @@ namespace BankUI.ViewModels
         {
             NewClientsView newClientWindow = new NewClientsView();
             _dialogService.ShowDialog(newClientWindow);
+            UpdateClients();
         }
 
         public decimal TransactionValue
@@ -128,6 +146,7 @@ namespace BankUI.ViewModels
         public ICollectionView Clients { get; }
         public ICollectionView Persons { get; }
         public ICollectionView Companies { get; }
+        public ICollectionView DataToShow { get; }
 
         public ClientViewModel ConcreteClient
         {
@@ -135,7 +154,7 @@ namespace BankUI.ViewModels
 
             set
             {
-                if (_concreteClient == value)
+                if (_concreteClient == value || value == null)
                     return;
                 _concreteClient = value;
                 OnPropertyChanged();
@@ -186,6 +205,31 @@ namespace BankUI.ViewModels
             }
         }
 
+        public bool IsPersonsSelected
+        {
+            get => _isPersonsSelected;
+            set
+            {
+                if (_isPersonsSelected == value)
+                    return;
+                _isPersonsSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsCompaniesSelected
+        {
+            get => _isCompaniesSelected;
+            set
+            {
+                if (_isCompaniesSelected == value)
+                    return;
+
+                _isCompaniesSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion Properties
 
         #region Methods
@@ -193,6 +237,8 @@ namespace BankUI.ViewModels
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            //UpdateClients();
+            DataCollectionsRefresh();
         }
 
         private void DataCollectionsRefresh()
@@ -200,6 +246,7 @@ namespace BankUI.ViewModels
             Persons.Refresh();
             Clients.Refresh();
             Companies.Refresh();
+            DataToShow.Refresh();
         }
 
         private void DataCollectionsClear()
@@ -207,6 +254,7 @@ namespace BankUI.ViewModels
             _clients.Clear();
             _persons.Clear();
             _companies.Clear();
+            _dataToShow.Clear();
         }
 
         private bool CanSend()
@@ -220,7 +268,7 @@ namespace BankUI.ViewModels
             if (SenderAccount.Balance < TransactionValue)
                 return;
 
-            AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, TransactionValue);
+            AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, new Transaction(SenderAccount, ReceiverAccount, TransactionValue));
 
             int indexClientDB_sender = 0;
             int indexClientDB_receiver = 0;
@@ -315,10 +363,18 @@ namespace BankUI.ViewModels
 
                 foreach (var client in clients)
                     _clients.Add(new ClientViewModel(client));
-                foreach (var person in persons)
-                    _persons.Add(new PersonViewModel(person));
-                foreach (var company in companies)
-                    _companies.Add(new CompanyViewModel(company));
+                if (IsPersonsSelected)
+                    foreach (var person in persons)
+                    {
+                        _dataToShow.Add(new PersonViewModel(person));
+                        _persons.Add(new PersonViewModel(person));
+                    }
+                else if (IsCompaniesSelected)
+                    foreach (var company in companies)
+                    {
+                        _dataToShow.Add(new CompanyViewModel(company));
+                        _companies.Add(new CompanyViewModel(company));
+                    }
 
                 DataCollectionsRefresh();
             }
@@ -333,6 +389,48 @@ namespace BankUI.ViewModels
             _dataProvider.GetClients().Where(client => client.Id == ConcreteClient.Id).FirstOrDefault()?.AddNewAccount();
             UpdateClients();
             // ConcreteClient.AddNewAccount(random.Next(0, 1000));
+        }
+
+        private void ShowCompaniesOnly()
+        {
+            UpdateClients();
+            //if (_isCompaniesSelected == true)
+            //{
+            //    DataCollectionsClear();
+            //    var clients = _dataProvider.GetClients();
+
+            //    var companies = clients.OfType<CompanyModel>();
+
+            //    foreach (var client in clients)
+            //        _clients.Add(new ClientViewModel(client));
+
+            //    foreach (var company in companies)
+            //        _dataToShow.Add(new CompanyViewModel(company));
+
+            //    DataCollectionsRefresh();
+            //}
+            //else
+            //    UpdateClients();
+        }
+
+        private void ShowPersonsOnly()
+        {
+            //if (_isPersonsSelected == true)
+            //{
+            //    DataCollectionsClear();
+            //    var clients = _dataProvider.GetClients();
+
+            //    var persons = clients.OfType<PersonModel>();
+
+            //    foreach (var person in persons)
+            //        _clients.Add(new ClientViewModel(person));
+            //    foreach (var person in persons)
+            //        _dataToShow.Add(new PersonViewModel(person));
+
+            //    DataCollectionsRefresh();
+            //}
+            //else
+            UpdateClients();
         }
 
         private void AddNewClientShow()
@@ -380,19 +478,26 @@ namespace BankUI.ViewModels
 
         private void LoadClients()
         {
-            DataCollectionsClear();
-            IEnumerable<ClientModel> clients = _dataProvider.GetClients();
-            var persons = clients.OfType<PersonModel>();
-            var companies = clients.OfType<CompanyModel>();
+            //DataCollectionsClear();
+            //IEnumerable<ClientModel> clients = _dataProvider.GetClients();
+            //var persons = clients.OfType<PersonModel>();
+            //var companies = clients.OfType<CompanyModel>();
 
-            foreach (var client in clients)
-                _clients.Add(new ClientViewModel(client));
-            foreach (var person in persons)
-                _persons.Add(new PersonViewModel(person));
-            foreach (var company in companies)
-                _companies.Add(new CompanyViewModel(company));
+            //foreach (var client in clients)
+            //{
+            //    _clients.Add(new ClientViewModel(client));
+            //    _dataToShow.Add(new ClientViewModel(client));
+            //}
+            //foreach (var person in persons)
+            //    _persons.Add(new PersonViewModel(person));
+            //foreach (var company in companies)
+            //    _companies.Add(new CompanyViewModel(company));
 
-            DataCollectionsRefresh();
+            //IsPersonsSelected = true;
+
+            //DataCollectionsRefresh();
+
+            UpdateClients();
         }
 
         /// <summary>
@@ -403,8 +508,25 @@ namespace BankUI.ViewModels
         {
             DataCollectionsClear();
             IEnumerable<ClientModel> clients = _dataProvider.GetClients(isTestData);
-            var persons = clients.OfType<PersonModel>();
-            var companies = clients.OfType<CompanyModel>();
+            IEnumerable<PersonModel> persons;
+            IEnumerable<CompanyModel> companies;
+            if (IsVIPSeleceted)
+            {
+                persons = clients.OfType<PersonModel>().Where(client => client.IsVIP == true);
+                companies = clients.OfType<CompanyModel>().Where(client => client.IsVIP == true);
+            }
+            else
+            {
+                persons = clients.OfType<PersonModel>();
+                companies = clients.OfType<CompanyModel>();
+            }
+
+            if (IsPersonsSelected)
+                foreach (var person in persons)
+                    _dataToShow.Add(new PersonViewModel(person));
+            else
+                foreach (var company in companies)
+                    _dataToShow.Add(new CompanyViewModel(company));
 
             foreach (var client in clients)
                 _clients.Add(new ClientViewModel(client));

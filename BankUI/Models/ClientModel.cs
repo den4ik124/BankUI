@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace BankUI.Models
 {
@@ -36,7 +37,7 @@ namespace BankUI.Models
             _id = nextId++;
             _name = name;
             _isVIP = isVIP;
-            _accountsList = new List<AccountModel>();
+            _accountsList = new ObservableCollection<AccountModel>();
             for (int i = 0; i < random.Next(5); i++)
             {
                 AddNewAccount(random.Next(1000));

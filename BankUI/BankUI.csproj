@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IDataSaver.cs" />
     <Compile Include="Interfaces\IDataProcessor.cs" />
     <Compile Include="Models\DepositModel.cs" />
+    <Compile Include="Models\Transaction.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\NewClientsViewModel.cs" />
     <Compile Include="ViewModels\NewDepositViewModel.cs" />

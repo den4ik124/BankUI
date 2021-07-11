@@ -28,10 +28,14 @@ namespace BankUI.Models
             _dataProcessor.Serialization(_accounts, FileName);
         }
 
-        public static void MoneyTransfer(AccountModel sender, AccountModel receiver, decimal transactionValue)
+        public static void MoneyTransfer(AccountModel sender, AccountModel receiver, Transaction transaction)
         {
-            _accounts[_accounts.IndexOf(sender)].Balance -= transactionValue;
-            _accounts[_accounts.IndexOf(receiver)].Balance += transactionValue;
+            _accounts[_accounts.IndexOf(sender)].ChangeBalance(transaction);
+            _accounts[_accounts.IndexOf(receiver)].ChangeBalance(transaction);
+            SaveDB();
+
+            //_accounts[_accounts.IndexOf(sender)].Balance -= transactionValue;
+            //_accounts[_accounts.IndexOf(receiver)].Balance += transactionValue;
         }
     }
 }

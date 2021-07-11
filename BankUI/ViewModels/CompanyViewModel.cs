@@ -17,14 +17,35 @@ namespace BankUI.ViewModels
             _companyModel = company as CompanyModel;
         }
 
-        public new string Name => _companyModel.Name;
-        public string CompanyCode => _companyModel.CompanyCode;
+        public override string Name
+        {
+            get => _companyModel.Name;
+            set
+            {
+                if (_companyModel.Name == value)
+                    return;
+                _companyModel.Name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public override string CompanyCode
+        {
+            get => _companyModel.CompanyCode;
+            set
+            {
+                if (_companyModel.CompanyCode == value)
+                    return;
+                _companyModel.CompanyCode = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion Constructors
 
         #region Properties
 
-        public new int Id
+        public override int Id
         {
             get => _companyModel.Id;
             set

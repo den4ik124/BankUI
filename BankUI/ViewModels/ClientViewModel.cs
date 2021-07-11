@@ -14,8 +14,14 @@ namespace BankUI.ViewModels
         #region Fields
 
         private Window _currentDialogWindow;
-        private readonly ClientModel _client;
+        private ClientModel _client;
         private IDialogService _dialogService;
+
+        private string _name;
+        private string _surName;
+        private string _phoneNumber;
+        private string _personalCode;
+        private string _companyCode;
 
         private bool _isVIP;
 
@@ -78,66 +84,66 @@ namespace BankUI.ViewModels
         public virtual string Name
         {
             //get => _client.Name;
-            get => _client?.Name;
+            get => _name;
             set
             {
-                if (_client.Name == value)
+                if (_name == value)
                     return;
-                _client.Name = value;
+                _name = value;
                 OnPropertyChanged();
             }
         }
 
         #region useless code
 
-        //public string SurName
-        //{
-        //    get => _person.SurName;
-        //    set
-        //    {
-        //        if (_person.SurName == value)
-        //            return;
-        //        _person.SurName = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+        public virtual string SurName
+        {
+            get => _surName;
+            set
+            {
+                if (_surName == value)
+                    return;
+                _surName = value;
+                OnPropertyChanged();
+            }
+        }
 
-        //public string PhoneNumber
-        //{
-        //    get => _person.PhoneNumber;
-        //    set
-        //    {
-        //        if (_person.PhoneNumber == value)
-        //            return;
-        //        _person.PhoneNumber = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+        public virtual string PhoneNumber
+        {
+            get => _phoneNumber;
+            set
+            {
+                if (_phoneNumber == value)
+                    return;
+                _phoneNumber = value;
+                OnPropertyChanged();
+            }
+        }
 
-        //public string PersonalCode
-        //{
-        //    get => _person.PersonalCode;
-        //    set
-        //    {
-        //        if (_person.PersonalCode == value)
-        //            return;
-        //        _person.PersonalCode = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+        public virtual string PersonalCode
+        {
+            get => _personalCode;
+            set
+            {
+                if (_personalCode == value)
+                    return;
+                _personalCode = value;
+                OnPropertyChanged();
+            }
+        }
 
         //TODO добавить _company
-        //public string CompanyCode
-        //{
-        //    get => _company.CompanyCode;
-        //    set
-        //    {
-        //        if (_company.CompanyCode == value)
-        //            return;
-        //        _company.CompanyCode = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+        public virtual string CompanyCode
+        {
+            get => _companyCode;// != null ? (_client as CompanyModel).CompanyCode : null;
+            set
+            {
+                if (_companyCode == value)
+                    return;
+                _companyCode = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion useless code
 
@@ -150,8 +156,6 @@ namespace BankUI.ViewModels
             {
                 if (_isVIP == value)
                     return;
-
-                //TODO креш при переключении CheckBox isVIP
                 _isVIP = value;
                 OnPropertyChanged();
             }
@@ -168,17 +172,17 @@ namespace BankUI.ViewModels
             }
         }
 
-        public virtual decimal TotalBalance
-        {
-            get => _client.TotalBalance;
-            set
-            {
-                if (_client.TotalBalance == value)
-                    return;
-                _client.TotalBalance = value;
-                OnPropertyChanged();
-            }
-        }
+        public virtual decimal TotalBalance { get; set; }
+        //{
+        //get => _client.TotalBalance;
+        //set
+        //{
+        //    if (_client.TotalBalance == value)
+        //        return;
+        //    _client.TotalBalance = value;
+        //    OnPropertyChanged();
+        //}
+        //}
 
         public RelayCommand AddNewClient => (_addNewClient) ??
             (_addNewClient = new RelayCommand(NewClientAdd, CanAddNewClient));
@@ -199,11 +203,13 @@ namespace BankUI.ViewModels
 
         private void NewClientAdd()
         {
-            //    if (IsPerson)
-            //        ConcreteClient = new PersonModel(Name, IsVIP, SurName, PersonalCode, PhoneNumber);
-            //    else
-            //        ConcreteClient = new CompanyModel(Name, CompanyCode: "some test code", true);//TODO добавить обработку нового клиента
-            //    CanBeClosed = true;
+            ClientModel concreteClient;
+            if (IsPerson)
+                concreteClient = new PersonModel(Name, IsVIP, SurName, PersonalCode, PhoneNumber);
+            else
+                concreteClient = new CompanyModel(Name, CompanyCode, IsVIP);
+            ClientsDBModel.AddClient(concreteClient);
+            _dialogService.CloseWindow(_currentDialogWindow);
         }
 
         private bool CanAddNewClient()

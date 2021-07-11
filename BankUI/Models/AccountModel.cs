@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -14,6 +15,7 @@ namespace BankUI.Models
         private static int _nextId = 1;
         private decimal _balance;
         private DateTime _dateOfCreation;
+        private IList<Transaction> _transactionsList;
 
         //private ClientModel _clientData;
         private int _hostID;
@@ -35,6 +37,7 @@ namespace BankUI.Models
             //_clientData = client;
             _hostID = client.Id; //добавлена как замена _clientData = client; из-за проблемы с десериализацией
             _deposit = null;
+            _transactionsList = new List<Transaction>();
             //TODO добавить кредитование
             //_credit = null;
         }
@@ -61,6 +64,12 @@ namespace BankUI.Models
             }
         }
 
+        public IList<Transaction> TransactionsList
+        {
+            get => _transactionsList;
+            set => _transactionsList = value;
+        }
+
         #region Events
 
         //public event PropertyChangedEventHandler PropertyChanged;
@@ -71,9 +80,13 @@ namespace BankUI.Models
 
         #region Methods
 
-        public void ChangeBalance(double value)
+        public void ChangeBalance(Transaction transaction)
         {
-            _balance += (decimal)value;
+            if (_hostID == transaction.ReceiverID)
+                _balance += transaction.Value;
+            else
+                _balance -= transaction.Value;
+            _transactionsList.Add(transaction);
         }
 
         public void OpenDeposit(decimal startBalance, int duration, double interestRateYear)

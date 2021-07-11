@@ -47,7 +47,7 @@ namespace BankUI.DAL
             {
                 if (!File.Exists(path))
                 {
-                    _dialogService.MessageBoxShow("File does not exist!", "Warning!");
+                    //_dialogService.MessageBoxShow("File does not exist!", "Warning!");
                     return null;
                 }
                 else

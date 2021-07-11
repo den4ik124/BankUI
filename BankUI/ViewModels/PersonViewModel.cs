@@ -68,7 +68,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public string PhoneNumber
+        public override string PhoneNumber
         {
             get => _person.PhoneNumber;
             set

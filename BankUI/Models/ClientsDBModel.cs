@@ -1,6 +1,7 @@
 ﻿using BankUI.DAL;
 using BankUI.Interfaces;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace BankUI.Models
@@ -10,9 +11,9 @@ namespace BankUI.Models
         #region Fields
 
         private static readonly string defaultFileName = "ClientsDataBase.json";
-        private static IList<ClientModel> _clients = new List<ClientModel>();
-        private static IList<PersonModel> _persons = new List<PersonModel>();
-        private static IList<CompanyModel> _companies = new List<CompanyModel>();
+        private static IList<ClientModel> _clients = new ObservableCollection<ClientModel>();
+        private static IList<PersonModel> _persons = new ObservableCollection<PersonModel>();
+        private static IList<CompanyModel> _companies = new ObservableCollection<CompanyModel>();
         private static IDataProcessor _dataProcessor = new DataProcessor();
         //private IDialogService _dialogService;
 
@@ -29,7 +30,7 @@ namespace BankUI.Models
                 UpdateClients();
                 return _clients;
             }
-            set => _clients = value;
+            //set => _clients = value;
         }
 
         public static IList<PersonModel> Persons
@@ -82,57 +83,22 @@ namespace BankUI.Models
             foreach (var client in deserializedClients)
             {
                 _clients.Add(client);
-                //TEST
-                //==============================================
-                if (client.GetType() == typeof(PersonModel))
-                    foreach (var account in client.AccountsList)
-                    {
-                        //if (!AccountsDBModel.Accounts.Contains(account))
+                foreach (var account in client.AccountsList)
+                    if (!AccountsDBModel.Accounts.Contains(account))
                         AccountsDBModel.AddAccount(account);
-                    }
-                //==============================================
+
+                ////TEST
+                ////==============================================
+                //if (client.GetType() == typeof(PersonModel))
+                //    foreach (var account in client.AccountsList)
+                //    {
+                //        //if (!AccountsDBModel.Accounts.Contains(account))
+                //        AccountsDBModel.AddAccount(account);
+                //    }
+                ////==============================================
             }
         }
 
-        //private static void Serialization<T>(T toSerializeObject)
-        //{
-        //    string json = JsonConvert.SerializeObject(toSerializeObject, jsonSettings);
-        //    if (Path == defaultFileName)
-        //        Path = Environment.CurrentDirectory + $"\\{defaultFileName}";
-
-        //    File.WriteAllText(Path, json);
-        //    Debug.WriteLine($"\nДанные записаны в файл:\n{Path}\n");
-        //}
-
-        //public static IList<T> DeserializationJSON<T>(string path = "")
-        //public static void DeserializationJSON<T>(string path = "")
-        //{
-        //    try
-        //    {
-        //        if (!File.Exists(Path))
-        //        {
-        //            //MessageBox.Show("File does not exist!", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //            return;
-        //        }
-        //        else
-        //        {
-        //            string json = File.ReadAllText(Path);
-        //            IList<T> result = JsonConvert.DeserializeObject<IList<T>>(json, jsonSettings);
-        //            foreach (T client in result)
-        //            {
-        //                _clients.Add(client as ClientModel);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Debug.WriteLine(new string('=', 50) + "\n" + e.Message + "\n" + new string('=', 50));
-        //        MessageBox.Show(e.Message + "\n" + e.Source + "\n" + e.TargetSite, "Load canceled", MessageBoxButton.OK, MessageBoxImage.Stop);
-        //        return;
-        //    }
-        //}
-
-        //private static void UpdateClients()
         public static void UpdateClients()
         {
             _persons.Clear();
