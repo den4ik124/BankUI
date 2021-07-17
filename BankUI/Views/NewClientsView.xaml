@@ -41,14 +41,14 @@
             <Setter Property="FontFamily" Value="OpenSans" />
         </Style>
     </Window.Resources>
-    <Grid ShowGridLines="True">
+    <Grid ShowGridLines="True" Height="Auto">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition  Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -59,6 +59,7 @@
             Grid.Row="1"
             Grid.Column="0"
             VerticalAlignment="Center"
+            Margin="0,10,0,10"
             Text="Имя" />
         <TextBox
             Grid.Row="1"
@@ -70,6 +71,7 @@
             Grid.Row="2"
             Grid.Column="0"
             VerticalAlignment="Center"
+            Margin="0,10,0,10"
             Text="Фамилия"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox
@@ -82,6 +84,7 @@
             Grid.Row="3"
             Grid.Column="0"
             VerticalAlignment="Center"
+            Margin="0,10,0,10"
             Text="ИНН"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox
@@ -93,6 +96,7 @@
         <TextBlock
             Grid.Row="3"
             Grid.Column="0"
+            Margin="0,10,0,10"
             VerticalAlignment="Center"
             Text="Код фирмы"
             Visibility="{Binding ElementName=rbtnCompany, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
@@ -105,6 +109,7 @@
         <TextBlock
             Grid.Row="4"
             Grid.Column="0"
+            Margin="0,10,0,10"
             VerticalAlignment="Center"
             Text="Номер телефона"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
@@ -131,11 +136,13 @@
         <Button
             Grid.Row="999"
             Grid.Column="0"
+            Height="Auto"
             Command="{Binding AddNewClient}"
             Content="Открыть счет" />
         <Button
             Grid.Row="999"
             Grid.Column="1"
+            Height="Auto"
             Command="{Binding CloseWindowCommand}"
             Content="Отмена" />
     </Grid>

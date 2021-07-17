@@ -44,12 +44,10 @@ namespace BankUI.DAL
         public void Load()
         {
             //TODO Логика считывания коллекции. Десериализация json
-            _clients.Clear();
             ClientsDBModel.FillDataBase();
+            _clients.Clear();
             foreach (var client in ClientsDBModel.Clients)
-            {
                 _clients.Add(client);
-            }
         }
 
         public IEnumerable<ClientModel> GetClients(bool isTestData = false)
@@ -59,6 +57,12 @@ namespace BankUI.DAL
                 ClientsDBModel.Clients.Clear();
                 AccountsDBModel.Accounts.Clear();
             }
+            // test ---------------
+            _clients.Clear();
+            foreach (var client in ClientsDBModel.Clients)
+                _clients.Add(client);
+            // test ---------------
+
             return isTestData ? GetTestClientsData() : _clients;
         }
 
@@ -75,18 +79,21 @@ namespace BankUI.DAL
 
         public void DeleteClient(ClientViewModel clientVM)
         {
-            int index = -1;
+            //int index = -1;
             foreach (var client in ClientsDBModel.Clients)
             {
                 if (client.Id == clientVM.Id)
                 {
-                    index = ClientsDBModel.Clients.IndexOf(client);
+                    //index = ClientsDBModel.Clients.IndexOf(client);
+                    ClientsDBModel.RemoveClient(client);
                     break;
                 }
             }
-            ClientsDBModel.Clients.RemoveAt(index);
+            _clients.Clear();
+            foreach (var client in ClientsDBModel.Clients)
+                _clients.Add(client);
+            // ClientsDBModel.Clients.RemoveAt(index);
             //ClientsDBModel.Clients.Remove(client);
-            _clients = ClientsDBModel.Clients;
             //return _clients;
         }
 

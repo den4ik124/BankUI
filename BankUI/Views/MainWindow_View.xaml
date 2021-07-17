@@ -9,10 +9,14 @@
     Width="1200"
     Height="450"
     d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Unloaded" />
+    </Window.Triggers>
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -54,25 +58,33 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="50" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <!--<ToggleButton Grid.Row="0" Margin="5" Width="Auto" Content="Clients / VIP">
         </ToggleButton>-->
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button
-                Width="Auto"
-                Margin="5"
-                Command="{Binding ShowTestClients}"
-                Content="Test Clients" />
-            <Button
-                Width="Auto"
-                Margin="5"
-                Command="{Binding AddNewClient}"
-                Content="+ Add new client" />
+        <StackPanel
+            Grid.Row="0"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+            <GroupBox Header="Tests">
+                <StackPanel Height="Auto" Orientation="Horizontal">
+                    <Button
+                        Width="Auto"
+                        Margin="5"
+                        Command="{Binding ShowTestClients}"
+                        Content="Test Clients" />
+                    <Button
+                        Width="Auto"
+                        Margin="5"
+                        Command="{Binding AddNewClient}"
+                        Content="+ Add TEST client" />
+                </StackPanel>
+            </GroupBox>
             <RadioButton
                 Width="Auto"
                 Margin="5"
+                VerticalAlignment="Center"
                 Command="{Binding ShowVIPOnlyCommand}"
                 Content="VIP only"
                 IsChecked="{Binding IsVIPSeleceted}"
@@ -80,9 +92,10 @@
 
             <Button
                 Width="Auto"
+                Height="25"
                 Margin="5"
                 Command="{Binding OpenWindowCommand}"
-                Content="+ Open new window" />
+                Content="+ Add client" />
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -121,14 +134,17 @@
                     x:Name="dgClients"
                     Grid.Row="1"
                     Margin="5"
-
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
                     IsSynchronizedWithCurrentItem="False"
                     ItemsSource="{Binding DataToShow}"
                     SelectedItem="{Binding ConcreteClient, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <!--  SelectedItem="{Binding DataContext.ConcreteClient, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">  -->
-
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="{Binding ShowFullInfoCommand}" Header="Full info" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
                     <DataGrid.InputBindings>
                         <KeyBinding Key="Delete" Command="{Binding DeleteClientCommand}" />
                         <KeyBinding Key="DbeEnterWordRegisterMode" />
@@ -362,10 +378,22 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button
-                                Height="30"
-                                Command="{Binding AddNewAccount}"
-                                Content="+ Acc" />
+                            <StackPanel Orientation="Horizontal">
+                                <Button
+                                    Width="30"
+                                    Height="20"
+                                    VerticalContentAlignment="Center"
+                                    Command="{Binding AddNewAccount}">
+                                    <TextBlock Text="+" FontSize="20" VerticalAlignment="Center"/>
+                                </Button>
+                                <Button
+                                    Width="30"
+                                    Height="20"
+                                    VerticalContentAlignment="Center"
+                                    Command="{Binding AddNewAccount}">
+                                    <TextBlock Text="-" FontSize="20" VerticalAlignment="Center"/>
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
                         <TextBlock
                             Grid.Row="5"

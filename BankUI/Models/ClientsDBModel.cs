@@ -25,32 +25,32 @@ namespace BankUI.Models
 
         public static IList<ClientModel> Clients
         {
-            get
+            get => _clients;
+            set
             {
+                _clients = value;
                 UpdateClients();
-                return _clients;
             }
-            //set => _clients = value;
         }
 
         public static IList<PersonModel> Persons
         {
-            get
+            get => _persons;
+            set
             {
+                _persons = value;
                 UpdateClients();
-                return _persons;
             }
-            set => _persons = value;
         }
 
         public static IList<CompanyModel> Companies
         {
-            get
+            get => _companies;
+            set
             {
+                _companies = value;
                 UpdateClients();
-                return _companies;
             }
-            set => _companies = value;
         }
 
         //public static IList<PersonModel> Persons { get => _clients.OfType<PersonModel>().ToList(); set => _persons = value; }
@@ -63,40 +63,37 @@ namespace BankUI.Models
         public static void AddClient(ClientModel client)
         {
             _clients.Add(client);
-            if (client.GetType() == typeof(PersonModel))
-                foreach (var account in client.AccountsList)
-                {
-                    //if (!AccountsDBModel.Accounts.Contains(account))
+            //if (client.GetType() == typeof(PersonModel))
+            foreach (var account in client.AccountsList)
+            {
+                if (!AccountsDBModel.Accounts.Contains(account))
                     AccountsDBModel.AddAccount(account);
-                }
+            }
             UpdateClients();
             //Serialization(_clients);
+        }
+
+        public static void RemoveClient(ClientModel client)
+        {
+            Clients.Remove(client);
+            UpdateClients();
         }
 
         public static void FillDataBase()
         {
             _clients.Clear();
-            AccountsDBModel.Accounts.Clear();
             var deserializedClients = _dataProcessor.DeserializationJSON<ClientModel>();
             if (deserializedClients == null)
                 return;
+            AccountsDBModel.Accounts.Clear();
             foreach (var client in deserializedClients)
             {
                 _clients.Add(client);
                 foreach (var account in client.AccountsList)
                     if (!AccountsDBModel.Accounts.Contains(account))
                         AccountsDBModel.AddAccount(account);
-
-                ////TEST
-                ////==============================================
-                //if (client.GetType() == typeof(PersonModel))
-                //    foreach (var account in client.AccountsList)
-                //    {
-                //        //if (!AccountsDBModel.Accounts.Contains(account))
-                //        AccountsDBModel.AddAccount(account);
-                //    }
-                ////==============================================
             }
+            UpdateClients();
         }
 
         public static void UpdateClients()

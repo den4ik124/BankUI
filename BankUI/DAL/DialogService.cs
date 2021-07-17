@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace BankUI.DAL
 {
-    internal class DialogService : IDialogService
+    public class DialogService : IDialogService
     {
         public string FilePath { get; set; }
 

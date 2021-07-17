@@ -238,7 +238,7 @@ namespace BankUI.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             //UpdateClients();
-            DataCollectionsRefresh();
+            //DataCollectionsRefresh();
         }
 
         private void DataCollectionsRefresh()
@@ -304,42 +304,6 @@ namespace BankUI.ViewModels
                 }
             }
             ClientsDBModel.UpdateClients();
-
-            ////SenderAccount.Balance -= TransactionValue;
-            ////ReceiverAccount.Balance += TransactionValue;
-            //foreach (var acc in AccountsDBModel.Accounts)
-            //{
-            //    if (acc.Id == SenderAccount.Id)
-            //    {
-            //        acc.Balance -= TransactionValue;
-            //        SenderAccount = acc;
-            //    }
-            //    else if (acc.Id == ReceiverAccount.Id)
-            //    {
-            //        acc.Balance += TransactionValue;
-            //        ReceiverAccount = acc;
-            //    }
-
-            //    foreach (var client in ClientsDBModel.Clients)
-            //    {
-            //        if (client.Id == SenderAccount.ClientData.Id)
-            //            foreach (var account in client.AccountsList)
-            //            {
-            //                if (account.Id == SenderAccount.Id)
-            //                {
-            //                    account.Balance = SenderAccount.Balance;
-            //                    continue;
-            //                }
-            //                else if (client.Id == ReceiverAccount.ClientData.Id)
-            //                {
-            //                    account.Balance = ReceiverAccount.Balance;
-            //                    continue;
-            //                }
-            //            }
-            //        client.TotalBalanceCalc();
-            //    }
-            //    //Почему-то UI не обновляется после транзакции
-            //}
         }
 
         private bool CanVIPShow()

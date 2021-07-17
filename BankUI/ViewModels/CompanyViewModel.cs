@@ -1,4 +1,5 @@
 ﻿using BankUI.Models;
+using System.Collections.Generic;
 
 namespace BankUI.ViewModels
 {
@@ -66,6 +67,18 @@ namespace BankUI.ViewModels
                     return;
 
                 _companyModel.IsVIP = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IList<AccountModel> AccountsList
+        {
+            get => _companyModel.AccountsList;
+            set
+            {
+                if (_companyModel.AccountsList == value)
+                    return;
+                _companyModel.AccountsList = value;
                 OnPropertyChanged();
             }
         }
