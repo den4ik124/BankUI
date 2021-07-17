@@ -32,10 +32,17 @@ namespace BankUI.Models
         {
             _accounts[_accounts.IndexOf(sender)].ChangeBalance(transaction);
             _accounts[_accounts.IndexOf(receiver)].ChangeBalance(transaction);
+
             SaveDB();
 
             //_accounts[_accounts.IndexOf(sender)].Balance -= transactionValue;
             //_accounts[_accounts.IndexOf(receiver)].Balance += transactionValue;
+        }
+
+        internal static void Remove(AccountModel acc)
+        {
+            Accounts.Remove(acc);
+            SaveDB();
         }
     }
 }

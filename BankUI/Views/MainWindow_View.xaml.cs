@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BankUI.Models;
+using System.Windows;
 
 namespace BankUI.Views
 {
@@ -10,6 +11,12 @@ namespace BankUI.Views
         public MainWindow_View()
         {
             InitializeComponent();
+        }
+
+        //TODO ПОДУМАТЬ КАК ВТУЛИТЬ СОБЫТИЕ "закрытие окна" В MVVM !!!
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            ClientsDBModel.UpdateClients();
         }
     }
 }

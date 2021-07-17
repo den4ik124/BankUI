@@ -133,7 +133,6 @@ namespace BankUI.ViewModels
             }
         }
 
-        //TODO добавить _company
         public virtual string CompanyCode
         {
             get => _companyCode;// != null ? (_client as CompanyModel).CompanyCode : null;

@@ -9,6 +9,7 @@
     Width="1200"
     Height="450"
     d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
+    Closed="Window_Closed"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.DataContext>
@@ -368,7 +369,8 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 ItemsSource="{Binding ElementName=dgClients, Path=SelectedItem.AccountsList, UpdateSourceTrigger=PropertyChanged}"
-                                SelectedValue="{Binding ElementName=dgClients, Path=SelectedItem.AccountsList[0], UpdateSourceTrigger=PropertyChanged}">
+                                SelectedItem="{Binding SelectedAccount, UpdateSourceTrigger=PropertyChanged}">
+                                <!--  SelectedValue="{Binding ElementName=dgClients, Path=SelectedItem.AccountsList[0]}">  -->
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -384,14 +386,20 @@
                                     Height="20"
                                     VerticalContentAlignment="Center"
                                     Command="{Binding AddNewAccount}">
-                                    <TextBlock Text="+" FontSize="20" VerticalAlignment="Center"/>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="20"
+                                        Text="+" />
                                 </Button>
                                 <Button
                                     Width="30"
                                     Height="20"
                                     VerticalContentAlignment="Center"
-                                    Command="{Binding AddNewAccount}">
-                                    <TextBlock Text="-" FontSize="20" VerticalAlignment="Center"/>
+                                    Command="{Binding RemoveAccountCommand}">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="20"
+                                        Text="-" />
                                 </Button>
                             </StackPanel>
                         </StackPanel>
@@ -558,6 +566,14 @@
                                     Command="{Binding SendMoneyCommand}"
                                     Content="Перевести" />
                             </Grid>
+                        </Expander>
+                        <Expander Header="Deposit">
+                            <Button>
+                                <TextBlock
+                                    Width="100"
+                                    Text=" Кнопка, открывает окно создания депозита"
+                                    TextWrapping="WrapWithOverflow" />
+                            </Button>
                         </Expander>
                     </StackPanel>
                 </Expander>

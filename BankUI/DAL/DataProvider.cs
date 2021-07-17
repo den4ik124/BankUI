@@ -43,7 +43,6 @@ namespace BankUI.DAL
 
         public void Load()
         {
-            //TODO Логика считывания коллекции. Десериализация json
             ClientsDBModel.FillDataBase();
             _clients.Clear();
             foreach (var client in ClientsDBModel.Clients)
@@ -84,7 +83,6 @@ namespace BankUI.DAL
             {
                 if (client.Id == clientVM.Id)
                 {
-                    //index = ClientsDBModel.Clients.IndexOf(client);
                     ClientsDBModel.RemoveClient(client);
                     break;
                 }
@@ -92,9 +90,21 @@ namespace BankUI.DAL
             _clients.Clear();
             foreach (var client in ClientsDBModel.Clients)
                 _clients.Add(client);
-            // ClientsDBModel.Clients.RemoveAt(index);
-            //ClientsDBModel.Clients.Remove(client);
-            //return _clients;
+        }
+
+        public void DeleteAccount(AccountModel account)
+        {
+            foreach (var acc in AccountsDBModel.Accounts)
+            {
+                if (acc.Id == account.Id)
+                {
+                    AccountsDBModel.Remove(acc);
+                    break;
+                }
+            }
+            _accounts.Clear();
+            foreach (var acc in AccountsDBModel.Accounts)
+                _accounts.Add(acc);
         }
 
         public void GetTestAccountsData()
@@ -104,6 +114,48 @@ namespace BankUI.DAL
             {
                 _accounts.Add(account);
             }
+        }
+
+        public void Delete<Y>(Y element)
+        {
+            if (typeof(Y) == typeof(AccountModel))
+            {
+                foreach (var acc in AccountsDBModel.Accounts)
+                {
+                    if (acc.Id == (element as AccountModel).Id)
+                    {
+                        AccountsDBModel.Remove(acc);
+                        foreach (var client in ClientsDBModel.Clients)
+                        {
+                            if (client.Id == acc.HostId)
+                            {
+                                client.RemoveAccount(acc);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                _accounts.Clear();
+                foreach (var acc in AccountsDBModel.Accounts)
+                    _accounts.Add(acc);
+            }
+            else if (typeof(Y) == typeof(ClientViewModel))
+            {
+                foreach (var client in ClientsDBModel.Clients)
+                {
+                    if (client.Id == (element as ClientViewModel).Id)
+                    {
+                        ClientsDBModel.RemoveClient(client);
+                        break;
+                    }
+                }
+                //_clients.Clear();
+                //foreach (var client in ClientsDBModel.Clients)
+                //    _clients.Add(client);
+            }
+            else
+                return;
         }
 
         #endregion Methods

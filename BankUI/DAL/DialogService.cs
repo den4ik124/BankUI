@@ -28,6 +28,12 @@ namespace BankUI.DAL
             return selection == MessageBoxResult.Yes;
         }
 
+        public bool DeleteAccountWindow()
+        {
+            var selection = MessageBox.Show("Действительно удалить этот счет?\nВернуть данные будет невозможно!", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+            return selection == MessageBoxResult.Yes;
+        }
+
         public void MessageBoxShow(string message, string caption, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.Warning)
         {
             MessageBox.Show(message, caption, button, icon);

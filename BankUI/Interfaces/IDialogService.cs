@@ -10,6 +10,8 @@ namespace BankUI.Interfaces
 
         bool DeleteClientWindow();
 
+        bool DeleteAccountWindow();
+
         void MessageBoxShow(string message, string caption, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.Warning);
 
         void ShowDialog(Window dialogWindow);

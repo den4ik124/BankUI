@@ -92,7 +92,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public IList<AccountModel> AccountsList
+        public override IList<AccountModel> AccountsList
         {
             get => _person.AccountsList;
             set

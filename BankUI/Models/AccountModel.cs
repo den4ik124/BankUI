@@ -82,9 +82,16 @@ namespace BankUI.Models
 
         public void ChangeBalance(Transaction transaction)
         {
-            if (_hostID == transaction.ReceiverID)
+            if (transaction.ReceiverID == transaction.SenderID)
+            {
+                if (_id == transaction.ReceiverAccID)
+                    _balance += transaction.Value;
+                else
+                    _balance -= transaction.Value;
+            }
+            else if (_hostID == transaction.ReceiverID)
                 _balance += transaction.Value;
-            else
+            else if (_hostID == transaction.SenderID)
                 _balance -= transaction.Value;
             _transactionsList.Add(transaction);
         }

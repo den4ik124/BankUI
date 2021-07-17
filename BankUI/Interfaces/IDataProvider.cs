@@ -8,7 +8,11 @@ namespace BankUI.Interfaces
     {
         IEnumerable<T> GetClients(bool isTestData = false);
 
+        void Delete<Y>(Y element);
+
         void DeleteClient(ClientViewModel client);
+
+        void DeleteAccount(AccountModel account);
 
         //IEnumerable<Client> GetTestClients();
         void Load();

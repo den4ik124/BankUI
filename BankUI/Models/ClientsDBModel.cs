@@ -96,6 +96,77 @@ namespace BankUI.Models
             UpdateClients();
         }
 
+        public static void UpdateBalance(AccountModel account)
+        {
+            foreach (var client in Clients)
+                if (client.Id == account.HostId)
+                {
+                    foreach (var acc in client.AccountsList)
+                        if (acc.Id == account.Id)
+                            acc.Balance = account.Balance;
+                    client.TotalBalanceCalc();
+                }
+            UpdateClients();
+        }
+
+        public static void UpdateBalances_test(AccountModel senderAccount, AccountModel receiverAccount, Transaction transaction)
+        {
+            if (senderAccount.HostId != receiverAccount.HostId)
+            {
+                foreach (var client in Clients)
+                {
+                    if (client.Id == senderAccount.HostId)
+                    {
+                        foreach (var acc in client.AccountsList)
+                            if (acc.Id == senderAccount.Id)
+                            {
+                                acc.Balance = AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                client.TotalBalanceCalc();
+                                break;
+                            }
+                        continue;
+                    }
+                    else if (client.Id == receiverAccount.HostId)
+                    {
+                        foreach (var acc in client.AccountsList)
+                            if (acc.Id == receiverAccount.Id)
+                            {
+                                acc.Balance = AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                client.TotalBalanceCalc();
+                                break;
+                            }
+                        continue;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var client in Clients)
+                {
+                    if (client.Id == senderAccount.HostId)
+                    {
+                        foreach (var acc in client.AccountsList)
+                        {
+                            if (acc.Id == senderAccount.Id)
+                            {
+                                acc.Balance = AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                client.TotalBalanceCalc();
+                                continue;
+                            }
+                            else if (acc.Id == receiverAccount.Id)
+                            {
+                                acc.Balance = AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                client.TotalBalanceCalc();
+                                continue;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            UpdateClients();
+        }
+
         public static void UpdateClients()
         {
             _persons.Clear();

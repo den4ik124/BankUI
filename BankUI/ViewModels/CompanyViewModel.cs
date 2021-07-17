@@ -71,7 +71,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public IList<AccountModel> AccountsList
+        public override IList<AccountModel> AccountsList
         {
             get => _companyModel.AccountsList;
             set
@@ -79,6 +79,18 @@ namespace BankUI.ViewModels
                 if (_companyModel.AccountsList == value)
                     return;
                 _companyModel.AccountsList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public override decimal TotalBalance
+        {
+            get => _companyModel.TotalBalance;
+            set
+            {
+                if (_companyModel.TotalBalance == value)
+                    return;
+                _companyModel.TotalBalance = value;
                 OnPropertyChanged();
             }
         }

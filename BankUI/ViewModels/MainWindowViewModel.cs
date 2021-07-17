@@ -25,6 +25,7 @@ namespace BankUI.ViewModels
         private IList<PersonViewModel> _persons;
         private IList<CompanyViewModel> _companies;
         private ClientViewModel _concreteClient;
+        private AccountModel _selectedAccount;
         private AccountModel _receiverAccount;
         private AccountModel _senderAccount;
 
@@ -36,6 +37,7 @@ namespace BankUI.ViewModels
         private RelayCommand _showTestClients;
         private RelayCommand _addNewClient;
         private RelayCommand _addNewAccount;
+        private RelayCommand _removeAccountCommand;
 
         private RelayCommand _showVIPOnly;
         private RelayCommand _showPersonsOnlyCommand;
@@ -103,6 +105,9 @@ namespace BankUI.ViewModels
 
         public RelayCommand AddNewAccount => _addNewAccount ??
             (_addNewAccount = new RelayCommand(AddNewAcc, CanShow));
+
+        public RelayCommand RemoveAccountCommand => _removeAccountCommand ??
+            (_removeAccountCommand = new RelayCommand(RemoveAccount, CanShow));
 
         public RelayCommand ShowVIPOnlyCommand => _showVIPOnly ??
             (_showVIPOnly = new RelayCommand(ShowVIPOnly, CanVIPShow));
@@ -230,6 +235,18 @@ namespace BankUI.ViewModels
             }
         }
 
+        public AccountModel SelectedAccount
+        {
+            get => _selectedAccount;
+            set
+            {
+                if (_selectedAccount == value)
+                    return;
+                _selectedAccount = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion Properties
 
         #region Methods
@@ -259,7 +276,7 @@ namespace BankUI.ViewModels
 
         private bool CanSend()
         {
-            return TransactionValue > 0 && SenderAccount?.Balance >= TransactionValue;
+            return TransactionValue > 0 && SenderAccount?.Balance >= TransactionValue && (SenderAccount != ReceiverAccount);
         }
 
         private void SendMoney()
@@ -267,42 +284,17 @@ namespace BankUI.ViewModels
             //TODO после десериализации креш при переводе денег
             if (SenderAccount.Balance < TransactionValue)
                 return;
+            if (SenderAccount == ReceiverAccount)
+                return;
+            Transaction transaction = new Transaction(SenderAccount, ReceiverAccount, TransactionValue);
+            AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transaction);
+            ClientsDBModel.UpdateBalances_test(SenderAccount, ReceiverAccount, transaction);
+            //if (SenderAccount.HostId != ReceiverAccount.HostId)
+            //{
+            //    ClientsDBModel.UpdateBalance(SenderAccount);
+            //    ClientsDBModel.UpdateBalance(ReceiverAccount);
+            //}
 
-            AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, new Transaction(SenderAccount, ReceiverAccount, TransactionValue));
-
-            int indexClientDB_sender = 0;
-            int indexClientDB_receiver = 0;
-
-            foreach (var client in ClientsDBModel.Clients)
-            {
-                if (client.Id == SenderAccount.HostId)
-                {
-                    indexClientDB_sender = ClientsDBModel.Clients.IndexOf(client);
-                }
-                else if (client.Id == ReceiverAccount.HostId)
-                {
-                    indexClientDB_receiver = ClientsDBModel.Clients.IndexOf(client);
-                }
-            }
-
-            //У конкретного клиента в БД клиентов (ОТПРАВИТЕЛЬ) меняем баланс на нужном аккаунте
-            foreach (var accSender in ClientsDBModel.Clients[indexClientDB_sender].AccountsList)
-            {
-                if (accSender.Id == SenderAccount.Id)
-                {
-                    accSender.Balance = SenderAccount.Balance;
-                    break;
-                }
-            }
-            //У конкретного клиента в БД клиентов (ПОЛУЧАТЕЛЬ) меняем баланс на нужном аккаунте
-            foreach (var accReceiver in ClientsDBModel.Clients[indexClientDB_receiver].AccountsList)
-            {
-                if (accReceiver.Id == ReceiverAccount.Id)
-                {
-                    accReceiver.Balance = ReceiverAccount.Balance;
-                    break;
-                }
-            }
             ClientsDBModel.UpdateClients();
         }
 
@@ -355,53 +347,33 @@ namespace BankUI.ViewModels
             // ConcreteClient.AddNewAccount(random.Next(0, 1000));
         }
 
+        private void RemoveAccount()
+        {
+            if (_dialogService.DeleteAccountWindow())
+            {
+                //_dataProvider.DeleteAccount(SelectedAccount);
+                if (SelectedAccount == null)
+                    return;
+
+                _dataProvider.Delete(SelectedAccount);
+                UpdateClients();
+            }
+            else
+                return;
+        }
+
         private void ShowCompaniesOnly()
         {
             UpdateClients();
-            //if (_isCompaniesSelected == true)
-            //{
-            //    DataCollectionsClear();
-            //    var clients = _dataProvider.GetClients();
-
-            //    var companies = clients.OfType<CompanyModel>();
-
-            //    foreach (var client in clients)
-            //        _clients.Add(new ClientViewModel(client));
-
-            //    foreach (var company in companies)
-            //        _dataToShow.Add(new CompanyViewModel(company));
-
-            //    DataCollectionsRefresh();
-            //}
-            //else
-            //    UpdateClients();
         }
 
         private void ShowPersonsOnly()
         {
-            //if (_isPersonsSelected == true)
-            //{
-            //    DataCollectionsClear();
-            //    var clients = _dataProvider.GetClients();
-
-            //    var persons = clients.OfType<PersonModel>();
-
-            //    foreach (var person in persons)
-            //        _clients.Add(new ClientViewModel(person));
-            //    foreach (var person in persons)
-            //        _dataToShow.Add(new PersonViewModel(person));
-
-            //    DataCollectionsRefresh();
-            //}
-            //else
             UpdateClients();
         }
 
         private void AddNewClientShow()
         {
-            //TODO разобраться как работать с окнами
-            //NewClientsView addNewClient = new NewClientsView();
-            //addNewClient.ShowDialog();
             ClientModel client;
             ClientViewModel clientVM;
             if (random.Next(0, 2) == 1)
@@ -425,7 +397,8 @@ namespace BankUI.ViewModels
         {
             if (_dialogService.DeleteClientWindow())
             {
-                _dataProvider.DeleteClient(ConcreteClient);
+                //_dataProvider.DeleteClient(ConcreteClient);
+                _dataProvider.Delete(ConcreteClient);
                 UpdateClients();
             }
             else
@@ -434,7 +407,6 @@ namespace BankUI.ViewModels
 
         private void TestClientsShow()
         {
-            //UpdatePersons(true);
             _isVIPSeleceted = false;
             OnPropertyChanged();
             UpdateClients(true);
@@ -442,25 +414,6 @@ namespace BankUI.ViewModels
 
         private void LoadClients()
         {
-            //DataCollectionsClear();
-            //IEnumerable<ClientModel> clients = _dataProvider.GetClients();
-            //var persons = clients.OfType<PersonModel>();
-            //var companies = clients.OfType<CompanyModel>();
-
-            //foreach (var client in clients)
-            //{
-            //    _clients.Add(new ClientViewModel(client));
-            //    _dataToShow.Add(new ClientViewModel(client));
-            //}
-            //foreach (var person in persons)
-            //    _persons.Add(new PersonViewModel(person));
-            //foreach (var company in companies)
-            //    _companies.Add(new CompanyViewModel(company));
-
-            //IsPersonsSelected = true;
-
-            //DataCollectionsRefresh();
-
             UpdateClients();
         }
 
