@@ -1,44 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="BankUI.Models.PersonModel">
-    <Position X="2.5" Y="4.25" Width="2" />
+    <Position X="2.25" Y="4.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAAACAAAAAAEQAAABEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\PersonModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BankUI.Models.CompanyModel">
-    <Position X="7.25" Y="4.25" Width="2.5" />
+    <Position X="5.75" Y="5.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Models\CompanyModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BankUI.Models.AccountsDB">
-    <Position X="13.25" Y="0.75" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\AccountDBModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="BankUI.Models.ClientsDBModel">
-    <Position X="10.5" Y="0.75" Width="2.5" />
+    <Position X="10.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAAACACAAAAAAAgAIAAAAAAAAEAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAAIQECACAAAAAAAgAIIADQACAAEACAA=</HashCode>
       <FileName>Models\ClientsDBModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BankUI.Models.ClientModel">
-    <Position X="5.25" Y="0.75" Width="1.5" />
+    <Position X="4.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACIAAAAAAIACAAABBAAAQAAAgAAAAACAQAAAAAAAA=</HashCode>
+      <HashCode>AAACIAAAAAAIACACABBAAAQAAAgAABAACAQAAAAAAEA=</HashCode>
       <FileName>Models\ClientModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BankUI.DAL.DataProvider" Collapsed="true">
     <Position X="0.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEgAAAAAABQAAAACACAAAAAAAAAICAAAAAgAEAAAA=</HashCode>
+      <HashCode>AAAEgAAAAAABQAAAACACAAAAAAEAAICAAAABgQEAAAA=</HashCode>
       <FileName>DAL\DataProvider.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -46,7 +39,7 @@
   <Class Name="BankUI.DAL.DialogService" Collapsed="true">
     <Position X="2.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAA=</HashCode>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAEAEAAEAAAAAAAgBAAAAAEAA=</HashCode>
       <FileName>DAL\DialogService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -59,31 +52,44 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BankUI.Models.DepositModel">
-    <Position X="10.5" Y="3.25" Width="2.5" />
+    <Position X="10.5" Y="4.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAEAAAAAAACAAAAAAgAAAAAEAAAAAQAAAAAhA=</HashCode>
+      <HashCode>AAAAIBAAEAAAACAACAAAAAAgAAAAAEAAAAAQAAAAAhA=</HashCode>
       <FileName>Models\DepositModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BankUI.Models.AccountModel">
-    <Position X="13.25" Y="3.25" Width="2.5" />
+    <Position X="13.25" Y="3.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>EAACAAAAAggAAAAAAAhAARAAgAAAAAIAgIAAAAAAAAI=</HashCode>
+      <HashCode>EAQCQAAAAggAAEAAAAlAAQAAAIAAAAAAgIAAAAAAAAI=</HashCode>
       <FileName>Models\AccountModel.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BankUI.Models.AccountsDBModel">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQgAAAAQAAAEAAABAAAAAAAAACAAAACAABAAAA=</HashCode>
+      <FileName>Models\AccountsDBModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BankUI.Models.Transaction">
+    <Position X="8.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAACAjAAIAAAAAAAAAAAAAAAAAAAACAQAgABAAAAQ=</HashCode>
+      <FileName>Models\Transaction.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Interface Name="BankUI.Interfaces.IDialogService" Collapsed="true">
     <Position X="2.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAA=</HashCode>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAEAEAAEAAAAAAAgBAAAAAEAA=</HashCode>
       <FileName>Interfaces\IDialogService.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="BankUI.Interfaces.IDataProvider" Collapsed="true">
+  <Interface Name="BankUI.Interfaces.IDataProvider&lt;T&gt;" Collapsed="true">
     <Position X="0.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABgQAAAAA=</HashCode>
       <FileName>Interfaces\IDataProvider.cs</FileName>
     </TypeIdentifier>
   </Interface>

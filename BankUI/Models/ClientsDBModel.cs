@@ -60,25 +60,32 @@ namespace BankUI.Models
 
         #region Methods
 
+        /// <summary>
+        /// Добавление нового клиента в БД
+        /// </summary>
+        /// <param name="client">Клиент, который будет добавлен в БД</param>
         public static void AddClient(ClientModel client)
         {
             _clients.Add(client);
-            //if (client.GetType() == typeof(PersonModel))
             foreach (var account in client.AccountsList)
-            {
                 if (!AccountsDBModel.Accounts.Contains(account))
-                    AccountsDBModel.AddAccount(account);
-            }
+                    AccountsDBModel.AddAccount(account); //добавление счетов нового клиента в БД счетов
             UpdateClients();
-            //Serialization(_clients);
         }
 
+        /// <summary>
+        /// Удаление клиента из БД
+        /// </summary>
+        /// <param name="client">Клиент, который будет удален</param>
         public static void RemoveClient(ClientModel client)
         {
             Clients.Remove(client);
             UpdateClients();
         }
 
+        /// <summary>
+        /// Заполнение БД клиентов
+        /// </summary>
         public static void FillDataBase()
         {
             _clients.Clear();
@@ -98,40 +105,48 @@ namespace BankUI.Models
 
         public static void UpdateBalance(AccountModel account)
         {
-            foreach (var client in Clients)
-                if (client.Id == account.HostId)
-                {
-                    foreach (var acc in client.AccountsList)
-                        if (acc.Id == account.Id)
-                            acc.Balance = account.Balance;
-                    client.TotalBalanceCalc();
-                }
-            UpdateClients();
+            //СТАРЫЙ КОД ОБНОВЛЕНИя ДАННЫХ АККАУНТА
+
+            //foreach (var client in Clients)
+            //    if (client.Id == account.HostId)
+            //    {
+            //        foreach (var acc in client.AccountsList)
+            //            if (acc.Id == account.Id)
+            //                acc.Balance = account.Balance;
+            //        client.TotalBalanceCalc();
+            //    }
+            //UpdateClients();
         }
 
-        public static void UpdateBalances_test(AccountModel senderAccount, AccountModel receiverAccount, Transaction transaction)
+        /// <summary>
+        /// Обновление данных в счетах клиентов
+        /// </summary>
+        /// <param name="senderAccount">Аккаунт отправителя</param>
+        /// <param name="receiverAccount">Аккаунт получателя</param>
+        /// <param name="transaction">Проведенная транзакция</param>
+        public static void UpdateBalances(AccountModel senderAccount, AccountModel receiverAccount, Transaction transaction)
         {
-            if (senderAccount.HostId != receiverAccount.HostId)
+            if (senderAccount.HostId != receiverAccount.HostId) //если отправитель и получатель - разные люди
             {
                 foreach (var client in Clients)
                 {
-                    if (client.Id == senderAccount.HostId)
+                    if (client.Id == senderAccount.HostId) //если клиент - отправитель
                     {
                         foreach (var acc in client.AccountsList)
-                            if (acc.Id == senderAccount.Id)
+                            if (acc.Id == senderAccount.Id) // обновляем данные о балансе после перевода (данные из БД)
                             {
-                                acc.Balance = AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
                                 client.TotalBalanceCalc();
                                 break;
                             }
                         continue;
                     }
-                    else if (client.Id == receiverAccount.HostId)
+                    else if (client.Id == receiverAccount.HostId) //если клиент - получатель
                     {
                         foreach (var acc in client.AccountsList)
-                            if (acc.Id == receiverAccount.Id)
+                            if (acc.Id == receiverAccount.Id) // обновляем данные о балансе после перевода (данные из БД)
                             {
-                                acc.Balance = AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
                                 client.TotalBalanceCalc();
                                 break;
                             }
@@ -139,7 +154,7 @@ namespace BankUI.Models
                     }
                 }
             }
-            else
+            else // если отправитель и получатель - один человек. Перевод между своими счетами
             {
                 foreach (var client in Clients)
                 {
@@ -149,13 +164,13 @@ namespace BankUI.Models
                         {
                             if (acc.Id == senderAccount.Id)
                             {
-                                acc.Balance = AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
                                 client.TotalBalanceCalc();
                                 continue;
                             }
                             else if (acc.Id == receiverAccount.Id)
                             {
-                                acc.Balance = AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                acc.Balance = UpdateAccountBalance(acc); // AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
                                 client.TotalBalanceCalc();
                                 continue;
                             }
@@ -167,6 +182,14 @@ namespace BankUI.Models
             UpdateClients();
         }
 
+        private static decimal UpdateAccountBalance(AccountModel account)
+        {
+            return AccountsDBModel.Accounts.Where(item => item.Id == account.Id).FirstOrDefault().Balance;
+        }
+
+        /// <summary>
+        /// Обновление списков клиентов физ.лиц и юр.лиц и сохранение в .json файл
+        /// </summary>
         public static void UpdateClients()
         {
             _persons.Clear();

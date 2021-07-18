@@ -41,11 +41,11 @@
             <Setter Property="FontFamily" Value="OpenSans" />
         </Style>
     </Window.Resources>
-    <Grid ShowGridLines="True" Height="Auto">
+    <Grid Height="Auto" ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition  Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -58,8 +58,8 @@
         <TextBlock
             Grid.Row="1"
             Grid.Column="0"
-            VerticalAlignment="Center"
             Margin="0,10,0,10"
+            VerticalAlignment="Center"
             Text="Имя" />
         <TextBox
             Grid.Row="1"
@@ -70,8 +70,8 @@
         <TextBlock
             Grid.Row="2"
             Grid.Column="0"
-            VerticalAlignment="Center"
             Margin="0,10,0,10"
+            VerticalAlignment="Center"
             Text="Фамилия"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox
@@ -83,8 +83,8 @@
         <TextBlock
             Grid.Row="3"
             Grid.Column="0"
-            VerticalAlignment="Center"
             Margin="0,10,0,10"
+            VerticalAlignment="Center"
             Text="ИНН"
             Visibility="{Binding ElementName=rbtnPerson, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox

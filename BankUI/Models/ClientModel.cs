@@ -64,28 +64,38 @@ namespace BankUI.Models
 
         #region Methods
 
+        /// <summary>
+        /// Добавление счета клиенту
+        /// </summary>
+        /// <param name="balance">Баланс при открытии счета</param>
         public void AddNewAccount(decimal balance = 0)
         {
             AccountModel account = new AccountModel(this, balance);
             _accountsList.Add(account);
             if (!AccountsDBModel.Accounts.Contains(account))
-                AccountsDBModel.Accounts.Add(account);
+                AccountsDBModel.AddAccount(account);
+            //AccountsDBModel.Accounts.Add(account); //исправить на это, если появятся проблемы с сохранением счетов в БД
             TotalBalanceCalc();
         }
 
+        /// <summary>
+        /// Удаление счета из списка счетов клиента
+        /// </summary>
+        /// <param name="account">Счет, который будет удален</param>
         public void RemoveAccount(AccountModel account)
         {
             AccountsList.Remove(account);
             TotalBalanceCalc();
         }
 
+        /// <summary>
+        /// Пересчет суммарного баланса клиентов.
+        /// </summary>
         public void TotalBalanceCalc()
         {
             _totalBalance = 0;
             foreach (var account in _accountsList)
-            {
                 _totalBalance += account.Balance;
-            }
         }
 
         #endregion Methods

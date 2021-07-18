@@ -39,6 +39,12 @@ namespace BankUI.DAL
 
         #region Methods
 
+        /// <summary>
+        /// Дисериализация данных из .json файла
+        /// </summary>
+        /// <typeparam name="T">Тип десериализуемых данных</typeparam>
+        /// <param name="path">Путь к .json файлу</param>
+        /// <returns></returns>
         public IList<T> DeserializationJSON<T>(string path = "")
         {
             if (path == "")
@@ -67,6 +73,12 @@ namespace BankUI.DAL
             }
         }
 
+        /// <summary>
+        /// Сериализация данных в .json файл
+        /// </summary>
+        /// <typeparam name="T">Тип сериализуемых данных</typeparam>
+        /// <param name="toSerializeObject">Объект для сериализации</param>
+        /// <param name="path">Путь, куда будет сохранен файл с данными</param>
         public void Serialization<T>(T toSerializeObject, string path = "")
         {
             string json = JsonConvert.SerializeObject(toSerializeObject, jsonSettings);

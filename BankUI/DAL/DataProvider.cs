@@ -41,14 +41,22 @@ namespace BankUI.DAL
 
         #region Methods
 
+        /// <summary>
+        /// Заполнение БД клиентами.
+        /// </summary>
         public void Load()
         {
-            ClientsDBModel.FillDataBase();
+            ClientsDBModel.FillDataBase(); //Десериализация данных и заполнение БД.
             _clients.Clear();
             foreach (var client in ClientsDBModel.Clients)
-                _clients.Add(client);
+                _clients.Add(client); //заполнение списка клиентов для дальнейшей передачи
         }
 
+        /// <summary>
+        /// Возвращает коллекцию клиентов
+        /// </summary>
+        /// <param name="isTestData">Используется для генерации тестовых клиентов. true - создавать тестовых клиентов, false - вернуть существующих клиентов</param>
+        /// <returns>Коллекция клиентов</returns>
         public IEnumerable<ClientModel> GetClients(bool isTestData = false)
         {
             if (isTestData == true)
@@ -56,26 +64,32 @@ namespace BankUI.DAL
                 ClientsDBModel.Clients.Clear();
                 AccountsDBModel.Accounts.Clear();
             }
-            // test ---------------
             _clients.Clear();
             foreach (var client in ClientsDBModel.Clients)
                 _clients.Add(client);
-            // test ---------------
 
             return isTestData ? GetTestClientsData() : _clients;
         }
 
+        /// <summary>
+        /// Получение тестовых клиентов из генератора.
+        /// </summary>
+        /// <returns>Коллекцию тестовых клиентов</returns>
         private IList<ClientModel> GetTestClientsData()
         {
             _clients.Clear();
             foreach (var client in Generator.GetClientsList())
             {
                 _clients.Add(client);
-                ClientsDBModel.AddClient(client);
+                ClientsDBModel.AddClient(client); //добавление клиента в БД
             }
             return _clients;
         }
 
+        /// <summary>
+        /// Удаление клиента
+        /// </summary>
+        /// <param name="clientVM">ViewModel клиента из View.</param>
         public void DeleteClient(ClientViewModel clientVM)
         {
             //int index = -1;
@@ -83,7 +97,7 @@ namespace BankUI.DAL
             {
                 if (client.Id == clientVM.Id)
                 {
-                    ClientsDBModel.RemoveClient(client);
+                    ClientsDBModel.RemoveClient(client); //Если клиент найден - он удаляется из БД.
                     break;
                 }
             }
@@ -92,13 +106,17 @@ namespace BankUI.DAL
                 _clients.Add(client);
         }
 
+        /// <summary>
+        /// Удаление аккаунта (счета) клиента
+        /// </summary>
+        /// <param name="account">Аккаунт, который будет удален</param>
         public void DeleteAccount(AccountModel account)
         {
             foreach (var acc in AccountsDBModel.Accounts)
             {
                 if (acc.Id == account.Id)
                 {
-                    AccountsDBModel.Remove(acc);
+                    AccountsDBModel.Remove(acc); //удаление счета из БД счетов.
                     break;
                 }
             }
@@ -107,17 +125,28 @@ namespace BankUI.DAL
                 _accounts.Add(acc);
         }
 
+        /// <summary>
+        /// Создание тестового счета
+        /// </summary>
         public void GetTestAccountsData()
         {
             _accounts.Clear();
             foreach (var account in Generator.GetAccountsList())
             {
+                //AccountsDBModel.AddAccount(account);
                 _accounts.Add(account);
             }
         }
 
+        /// <summary>
+        /// Удаление элемента из БД
+        /// </summary>
+        /// <typeparam name="Y">Тип удаляемого объекта</typeparam>
+        /// <param name="element">Элемент, который будет удален</param>
         public void Delete<Y>(Y element)
         {
+            // TODO подумать, что лучше: один такой обобщенный метод или 2 отдельных не обощенных.
+            // если тип - аккаунт
             if (typeof(Y) == typeof(AccountModel))
             {
                 foreach (var acc in AccountsDBModel.Accounts)
@@ -140,6 +169,7 @@ namespace BankUI.DAL
                 foreach (var acc in AccountsDBModel.Accounts)
                     _accounts.Add(acc);
             }
+            //если тип - клиент.
             else if (typeof(Y) == typeof(ClientViewModel))
             {
                 foreach (var client in ClientsDBModel.Clients)
@@ -150,9 +180,6 @@ namespace BankUI.DAL
                         break;
                     }
                 }
-                //_clients.Clear();
-                //foreach (var client in ClientsDBModel.Clients)
-                //    _clients.Add(client);
             }
             else
                 return;

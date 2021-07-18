@@ -10,6 +10,10 @@ namespace BankUI.HelpClasses
 
         #region Methods
 
+        /// <summary>
+        /// Создание списка клиентов.
+        /// </summary>
+        /// <returns>Коллекцию клиентов </returns>
         public static IList<ClientModel> GetClientsList()
         {
             List<ClientModel> clients = new List<ClientModel>();
@@ -20,16 +24,10 @@ namespace BankUI.HelpClasses
             return clients;
         }
 
-        //public static IList<PersonModel> GetPersonsList()
-        //{
-        //    List<PersonModel> clients = new List<PersonModel>();
-        //    for (int i = 0; i < random.Next(15); i++)
-        //    {
-        //        clients.Add(GetPerson());
-        //    }
-        //    return clients;
-        //}
-
+        /// <summary>
+        /// Создание коллекции тестовых счетов
+        /// </summary>
+        /// <returns>Коллекция тестовых счетов</returns>
         public static IList<AccountModel> GetAccountsList()
         {
             List<AccountModel> accounts = new List<AccountModel>();
@@ -40,6 +38,10 @@ namespace BankUI.HelpClasses
             return accounts;
         }
 
+        /// <summary>
+        /// Создание аккаунта
+        /// </summary>
+        /// <returns>Новый аккаунт</returns>
         private static AccountModel GetAccount()
         {
             return new AccountModel(GetClient());
@@ -56,11 +58,6 @@ namespace BankUI.HelpClasses
                     return new CompanyModel($"Company #{random.Next(100)}", Guid.NewGuid().ToString(), random.Next(0, 2) == 1);
             }
         }
-
-        //private static PersonModel GetPerson()
-        //{
-        //    return new PersonModel(RandomName(), isVIP: RandomVIP(), RandomSurname(), random.Next(0, 101).ToString(), $"+380({random.Next(10, 100)})-{random.Next(100, 1000)}-{random.Next(10, 100)}-{random.Next(10, 100)}");
-        //}
 
         private static bool RandomVIP()
         {

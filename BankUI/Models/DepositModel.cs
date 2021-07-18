@@ -40,15 +40,31 @@ namespace BankUI.Models
 
         #region Methods
 
+        /// <summary>
+        /// Получение баланса счета через определенное число месяцев
+        /// </summary>
+        /// <param name="monthCount">Число месяцев</param>
+        /// <returns>Значение баланса счета</returns>
         public decimal GetBalanceAtMonth(int monthCount)
         {
             return _isCapitalization ? Capitalization(monthCount) : NoCapitalization(monthCount);
         }
 
+        /// <summary>
+        /// Расчет баланса счета с капитализацией
+        /// </summary>
+        /// <param name="monthCount">Число месяцев</param>
+        /// <returns>Значение баланса счета с капитализацией</returns>
         private decimal Capitalization(int monthCount)
         {
             return _startBalance * (decimal)Math.Pow((1 + _interestRateYear / 12 / 100), monthCount);
         }
+
+        /// <summary>
+        /// Расчет баланса счета без капитализации
+        /// </summary>
+        /// <param name="monthCount">Число месяцев</param>
+        /// <returns>Значение баланса счета с капитализацией</returns>
         private decimal NoCapitalization(int monthCount)
         {
             return monthCount >= 12 ? _startBalance * (decimal)Math.Pow((1 + _interestRateYear / 100), monthCount / 12) : _startBalance;

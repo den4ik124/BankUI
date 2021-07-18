@@ -26,12 +26,6 @@ namespace BankUI.ViewModels
 
         private bool _isVIP;
 
-        //private readonly PersonModel _person;
-        //private ClientModel _concreteClient;
-        //private bool _isPerson = true;
-
-        //public Color _backgroundColor;
-
         private RelayCommand _addNewClient;
 
         private RelayCommand _closeWindowCommand;
@@ -66,20 +60,6 @@ namespace BankUI.ViewModels
 
         #region Properties
 
-        //public ClientModel ConcreteClient
-        //{
-        //    get => _concreteClient;
-
-        //    set
-        //    {
-        //        if (_concreteClient == value)
-        //            return;
-        //        _concreteClient = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        //public int Id => _client.Id;
         public virtual int Id { get; set; }
 
         public virtual string Name
@@ -94,8 +74,6 @@ namespace BankUI.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        #region useless code
 
         public virtual string SurName
         {
@@ -145,10 +123,6 @@ namespace BankUI.ViewModels
             }
         }
 
-        #endregion useless code
-
-        //public bool IsVIPSelected { get; set; } = false;
-
         public virtual bool IsVIP
         {
             get => _isVIP;
@@ -175,16 +149,6 @@ namespace BankUI.ViewModels
         }
 
         public virtual decimal TotalBalance { get; set; }
-        //{
-        //get => _client.TotalBalance;
-        //set
-        //{
-        //    if (_client.TotalBalance == value)
-        //        return;
-        //    _client.TotalBalance = value;
-        //    OnPropertyChanged();
-        //}
-        //}
 
         public RelayCommand AddNewClient => (_addNewClient) ??
             (_addNewClient = new RelayCommand(NewClientAdd, CanAddNewClient));

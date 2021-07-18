@@ -80,22 +80,32 @@ namespace BankUI.Models
 
         #region Methods
 
+        /// <summary>
+        /// Изменение баланса на счету.
+        /// </summary>
+        /// <param name="transaction">Совершенная транзакция</param>
         public void ChangeBalance(Transaction transaction)
         {
-            if (transaction.ReceiverID == transaction.SenderID)
+            if (transaction.ReceiverID == transaction.SenderID) //если перевод между своими счетами клиента
             {
                 if (_id == transaction.ReceiverAccID)
-                    _balance += transaction.Value;
+                    _balance += transaction.Value; //если аккаунт совпал с аккаунтом получателя в тразакции - баланс увеличивается на величину перевода
                 else
-                    _balance -= transaction.Value;
+                    _balance -= transaction.Value; //если аккаунт совпал с аккаунтом отправителя в тразакции - баланс уменьшается на величину перевода
             }
-            else if (_hostID == transaction.ReceiverID)
-                _balance += transaction.Value;
-            else if (_hostID == transaction.SenderID)
-                _balance -= transaction.Value;
-            _transactionsList.Add(transaction);
+            else if (_hostID == transaction.ReceiverID) //если ID владельца счета совпал с получаетелем в транзакции
+                _balance += transaction.Value;          // баланс увеличивается на величину перевода
+            else if (_hostID == transaction.SenderID)   //если ID владельца счета совпал с отправителем в транзакции
+                _balance -= transaction.Value;          // баланс уменьшается на величину перевода
+            _transactionsList.Add(transaction);         //в список переводов добавляется новый перевод.
         }
 
+        /// <summary>
+        /// Открытие вклада
+        /// </summary>
+        /// <param name="startBalance">Начальная сумма вклада</param>
+        /// <param name="duration">Продолжительность депозита</param>
+        /// <param name="interestRateYear">% ставка за год</param>
         public void OpenDeposit(decimal startBalance, int duration, double interestRateYear)
         {
             _deposit = new DepositModel(startBalance, duration, interestRateYear);

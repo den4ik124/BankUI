@@ -57,8 +57,8 @@
             Grid.Row="0"
             Grid.Column="1"
             VerticalAlignment="Center"
-            Text="100 руб." />
-        <!--  Text="{Binding StringFormat= {}{0} рублей,Path=DepositStart}" />  -->
+            Text="{Binding DepositStart, StringFormat='{}{0} $'}" />
+        <!--  Text="100 руб."  -->
 
         <TextBlock
             Grid.Row="1"

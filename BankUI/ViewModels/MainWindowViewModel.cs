@@ -45,7 +45,8 @@ namespace BankUI.ViewModels
 
         private RelayCommand _deleteClientCommand;
         private RelayCommand _sendMoneyCommand;
-        private RelayCommand _openWindowCommand;
+        private RelayCommand _addClientCommand;
+        private RelayCommand _openDepositCommand;
 
         private bool _isVIPSeleceted;
         private bool _isPersonsSelected = true;
@@ -124,14 +125,16 @@ namespace BankUI.ViewModels
         public RelayCommand SendMoneyCommand => _sendMoneyCommand ??
             (_sendMoneyCommand = new RelayCommand(SendMoney, CanSend));
 
-        public RelayCommand OpenWindowCommand => _openWindowCommand ??
-            (_openWindowCommand = new RelayCommand(OpenWindow, CanShow));
+        public RelayCommand AddClientCommand => _addClientCommand ??
+            (_addClientCommand = new RelayCommand(AddClient, CanShow));
 
-        private void OpenWindow()
+        public RelayCommand OpenDepositCommand => _openDepositCommand ??
+            (_openDepositCommand = new RelayCommand(OpenDeposit, CanShow));
+
+        private void OpenDeposit()
         {
-            NewClientsView newClientWindow = new NewClientsView();
-            _dialogService.ShowDialog(newClientWindow);
-            UpdateClients();
+            NewDepositView newDepositWindow = new NewDepositView();
+            _dialogService.ShowDialog(newDepositWindow);
         }
 
         public decimal TransactionValue
@@ -258,6 +261,13 @@ namespace BankUI.ViewModels
             //DataCollectionsRefresh();
         }
 
+        private void AddClient()
+        {
+            NewClientsView newClientWindow = new NewClientsView();
+            _dialogService.ShowDialog(newClientWindow);
+            UpdateClients();
+        }
+
         private void DataCollectionsRefresh()
         {
             Persons.Refresh();
@@ -281,19 +291,13 @@ namespace BankUI.ViewModels
 
         private void SendMoney()
         {
-            //TODO после десериализации креш при переводе денег
             if (SenderAccount.Balance < TransactionValue)
                 return;
             if (SenderAccount == ReceiverAccount)
                 return;
             Transaction transaction = new Transaction(SenderAccount, ReceiverAccount, TransactionValue);
             AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transaction);
-            ClientsDBModel.UpdateBalances_test(SenderAccount, ReceiverAccount, transaction);
-            //if (SenderAccount.HostId != ReceiverAccount.HostId)
-            //{
-            //    ClientsDBModel.UpdateBalance(SenderAccount);
-            //    ClientsDBModel.UpdateBalance(ReceiverAccount);
-            //}
+            ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transaction);
 
             ClientsDBModel.UpdateClients();
         }

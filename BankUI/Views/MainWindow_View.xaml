@@ -568,7 +568,7 @@
                             </Grid>
                         </Expander>
                         <Expander Header="Deposit">
-                            <Button>
+                            <Button Command="{Binding OpenDepositCommand}">
                                 <TextBlock
                                     Width="100"
                                     Text=" Кнопка, открывает окно создания депозита"
