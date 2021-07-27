@@ -185,6 +185,15 @@ namespace BankUI.DAL
                 return;
         }
 
+        public IEnumerable<ClientModel> GetClientsFilteredByName(string nameFromUI)
+        {
+            List<ClientModel> result = new List<ClientModel>();
+            foreach (var item in _clients)
+                if (Levenshtein.Find(item.Name, nameFromUI) <= 2)
+                    result.Add(item);
+            return result;
+        }
+
         #endregion Methods
     }
 }

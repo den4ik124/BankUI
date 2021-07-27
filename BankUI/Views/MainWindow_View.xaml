@@ -113,6 +113,7 @@
                     <RowDefinition Height="30" />
                     <RowDefinition />
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
                 <StackPanel
                     Grid.Row="0"
@@ -187,6 +188,13 @@
                         Text="Total: " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding DataToShow.Count}" />
                     <!--<TextBlock VerticalAlignment="Center" Text="{Binding ElementName=dgClients, Path=Items.Count}" />-->
+                </StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                    <Label>Input clients name here:</Label>
+                    <TextBox
+                        Height="25"
+                        MinWidth="150"
+                        Text="{Binding FindClientsByName, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </Grid>
 

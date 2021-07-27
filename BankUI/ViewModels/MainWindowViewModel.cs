@@ -29,6 +29,8 @@ namespace BankUI.ViewModels
         private AccountModel _receiverAccount;
         private AccountModel _senderAccount;
 
+        private string _findClientsByName = string.Empty;
+
         private decimal _transactionValue;
 
         //private AccountsDBModel _accountsDB;
@@ -130,12 +132,6 @@ namespace BankUI.ViewModels
 
         public RelayCommand OpenDepositCommand => _openDepositCommand ??
             (_openDepositCommand = new RelayCommand(OpenDeposit, CanShow));
-
-        private void OpenDeposit()
-        {
-            NewDepositView newDepositWindow = new NewDepositView();
-            _dialogService.ShowDialog(newDepositWindow);
-        }
 
         public decimal TransactionValue
         {
@@ -248,6 +244,22 @@ namespace BankUI.ViewModels
                 _selectedAccount = value;
                 OnPropertyChanged();
             }
+        }
+
+        public string FindClientsByName
+        {
+            get => _findClientsByName;
+            set
+            {
+                _findClientsByName = value;
+                UpdateClients();
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsFindClientByNameEmpty
+        {
+            get => _findClientsByName.Length > 0 ? false : true;
         }
 
         #endregion Properties
@@ -427,8 +439,12 @@ namespace BankUI.ViewModels
         /// <param name="isTestData">Загрузить новые тестовые данные или нет</param>
         private void UpdateClients(bool isTestData = false)
         {
+            IEnumerable<ClientModel> clients;
+            if (IsFindClientByNameEmpty)
+                clients = _dataProvider.GetClients(isTestData);
+            else
+                clients = _dataProvider.GetClientsFilteredByName(FindClientsByName);
             DataCollectionsClear();
-            IEnumerable<ClientModel> clients = _dataProvider.GetClients(isTestData);
             IEnumerable<PersonModel> persons;
             IEnumerable<CompanyModel> companies;
             if (IsVIPSeleceted)
@@ -457,6 +473,12 @@ namespace BankUI.ViewModels
                 _companies.Add(new CompanyViewModel(company));
 
             DataCollectionsRefresh();
+        }
+
+        private void OpenDeposit()
+        {
+            NewDepositView newDepositWindow = new NewDepositView();
+            _dialogService.ShowDialog(newDepositWindow);
         }
 
         #endregion Methods

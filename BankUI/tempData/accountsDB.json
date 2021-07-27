@@ -1,0 +1,156 @@
+{
+  "$id": "1",
+  "$type": "System.Collections.ObjectModel.ObservableCollection`1[[BankUI.Models.AccountModel, BankUI]], System",
+  "$values": [
+    {
+      "$id": "2",
+      "$type": "BankUI.Models.AccountModel, BankUI",
+      "Id": "_A1|1",
+      "Balance": 813.0,
+      "DateOfCreation": "2021-07-17T22:06:38.58149+03:00",
+      "HostId": 1,
+      "TransactionsList": {
+        "$id": "3",
+        "$type": "System.Collections.Generic.List`1[[BankUI.Models.Transaction, BankUI]], mscorlib",
+        "$values": [
+          {
+            "$id": "4",
+            "$type": "BankUI.Models.Transaction, BankUI",
+            "SenderID": 1,
+            "ReceiverID": 1,
+            "SenderAccID": "_A1|2",
+            "ReceiverAccID": "_A1|1",
+            "Value": 0.0,
+            "TransactionTime": "2021-07-17T22:10:10.352878+03:00"
+          }
+        ]
+      }
+    },
+    {
+      "$id": "5",
+      "$type": "BankUI.Models.AccountModel, BankUI",
+      "Id": "_A1|2",
+      "Balance": 0.0,
+      "DateOfCreation": "2021-07-17T22:06:38.58149+03:00",
+      "HostId": 1,
+      "TransactionsList": {
+        "$id": "6",
+        "$type": "System.Collections.Generic.List`1[[BankUI.Models.Transaction, BankUI]], mscorlib",
+        "$values": [
+          {
+            "$ref": "4"
+          }
+        ]
+      }
+    },
+    {
+      "$id": "7",
+      "$type": "BankUI.Models.AccountModel, BankUI",
+      "Id": "_A2|3",
+      "Balance": 1131.0,
+      "DateOfCreation": "2021-07-17T22:06:53.0858792+03:00",
+      "HostId": 2,
+      "TransactionsList": {
+        "$id": "8",
+        "$type": "System.Collections.Generic.List`1[[BankUI.Models.Transaction, BankUI]], mscorlib",
+        "$values": [
+          {
+            "$id": "9",
+            "$type": "BankUI.Models.Transaction, BankUI",
+            "SenderID": 2,
+            "ReceiverID": 2,
+            "SenderAccID": "_A2|5",
+            "ReceiverAccID": "_A2|3",
+            "Value": 0.0,
+            "TransactionTime": "2021-07-17T22:10:54.6277032+03:00"
+          },
+          {
+            "$id": "10",
+            "$type": "BankUI.Models.Transaction, BankUI",
+            "SenderID": 2,
+            "ReceiverID": 2,
+            "SenderAccID": "_A2|4",
+            "ReceiverAccID": "_A2|3",
+            "Value": 0.0,
+            "TransactionTime": "2021-07-17T22:10:59.4601157+03:00"
+          }
+        ]
+      }
+    },
+    {
+      "$id": "11",
+      "$type": "BankUI.Models.AccountModel, BankUI",
+      "Id": "_A2|4",
+      "Balance": 0.0,
+      "DateOfCreation": "2021-07-17T22:06:53.0858792+03:00",
+      "HostId": 2,
+      "TransactionsList": {
+        "$id": "12",
+        "$type": "System.Collections.Generic.List`1[[BankUI.Models.Transaction, BankUI]], mscorlib",
+        "$values": [
+          {
+            "$ref": "10"
+          }
+        ]
+      }
+    },
+    {
+      "$id": "13",
+      "$type": "BankUI.Models.AccountModel, BankUI",
+      "Id": "_A2|5",
+      "Balance": 0.0,
+      "DateOfCreation": "2021-07-17T22:06:53.0858792+03:00",
+      "HostId": 2,
+      "TransactionsList": {
+        "$id": "14",
+        "$type": "System.Collections.Generic.List`1[[BankUI.Models.Transaction, BankUI]], mscorlib",
+        "$values": [
+          {
+            "$ref": "9"
+          }
+        ]
+      }
+    },
+    {
+      "$id": "15",
+      "$type": "BankUI.Models.AccountModel, BankUI",
+      "Id": "_A3|6",
+      "Balance": 1154.0,
+      "DateOfCreation": "2021-07-17T22:14:29.0070109+03:00",
+      "HostId": 3,
+      "TransactionsList": {
+        "$id": "16",
+        "$type": "System.Collections.Generic.List`1[[BankUI.Models.Transaction, BankUI]], mscorlib",
+        "$values": [
+          {
+            "$id": "17",
+            "$type": "BankUI.Models.Transaction, BankUI",
+            "SenderID": 3,
+            "ReceiverID": 3,
+            "SenderAccID": "_A3|7",
+            "ReceiverAccID": "_A3|6",
+            "Value": 0.0,
+            "TransactionTime": "2021-07-17T22:14:55.9841862+03:00"
+          }
+        ]
+      }
+    },
+    {
+      "$id": "18",
+      "$type": "BankUI.Models.AccountModel, BankUI",
+      "Id": "_A3|7",
+      "Balance": 0.0,
+      "DateOfCreation": "2021-07-17T22:14:29.0070109+03:00",
+      "HostId": 3,
+      "TransactionsList": {
+        "$id": "19",
+        "$type": "System.Collections.Generic.List`1[[BankUI.Models.Transaction, BankUI]], mscorlib",
+        "$values": [
+          {
+            "$ref": "17"
+          }
+        ]
+      }
+    }
+  ]
+}
