@@ -11,6 +11,8 @@ namespace BankUI.HelpClasses
     {
         public int FindDistance(string horizontal, string vertical)
         {
+            horizontal.ToLower();
+            vertical.ToLower();
             int[,] array = new int[vertical.Length + 1, horizontal.Length + 1];
             int[] tempData;
             for (int i = 0; i <= vertical.Length; i++)

@@ -14,7 +14,6 @@ namespace BankUI.DAL
         private IList<ClientModel> _clients;
         private IList<PersonModel> _persons;
         private IList<AccountModel> _accounts;
-        private IDistanceMetric _distanceMetric;
         //private IDataProcessor _dataProcessor = new DataProcessor();
 
         #endregion Fields
@@ -26,7 +25,6 @@ namespace BankUI.DAL
             _clients = new List<ClientModel>();
             _persons = new List<PersonModel>();
             _accounts = new List<AccountModel>();
-            _distanceMetric = new Levenshtein();
             Load();
         }
 
