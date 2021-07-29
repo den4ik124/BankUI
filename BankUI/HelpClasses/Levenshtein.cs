@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BankUI.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BankUI.HelpClasses
 {
-    public static class Levenshtein
+    public class Levenshtein : IDistanceMetric
     {
-        public static int Find(string horizontal, string vertical)
+        public int FindDistance(string horizontal, string vertical)
         {
             int[,] array = new int[vertical.Length + 1, horizontal.Length + 1];
             int[] tempData;

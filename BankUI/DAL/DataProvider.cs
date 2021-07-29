@@ -14,6 +14,7 @@ namespace BankUI.DAL
         private IList<ClientModel> _clients;
         private IList<PersonModel> _persons;
         private IList<AccountModel> _accounts;
+        private IDistanceMetric _distanceMetric;
         //private IDataProcessor _dataProcessor = new DataProcessor();
 
         #endregion Fields
@@ -25,7 +26,7 @@ namespace BankUI.DAL
             _clients = new List<ClientModel>();
             _persons = new List<PersonModel>();
             _accounts = new List<AccountModel>();
-
+            _distanceMetric = new Levenshtein();
             Load();
         }
 
@@ -187,11 +188,7 @@ namespace BankUI.DAL
 
         public IEnumerable<ClientModel> GetClientsFilteredByName(string nameFromUI)
         {
-            List<ClientModel> result = new List<ClientModel>();
-            foreach (var item in _clients)
-                if (Levenshtein.Find(item.Name, nameFromUI) <= 2)
-                    result.Add(item);
-            return result;
+            return _clients.Where(client => _distanceMetric.FindDistance(client.Name, nameFromUI) <= 2).ToList();
         }
 
         #endregion Methods
