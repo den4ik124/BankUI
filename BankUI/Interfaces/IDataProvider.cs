@@ -8,7 +8,7 @@ namespace BankUI.Interfaces
     {
         IEnumerable<T> GetClients(bool isTestData = false);
 
-        IEnumerable<T> GetClientsFilteredByName(string nameFromUI);
+        //IEnumerable<T> GetClientsFilteredByName(string nameFromUI);
 
         void Delete<Y>(Y element);
 

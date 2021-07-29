@@ -186,11 +186,6 @@ namespace BankUI.DAL
                 return;
         }
 
-        public IEnumerable<ClientModel> GetClientsFilteredByName(string nameFromUI)
-        {
-            return _clients.Where(client => _distanceMetric.FindDistance(client.Name, nameFromUI) <= 2).ToList();
-        }
-
         #endregion Methods
     }
 }

@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using BankUI.Views;
+using BankUI.HelpClasses;
 
 namespace BankUI.ViewModels
 {
@@ -55,6 +56,7 @@ namespace BankUI.ViewModels
         private bool _isCompaniesSelected = false;
 
         private static Random random = new Random();
+        private IDistanceMetric _distanceMetric;
 
         #endregion Fields
 
@@ -70,6 +72,7 @@ namespace BankUI.ViewModels
         {
             _dataProvider = new DataProvider();
             _dialogService = new DialogService();
+            _distanceMetric = new Levenshtein();
 
             _clients = new ObservableCollection<ClientViewModel>();
             Clients = CollectionViewSource.GetDefaultView(_clients);
@@ -413,7 +416,6 @@ namespace BankUI.ViewModels
         {
             if (_dialogService.DeleteClientWindow())
             {
-                //_dataProvider.DeleteClient(ConcreteClient);
                 _dataProvider.Delete(ConcreteClient);
                 UpdateClients();
             }
@@ -439,11 +441,10 @@ namespace BankUI.ViewModels
         /// <param name="isTestData">Загрузить новые тестовые данные или нет</param>
         private void UpdateClients(bool isTestData = false)
         {
-            IEnumerable<ClientModel> clients;
-            if (IsFindClientByNameEmpty)
-                clients = _dataProvider.GetClients(isTestData);
-            else
-                clients = _dataProvider.GetClientsFilteredByName(FindClientsByName);
+            IEnumerable<ClientModel> clients = _dataProvider.GetClients(isTestData);
+            if (!IsFindClientByNameEmpty)
+                clients = clients.Where(client => _distanceMetric.FindDistance(client.Name, FindClientsByName) <= 2).ToList();
+
             DataCollectionsClear();
             IEnumerable<PersonModel> persons;
             IEnumerable<CompanyModel> companies;
