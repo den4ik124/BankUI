@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankUI.Interfaces
 {
-    internal interface IDistanceMetric
+    public interface IDistanceMetric
     {
         int FindDistance(string horizontal, string vertical);
     }

@@ -56,7 +56,7 @@ namespace BankUI.ViewModels
         private bool _isCompaniesSelected = false;
 
         private static Random random = new Random();
-        private IDistanceMetric _distanceMetric;
+        private IDistanceMetric _distanceMetric = new Levenshtein();
 
         #endregion Fields
 
@@ -72,7 +72,6 @@ namespace BankUI.ViewModels
         {
             _dataProvider = new DataProvider();
             _dialogService = new DialogService();
-            _distanceMetric = new Levenshtein();
 
             _clients = new ObservableCollection<ClientViewModel>();
             Clients = CollectionViewSource.GetDefaultView(_clients);
@@ -265,6 +264,12 @@ namespace BankUI.ViewModels
             get => _findClientsByName.Length > 0 ? false : true;
         }
 
+        public IDistanceMetric DistanceMetric
+        {
+            get => _distanceMetric;
+            set => _distanceMetric = value;
+        }
+
         #endregion Properties
 
         #region Methods
@@ -441,9 +446,7 @@ namespace BankUI.ViewModels
         /// <param name="isTestData">Загрузить новые тестовые данные или нет</param>
         private void UpdateClients(bool isTestData = false)
         {
-            IEnumerable<ClientModel> clients = _dataProvider.GetClients(isTestData);
-            if (!IsFindClientByNameEmpty)
-                clients = clients.Where(client => _distanceMetric.FindDistance(client.Name, FindClientsByName) <= 2).ToList();
+            IEnumerable<ClientModel> clients = GetClients(DistanceMetric, isTestData);
 
             DataCollectionsClear();
             IEnumerable<PersonModel> persons;
@@ -468,12 +471,21 @@ namespace BankUI.ViewModels
 
             foreach (var client in clients)
                 _clients.Add(new ClientViewModel(client));
-            foreach (var person in persons)
-                _persons.Add(new PersonViewModel(person));
-            foreach (var company in companies)
-                _companies.Add(new CompanyViewModel(company));
+            //foreach (var person in persons)
+            //    _persons.Add(new PersonViewModel(person));
+            //foreach (var company in companies)
+            //    _companies.Add(new CompanyViewModel(company));
 
             DataCollectionsRefresh();
+        }
+
+        private IEnumerable<ClientModel> GetClients(IDistanceMetric distanceMetric = null, bool isTestData = false)
+        {
+            IEnumerable<ClientModel> clients;
+            clients = _dataProvider.GetClients(isTestData);
+            if (!IsFindClientByNameEmpty && distanceMetric != null)
+                return clients.Where(client => distanceMetric.FindDistance(client.Name, FindClientsByName) <= 2);
+            return clients;
         }
 
         private void OpenDeposit()
