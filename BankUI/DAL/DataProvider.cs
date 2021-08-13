@@ -3,6 +3,7 @@ using BankUI.Interfaces;
 using BankUI.Models;
 using BankUI.ViewModels;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace BankUI.DAL
@@ -77,7 +78,8 @@ namespace BankUI.DAL
         private IList<ClientModel> GetTestClientsData()
         {
             _clients.Clear();
-            foreach (var client in Generator.GetClientsList())
+            var genData = Generator.GetClientsList();
+            foreach (var client in genData)
             {
                 _clients.Add(client);
                 ClientsDBModel.AddClient(client); //добавление клиента в БД

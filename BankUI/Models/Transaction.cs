@@ -31,15 +31,16 @@ namespace BankUI.Models
                 _senderAccID = senderAccount.Id;
                 _receiverAccID = receiverAccount.Id;
                 _value = value;
-                _transactionTime = DateTime.Now;
             }
             else
             {
                 _senderID = -1;
                 _receiverID = -1;
+                _senderAccID = "-1";
+                _receiverAccID = "-1";
                 _value = 0;
-                _transactionTime = DateTime.Now;
             }
+            _transactionTime = DateTime.Now;
         }
 
         #endregion Constructor

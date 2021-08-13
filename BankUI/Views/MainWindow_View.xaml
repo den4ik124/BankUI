@@ -153,7 +153,7 @@
                     </DataGrid.InputBindings>
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
-                            <Setter Property="Background" Value="{Binding BackgroundColor}" />
+                            <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}" />
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>

@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Collections.ObjectModel;
 using BankUI.Views;
 using BankUI.HelpClasses;
+using System.Diagnostics;
 
 namespace BankUI.ViewModels
 {
@@ -315,7 +316,8 @@ namespace BankUI.ViewModels
                 return;
             if (SenderAccount == ReceiverAccount)
                 return;
-            Transaction transaction = new Transaction(SenderAccount, ReceiverAccount, TransactionValue);
+            //https://github.com/den4ik124/FBQ.git
+            Transaction transaction = new Transaction(SenderAccount, ReceiverAccount, TransactionValue); //применить тут FBQ
             AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transaction);
             ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transaction);
 
@@ -471,18 +473,17 @@ namespace BankUI.ViewModels
 
             foreach (var client in clients)
                 _clients.Add(new ClientViewModel(client));
-            //foreach (var person in persons)
-            //    _persons.Add(new PersonViewModel(person));
-            //foreach (var company in companies)
-            //    _companies.Add(new CompanyViewModel(company));
-
             DataCollectionsRefresh();
         }
 
         private IEnumerable<ClientModel> GetClients(IDistanceMetric distanceMetric = null, bool isTestData = false)
         {
             IEnumerable<ClientModel> clients;
+            //Stopwatch stopWatch = new Stopwatch();
+            //stopWatch.Start();
             clients = _dataProvider.GetClients(isTestData);
+            //stopWatch.Stop();
+            //Debug.WriteLine($"На заполнение данные: {stopWatch.ElapsedMilliseconds} ms.\n" + new string('=', 50));
             if (!IsFindClientByNameEmpty && distanceMetric != null)
                 return clients.Where(client => distanceMetric.FindDistance(client.Name, FindClientsByName) <= 2);
             return clients;
