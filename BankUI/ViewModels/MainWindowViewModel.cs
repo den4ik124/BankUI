@@ -321,7 +321,7 @@ namespace BankUI.ViewModels
             Transaction transactionFBQ = new TransactionAccounts(SelectedAccount, ReceiverAccount)
                                                 .WithAmount(TransactionValue)
                                                 .GetTransaction();
-            Transaction transaction = new Transaction(SenderAccount, ReceiverAccount, TransactionValue);
+            //Transaction transaction = new Transaction(SenderAccount, ReceiverAccount, TransactionValue);
 
             AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transactionFBQ);
             ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transactionFBQ);
