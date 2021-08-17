@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using BankUI.Views;
 using BankUI.HelpClasses;
 using System.Diagnostics;
+using BankUI.Models.TransactionFiles;
 
 namespace BankUI.ViewModels
 {
@@ -317,9 +318,13 @@ namespace BankUI.ViewModels
             if (SenderAccount == ReceiverAccount)
                 return;
             //https://github.com/den4ik124/FBQ.git
-            Transaction transaction = new Transaction(SenderAccount, ReceiverAccount, TransactionValue); //применить тут FBQ
-            AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transaction);
-            ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transaction);
+            Transaction transactionFBQ = new TransactionAccounts(SelectedAccount, ReceiverAccount)
+                                                .WithAmount(TransactionValue)
+                                                .GetTransaction();
+            Transaction transaction = new Transaction(SenderAccount, ReceiverAccount, TransactionValue);
+
+            AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transactionFBQ);
+            ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transactionFBQ);
 
             ClientsDBModel.UpdateClients();
         }

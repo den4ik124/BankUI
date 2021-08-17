@@ -21,7 +21,7 @@ namespace BankUI.Models
 
         #region Constructor
 
-        public Transaction(AccountModel senderAccount, AccountModel receiverAccount, decimal value)
+        public Transaction(in AccountModel senderAccount, in AccountModel receiverAccount, in decimal value)
         {
             //TODO проверить правильность заполнения коллекций транзакций
             if (senderAccount != null && receiverAccount != null)
