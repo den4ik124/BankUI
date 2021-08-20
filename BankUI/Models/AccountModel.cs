@@ -15,7 +15,7 @@ namespace BankUI.Models
         private static int _nextId = 1;
         private decimal _balance;
         private DateTime _dateOfCreation;
-        private IList<Transaction> _transactionsList;
+        private IList<Transaction<AccountModel>> _transactionsList;
 
         //private ClientModel _clientData;
         private int _hostID;
@@ -37,7 +37,7 @@ namespace BankUI.Models
             //_clientData = client;
             _hostID = client.Id; //добавлена как замена _clientData = client; из-за проблемы с десериализацией
             _deposit = null;
-            _transactionsList = new List<Transaction>();
+            _transactionsList = new List<Transaction<AccountModel>>();
             //TODO добавить кредитование
             //_credit = null;
         }
@@ -64,7 +64,7 @@ namespace BankUI.Models
             }
         }
 
-        public IList<Transaction> TransactionsList
+        public IList<Transaction<AccountModel>> TransactionsList
         {
             get => _transactionsList;
             set => _transactionsList = value;
@@ -84,7 +84,7 @@ namespace BankUI.Models
         /// Изменение баланса на счету.
         /// </summary>
         /// <param name="transaction">Совершенная транзакция</param>
-        public void ChangeBalance(Transaction transaction)
+        public void ChangeBalance<T>(Transaction<T> transaction) where T : AccountModel
         {
             if (transaction.ReceiverID == transaction.SenderID) //если перевод между своими счетами клиента
             {
@@ -97,7 +97,7 @@ namespace BankUI.Models
                 _balance += transaction.Value;          // баланс увеличивается на величину перевода
             else if (_hostID == transaction.SenderID)   //если ID владельца счета совпал с отправителем в транзакции
                 _balance -= transaction.Value;          // баланс уменьшается на величину перевода
-            _transactionsList.Add(transaction);         //в список переводов добавляется новый перевод.
+            _transactionsList.Add(transaction as Transaction<AccountModel>);         //в список переводов добавляется новый перевод.
         }
 
         /// <summary>

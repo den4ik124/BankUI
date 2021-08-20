@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BankUI.Models
 {
-    public class Transaction
+    public class Transaction<T> where T : AccountModel
     {
         #region Fields
 
@@ -21,25 +22,40 @@ namespace BankUI.Models
 
         #region Constructor
 
-        public Transaction(in AccountModel senderAccount, in AccountModel receiverAccount, in decimal value)
+        [JsonConstructor]
+        public Transaction()
+        { }
+
+        public Transaction(in T senderAccount, in T receiverAccount, in decimal value)
         {
+            #region Old transaction ctor
+
             //TODO проверить правильность заполнения коллекций транзакций
-            if (senderAccount != null && receiverAccount != null)
-            {
-                _senderID = senderAccount.HostId;
-                _receiverID = receiverAccount.HostId;
-                _senderAccID = senderAccount.Id;
-                _receiverAccID = receiverAccount.Id;
-                _value = value;
-            }
-            else
-            {
-                _senderID = -1;
-                _receiverID = -1;
-                _senderAccID = "-1";
-                _receiverAccID = "-1";
-                _value = 0;
-            }
+            //if (senderAccount != null && receiverAccount != null)
+            //{
+            //    _senderID = senderAccount.HostId;
+            //    _receiverID = receiverAccount.HostId;
+            //    _senderAccID = senderAccount.Id;
+            //    _receiverAccID = receiverAccount.Id;
+            //    _value = value;
+            //}
+            //else
+            //{
+            //    _senderID = -1;
+            //    _receiverID = -1;
+            //    _senderAccID = "-1";
+            //    _receiverAccID = "-1";
+            //    _value = 0;
+            //}
+            //_transactionTime = DateTime.Now;
+
+            #endregion Old transaction ctor
+
+            _senderID = senderAccount.HostId;
+            _receiverID = receiverAccount.HostId;
+            _senderAccID = senderAccount.Id;
+            _receiverAccID = receiverAccount.Id;
+            _value = value;
             _transactionTime = DateTime.Now;
         }
 

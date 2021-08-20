@@ -124,7 +124,7 @@ namespace BankUI.Models
         /// <param name="senderAccount">Аккаунт отправителя</param>
         /// <param name="receiverAccount">Аккаунт получателя</param>
         /// <param name="transaction">Проведенная транзакция</param>
-        public static void UpdateBalances(AccountModel senderAccount, AccountModel receiverAccount, Transaction transaction)
+        public static void UpdateBalances<T>(T senderAccount, T receiverAccount, Transaction<T> transaction) where T : AccountModel
         {
             if (senderAccount.HostId != receiverAccount.HostId) //если отправитель и получатель - разные люди
             {

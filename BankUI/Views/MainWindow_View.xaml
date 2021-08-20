@@ -95,7 +95,7 @@
                 Width="Auto"
                 Height="25"
                 Margin="5"
-                Command="{Binding OpenWindowCommand}"
+                Command="{Binding AddClientCommand}"
                 Content="+ Add client" />
         </StackPanel>
         <Grid Grid.Row="1">

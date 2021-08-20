@@ -14,7 +14,7 @@ namespace BankUI.Models.TransactionFiles
             this.to = to;
         }
 
-        public Transaction GetTransaction() => new Transaction(from, to, amount);
+        public Transaction<AccountModel> GetTransaction() => new Transaction<AccountModel>(from, to, amount);
 
         protected override TransactionAccounts This() => this;
     }

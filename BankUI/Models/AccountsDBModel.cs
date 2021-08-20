@@ -51,7 +51,7 @@ namespace BankUI.Models
         /// <param name="sender">Счет отправителя</param>
         /// <param name="receiver">Счет получателя</param>
         /// <param name="transaction">Транзакция</param>
-        public static void MoneyTransfer(AccountModel sender, AccountModel receiver, Transaction transaction)
+        public static void MoneyTransfer<T>(T sender, T receiver, Transaction<T> transaction) where T : AccountModel
         {
             _accounts[_accounts.IndexOf(sender)].ChangeBalance(transaction);
             _accounts[_accounts.IndexOf(receiver)].ChangeBalance(transaction);

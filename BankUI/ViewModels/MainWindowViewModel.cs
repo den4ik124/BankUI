@@ -313,15 +313,16 @@ namespace BankUI.ViewModels
 
         private void SendMoney()
         {
-            if (SenderAccount.Balance < TransactionValue)
-                return;
-            if (SenderAccount == ReceiverAccount)
-                return;
+            if (SenderAccount == null || ReceiverAccount == null) return;
+            if (SenderAccount.Balance < TransactionValue) return;
+            if (SenderAccount == ReceiverAccount) return;
             //https://github.com/den4ik124/FBQ.git
-            Transaction transactionFBQ = new TransactionAccounts(SelectedAccount, ReceiverAccount)
+
+            Transaction<AccountModel> transactionFBQ = new TransactionAccounts(SenderAccount, ReceiverAccount)
                                                 .WithAmount(TransactionValue)
                                                 .GetTransaction();
-            //Transaction transaction = new Transaction(SenderAccount, ReceiverAccount, TransactionValue);
+
+            Transaction<AccountModel> transaction = new Transaction<AccountModel>(SenderAccount, ReceiverAccount, TransactionValue);
 
             AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transactionFBQ);
             ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transactionFBQ);

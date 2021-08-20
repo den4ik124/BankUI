@@ -57,7 +57,7 @@ namespace BankUI.Models
         /// <returns>Значение баланса счета с капитализацией</returns>
         private decimal Capitalization(int monthCount)
         {
-            return _startBalance * (decimal)Math.Pow((1 + _interestRateYear / 12 / 100), monthCount);
+            return _startBalance * (decimal)Math.Pow(1 + _interestRateYear / 12 / 100, monthCount);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace BankUI.Models
         /// <returns>Значение баланса счета с капитализацией</returns>
         private decimal NoCapitalization(int monthCount)
         {
-            return monthCount >= 12 ? _startBalance * (decimal)Math.Pow((1 + _interestRateYear / 100), monthCount / 12) : _startBalance;
+            return monthCount >= 12 ? _startBalance * (decimal)Math.Pow(1 + _interestRateYear / 100, monthCount / 12) : _startBalance;
         }
 
         #endregion Methods

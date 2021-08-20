@@ -46,6 +46,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <TextBlock
@@ -69,7 +70,7 @@
             Grid.Row="1"
             Grid.Column="1"
             VerticalAlignment="Center"
-            Text="12 мес." />
+            Text="{Binding DepositDuration, StringFormat='{}{0} мес.', UpdateSourceTrigger=PropertyChanged}" />
         <TextBlock
             Grid.Row="2"
             Grid.Column="0"
@@ -106,7 +107,7 @@
             Margin="0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Text="Lorem ipsum" />
+            Text="Через XX месяцев на Вашем счету будет $$$ денег ;)" />
 
         <Button
             Grid.Row="6"
@@ -116,5 +117,14 @@
             Grid.Row="6"
             Grid.Column="1"
             Content="Отмена" />
+
+        <!--<Expander Grid.Column="2" Grid.RowSpan="7" ExpandDirection="Right">
+            <StackPanel Orientation="Vertical">
+                <TextBlock
+            VerticalAlignment="Center"
+            Text="Ожидаеммая сумма" />
+                <TextBlock Text="{Binding BalanceAtMonth}" />
+            </StackPanel>
+        </Expander>-->
     </Grid>
 </Window>
