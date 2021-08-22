@@ -93,10 +93,9 @@ namespace BankUI.ViewModels
         private void AddNewAccount()
         {
             AccountBaseModel newAcc;
-            //TODO прописать создание нового аккаунта в зависимости от выбранной RadioButton
             if (_isCredit)
                 return;
-            //TODO прописать создание креидита
+            //TODO прописать создание кредита
             //newAcc = new CreditAccountModel(_client, StartBalance, InterestRateYear, DepositDuration, IsCapitalization);
             else if (_isDeposit)
                 newAcc = new DepositAccountModel(_client, StartBalance, InterestRateYear, DepositDuration, IsCapitalization);
