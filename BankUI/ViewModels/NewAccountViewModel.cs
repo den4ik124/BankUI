@@ -51,6 +51,7 @@ namespace BankUI.ViewModels
             _currentWindow = currentWindow;
             _dataProvider = new DataProvider();
             _dialogService = new DialogService();
+            //TODO проверить на null
             _client = _dataProvider.GetClients().First(item => item.Id == client.Id);
         }
 
@@ -102,6 +103,7 @@ namespace BankUI.ViewModels
             else
                 newAcc = new RegularAccountModel(_client, StartBalance);
 
+            //TODO проверить правильность добавления в базу. Сериализацию/Десериализацию
             _dataProvider.GetClients().Where(client => client.Id == _client.Id).FirstOrDefault()?.AddNewAccount(newAcc);
             CloseWindow();
         }

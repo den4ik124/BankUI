@@ -51,7 +51,6 @@ namespace BankUI.ViewModels
         private RelayCommand _deleteClientCommand;
         private RelayCommand _sendMoneyCommand;
         private RelayCommand _addClientCommand;
-        private RelayCommand _openDepositCommand;
 
         private bool _isVIPSeleceted;
         private bool _isPersonsSelected = true;
@@ -133,9 +132,6 @@ namespace BankUI.ViewModels
 
         public RelayCommand AddClientCommand => _addClientCommand ??
             (_addClientCommand = new RelayCommand(AddClient, CanShow));
-
-        public RelayCommand OpenDepositCommand => _openDepositCommand ??
-            (_openDepositCommand = new RelayCommand(OpenDeposit, CanShow));
 
         public decimal TransactionValue
         {
@@ -372,14 +368,10 @@ namespace BankUI.ViewModels
 
         private void AddNewAcc()
         {
-            var temp = ConcreteClient;
-            //TODO проверить почему удаляются "тестовые" сотрудники
             NewAccountView newDepositWindow = new NewAccountView(ConcreteClient);
             _dialogService.ShowDialog(newDepositWindow);
 
-            //_dataProvider.GetClients().Where(client => client.Id == ConcreteClient.Id).FirstOrDefault()?.AddNewAccount();
             UpdateClients();
-            // ConcreteClient.AddNewAccount(random.Next(0, 1000));
         }
 
         private void RemoveAccount()
@@ -496,12 +488,6 @@ namespace BankUI.ViewModels
             if (!IsFindClientByNameEmpty && distanceMetric != null)
                 return clients.Where(client => distanceMetric.FindDistance(client.Name, FindClientsByName) <= 2);
             return clients;
-        }
-
-        private void OpenDeposit()
-        {
-            //NewAccountView newDepositWindow = new NewAccountView();
-            //_dialogService.ShowDialog(newDepositWindow);
         }
 
         #endregion Methods

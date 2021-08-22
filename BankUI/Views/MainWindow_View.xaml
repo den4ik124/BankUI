@@ -575,14 +575,6 @@
                                     Content="Перевести" />
                             </Grid>
                         </Expander>
-                        <Expander Header="Deposit">
-                            <Button Command="{Binding OpenDepositCommand}">
-                                <TextBlock
-                                    Width="100"
-                                    Text=" Кнопка, открывает окно создания депозита"
-                                    TextWrapping="WrapWithOverflow" />
-                            </Button>
-                        </Expander>
                     </StackPanel>
                 </Expander>
             </StackPanel>
