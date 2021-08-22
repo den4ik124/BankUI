@@ -135,7 +135,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public virtual IList<AccountModel> AccountsList { get; set; }
+        public virtual IList<AccountBaseModel> AccountsList { get; set; }
 
         public bool IsPerson { get; set; }
         public bool CanBeClosed { get; set; }

@@ -8,6 +8,6 @@ namespace BankUI.Interfaces
         int Id { get; set; }
         bool IsVIP { get; set; }
         string Name { get; set; }
-        IList<AccountModel> AccountsList { get; set; }
+        IList<AccountBaseModel> AccountsList { get; set; }
     }
 }

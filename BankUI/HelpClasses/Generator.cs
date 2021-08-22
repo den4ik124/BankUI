@@ -1,4 +1,5 @@
 ﻿using BankUI.Models;
+using BankUI.Models.Accounts;
 using System;
 using System.Collections.Generic;
 
@@ -28,9 +29,9 @@ namespace BankUI.HelpClasses
         /// Создание коллекции тестовых счетов
         /// </summary>
         /// <returns>Коллекция тестовых счетов</returns>
-        public static IList<AccountModel> GetAccountsList()
+        public static IList<AccountBaseModel> GetAccountsList()
         {
-            List<AccountModel> accounts = new List<AccountModel>();
+            List<AccountBaseModel> accounts = new List<AccountBaseModel>();
             for (int i = 0; i < random.Next(6); i++)
             {
                 accounts.Add(GetAccount());
@@ -42,9 +43,21 @@ namespace BankUI.HelpClasses
         /// Создание аккаунта
         /// </summary>
         /// <returns>Новый аккаунт</returns>
-        private static AccountModel GetAccount()
+        private static AccountBaseModel GetAccount()
         {
-            return new AccountModel(GetClient());
+            switch (random.Next(0, 3))
+            {
+                case 1:
+                    return new DepositAccountModel(GetClient(), random.Next(0, 101), 12, 12, RandomVIP());
+
+                //case 2:
+                //    return new CreditAccountModel(GetClient());
+
+                default:
+                    return new RegularAccountModel(GetClient());
+            }
+
+            //return new AccountModel(GetClient());
         }
 
         private static ClientModel GetClient()

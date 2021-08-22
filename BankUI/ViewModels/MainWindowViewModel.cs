@@ -28,9 +28,9 @@ namespace BankUI.ViewModels
         private IList<PersonViewModel> _persons;
         private IList<CompanyViewModel> _companies;
         private ClientViewModel _concreteClient;
-        private AccountModel _selectedAccount;
-        private AccountModel _receiverAccount;
-        private AccountModel _senderAccount;
+        private AccountBaseModel _selectedAccount;
+        private AccountBaseModel _receiverAccount;
+        private AccountBaseModel _senderAccount;
 
         private string _findClientsByName = string.Empty;
 
@@ -169,7 +169,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public AccountModel ReceiverAccount
+        public AccountBaseModel ReceiverAccount
         {
             get => _receiverAccount;
             set
@@ -181,7 +181,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public AccountModel SenderAccount
+        public AccountBaseModel SenderAccount
         {
             get { return _senderAccount; }
             set
@@ -193,7 +193,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public IList<AccountModel> AccountsList
+        public IList<AccountBaseModel> AccountsList
         {
             //TODO Можно ли так увязывать Model u ViewModel ?
             get => AccountsDBModel.Accounts;
@@ -238,7 +238,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public AccountModel SelectedAccount
+        public AccountBaseModel SelectedAccount
         {
             get => _selectedAccount;
             set
@@ -318,11 +318,11 @@ namespace BankUI.ViewModels
             if (SenderAccount == ReceiverAccount) return;
             //https://github.com/den4ik124/FBQ.git
 
-            Transaction<AccountModel> transactionFBQ = new TransactionAccounts(SenderAccount, ReceiverAccount)
+            Transaction<AccountBaseModel> transactionFBQ = new TransactionAccounts(SenderAccount, ReceiverAccount)
                                                 .WithAmount(TransactionValue)
                                                 .GetTransaction();
 
-            Transaction<AccountModel> transaction = new Transaction<AccountModel>(SenderAccount, ReceiverAccount, TransactionValue);
+            //Transaction<AccountModel> transaction = new Transaction<AccountModel>(SenderAccount, ReceiverAccount, TransactionValue);
 
             AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transactionFBQ);
             ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transactionFBQ);
@@ -374,7 +374,10 @@ namespace BankUI.ViewModels
         {
             var temp = ConcreteClient;
             //TODO проверить почему удаляются "тестовые" сотрудники
-            _dataProvider.GetClients().Where(client => client.Id == ConcreteClient.Id).FirstOrDefault()?.AddNewAccount();
+            NewAccountView newDepositWindow = new NewAccountView(ConcreteClient);
+            _dialogService.ShowDialog(newDepositWindow);
+
+            //_dataProvider.GetClients().Where(client => client.Id == ConcreteClient.Id).FirstOrDefault()?.AddNewAccount();
             UpdateClients();
             // ConcreteClient.AddNewAccount(random.Next(0, 1000));
         }
@@ -497,8 +500,8 @@ namespace BankUI.ViewModels
 
         private void OpenDeposit()
         {
-            NewDepositView newDepositWindow = new NewDepositView();
-            _dialogService.ShowDialog(newDepositWindow);
+            //NewAccountView newDepositWindow = new NewAccountView();
+            //_dialogService.ShowDialog(newDepositWindow);
         }
 
         #endregion Methods

@@ -64,13 +64,15 @@
     <Compile Include="Interfaces\IDataSaver.cs" />
     <Compile Include="Interfaces\IDataProcessor.cs" />
     <Compile Include="Interfaces\IDistanceMetric.cs" />
-    <Compile Include="Models\DepositModel.cs" />
+    <Compile Include="Models\Accounts\DepositAccountModel.cs" />
+    <Compile Include="Models\Accounts\DepositModel.cs" />
+    <Compile Include="Models\Accounts\RegularAccountModel.cs" />
     <Compile Include="Models\TransactionFiles\Transaction.cs" />
     <Compile Include="Models\TransactionFiles\TransactionBuilder.cs" />
     <Compile Include="Models\TransactionFiles\TransactionAccounts.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\NewClientsViewModel.cs" />
-    <Compile Include="ViewModels\NewDepositViewModel.cs" />
+    <Compile Include="ViewModels\NewAccountViewModel.cs" />
     <Compile Include="ViewModels\PersonViewModel.cs" />
     <Compile Include="Views\MainWindow_View.xaml.cs">
       <DependentUpon>MainWindow_View.xaml</DependentUpon>
@@ -80,23 +82,23 @@
     <Compile Include="HelpClasses\Generator.cs" />
     <Compile Include="Interfaces\IDataProvider.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
-    <Compile Include="Models\AccountModel.cs" />
-    <Compile Include="Models\AccountsDBModel.cs" />
+    <Compile Include="Models\Accounts\AccountBaseModel.cs" />
+    <Compile Include="Models\Accounts\AccountsDBModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\ClientModel.cs" />
-    <Compile Include="Models\ClientsDBModel.cs" />
-    <Compile Include="Models\CompanyModel.cs" />
+    <Compile Include="Models\Clients\ClientModel.cs" />
+    <Compile Include="Models\Clients\ClientsDBModel.cs" />
+    <Compile Include="Models\Clients\CompanyModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Views\NewClientsView.xaml.cs">
       <DependentUpon>NewClientsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewDepositView.xaml.cs">
-      <DependentUpon>NewDepositView.xaml</DependentUpon>
+    <Compile Include="Views\NewAccountView.xaml.cs">
+      <DependentUpon>NewAccountView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\MainWindow_View.xaml">
       <SubType>Designer</SubType>
@@ -106,13 +108,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewDepositView.xaml">
+    <Page Include="Views\NewAccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\Clients\PersonModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

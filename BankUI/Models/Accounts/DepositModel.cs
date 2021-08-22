@@ -20,6 +20,9 @@ namespace BankUI.Models
 
         #region Constructors
 
+        public DepositModel()
+        { }
+
         public DepositModel(decimal startBalance, int duration, double interestRateYear, bool isCapitalization = false)
         {
             _startBalance = startBalance;

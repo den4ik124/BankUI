@@ -103,7 +103,7 @@ namespace BankUI.Models
             UpdateClients();
         }
 
-        public static void UpdateBalance(AccountModel account)
+        public static void UpdateBalance(AccountBaseModel account)
         {
             //СТАРЫЙ КОД ОБНОВЛЕНИя ДАННЫХ АККАУНТА
 
@@ -124,7 +124,7 @@ namespace BankUI.Models
         /// <param name="senderAccount">Аккаунт отправителя</param>
         /// <param name="receiverAccount">Аккаунт получателя</param>
         /// <param name="transaction">Проведенная транзакция</param>
-        public static void UpdateBalances<T>(T senderAccount, T receiverAccount, Transaction<T> transaction) where T : AccountModel
+        public static void UpdateBalances<T>(T senderAccount, T receiverAccount, Transaction<T> transaction) where T : AccountBaseModel
         {
             if (senderAccount.HostId != receiverAccount.HostId) //если отправитель и получатель - разные люди
             {
@@ -135,7 +135,8 @@ namespace BankUI.Models
                         foreach (var acc in client.AccountsList)
                             if (acc.Id == senderAccount.Id) // обновляем данные о балансе после перевода (данные из БД)
                             {
-                                acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                //acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                acc.UpdateAccountBalance();
                                 client.TotalBalanceCalc();
                                 break;
                             }
@@ -146,7 +147,8 @@ namespace BankUI.Models
                         foreach (var acc in client.AccountsList)
                             if (acc.Id == receiverAccount.Id) // обновляем данные о балансе после перевода (данные из БД)
                             {
-                                acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                //acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                acc.UpdateAccountBalance();
                                 client.TotalBalanceCalc();
                                 break;
                             }
@@ -164,13 +166,15 @@ namespace BankUI.Models
                         {
                             if (acc.Id == senderAccount.Id)
                             {
-                                acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                //acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                acc.UpdateAccountBalance();
                                 client.TotalBalanceCalc();
                                 continue;
                             }
                             else if (acc.Id == receiverAccount.Id)
                             {
-                                acc.Balance = UpdateAccountBalance(acc); // AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                //acc.Balance = UpdateAccountBalance(acc); // AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
+                                acc.UpdateAccountBalance();
                                 client.TotalBalanceCalc();
                                 continue;
                             }
@@ -182,7 +186,7 @@ namespace BankUI.Models
             UpdateClients();
         }
 
-        private static decimal UpdateAccountBalance(AccountModel account)
+        private static decimal UpdateAccountBalance(AccountBaseModel account)
         {
             return AccountsDBModel.Accounts.Where(item => item.Id == account.Id).FirstOrDefault().Balance;
         }

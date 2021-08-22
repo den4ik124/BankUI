@@ -10,7 +10,7 @@ namespace BankUI.Models
     {
         #region Fields
 
-        private static IList<AccountModel> _accounts = new ObservableCollection<AccountModel>();
+        private static IList<AccountBaseModel> _accounts = new ObservableCollection<AccountBaseModel>();
         private readonly static IDataProcessor _dataProcessor = new DataProcessor();
 
         #endregion Fields
@@ -19,7 +19,7 @@ namespace BankUI.Models
 
         public static string FileName { get; set; } = "accountsDB.json";
 
-        public static IList<AccountModel> Accounts { get => _accounts; set => _accounts = value; }
+        public static IList<AccountBaseModel> Accounts { get => _accounts; set => _accounts = value; }
 
         #endregion Properties
 
@@ -29,7 +29,7 @@ namespace BankUI.Models
         /// Добавление счета в БД
         /// </summary>
         /// <param name="account">Счет, который должен быть добавлен в БД</param>
-        public static void AddAccount(AccountModel account)
+        public static void AddAccount(AccountBaseModel account)
         {
             if (_accounts.Contains(account))
                 return;
@@ -51,7 +51,7 @@ namespace BankUI.Models
         /// <param name="sender">Счет отправителя</param>
         /// <param name="receiver">Счет получателя</param>
         /// <param name="transaction">Транзакция</param>
-        public static void MoneyTransfer<T>(T sender, T receiver, Transaction<T> transaction) where T : AccountModel
+        public static void MoneyTransfer<T>(T sender, T receiver, Transaction<T> transaction) where T : AccountBaseModel
         {
             _accounts[_accounts.IndexOf(sender)].ChangeBalance(transaction);
             _accounts[_accounts.IndexOf(receiver)].ChangeBalance(transaction);
@@ -66,7 +66,7 @@ namespace BankUI.Models
         /// Удаление счета из БД
         /// </summary>
         /// <param name="acc">Счет, который будет удален</param>
-        internal static void Remove(AccountModel acc)
+        internal static void Remove(AccountBaseModel acc)
         {
             Accounts.Remove(acc);
             SaveDB();

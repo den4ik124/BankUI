@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="BankUI.Views.NewDepositView"
+    x:Class="BankUI.Views.NewAccountView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,10 +8,11 @@
     Title="Open deposit"
     Width="650"
     Height="450"
-    d:DataContext="{d:DesignInstance local:NewDepositViewModel}"
+    d:DataContext="{d:DesignInstance local:NewAccountViewModel}"
     mc:Ignorable="d">
 
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="30" />
         </Style>
@@ -32,9 +33,15 @@
             <Setter Property="Margin" Value="20,0,0,0" />
             <Setter Property="FontFamily" Value="OpenSans" />
         </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="20,0,0,0" />
+            <Setter Property="FontFamily" Value="OpenSans" />
+        </Style>
     </Window.Resources>
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -48,74 +55,104 @@
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-
+        <StackPanel
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <RadioButton
+                x:Name="rbtnRegular"
+                Height="30"
+                Content="Обычный"
+                IsChecked="{Binding IsRegular, UpdateSourceTrigger=PropertyChanged}" />
+            <RadioButton
+                x:Name="rbtnDeposit"
+                Height="30"
+                Content="Депозитный"
+                IsChecked="{Binding IsDeposit, UpdateSourceTrigger=PropertyChanged}" />
+            <RadioButton
+                x:Name="rbtnCredit"
+                Height="30"
+                Content="Кредитный"
+                IsChecked="{Binding IsCredit, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="False" />
+        </StackPanel>
         <TextBlock
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="0"
             VerticalAlignment="Center"
             Text="Сумма вклада" />
         <TextBox
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
             VerticalAlignment="Center"
-            Text="{Binding DepositStart, StringFormat='{}{0} $'}" />
+            Text="{Binding StartBalance, StringFormat='{}{0} $'}" />
         <!--  Text="100 руб."  -->
 
         <TextBlock
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="0"
             VerticalAlignment="Center"
-            Text="Срок размещения (мес.)" />
+            Text="Срок размещения (мес.)"
+            Visibility="{Binding ElementName=rbtnDeposit, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"
             VerticalAlignment="Center"
-            Text="{Binding DepositDuration, StringFormat='{}{0} мес.', UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding DepositDuration, UpdateSourceTrigger=PropertyChanged}"
+            Visibility="{Binding ElementName=rbtnDeposit, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBlock
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             VerticalAlignment="Center"
-            Text="Дата начала" />
+            Text="Дата начала"
+            Visibility="{Binding ElementName=rbtnDeposit, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <DatePicker
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="1"
             Margin="20,0,20,0"
             VerticalAlignment="Center"
-            FontSize="15" />
+            FontSize="15"
+            Visibility="{Binding ElementName=rbtnDeposit, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBlock
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="0"
             VerticalAlignment="Center"
-            Text="Процентная ставка" />
+            Text="Процентная ставка"
+            Visibility="{Binding ElementName=rbtnDeposit, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <TextBox
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="1"
             VerticalAlignment="Center"
-            Text="12 % год." />
+            Text="12 % год."
+            Visibility="{Binding ElementName=rbtnDeposit, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <CheckBox
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Content="с капитализацией" />
+            Content="с капитализацией"
+            Visibility="{Binding ElementName=rbtnDeposit, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
         <!--<TextBlock Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Text="{Binding DepositResult}" VerticalAlignment="Center" />-->
         <TextBlock
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Margin="0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Text="Через XX месяцев на Вашем счету будет $$$ денег ;)" />
+            Text="Через XX месяцев на Вашем счету будет $$$ денег ;)"
+            Visibility="{Binding ElementName=rbtnDeposit, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
 
         <Button
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.Column="0"
+            Command="{Binding AddAccountCommand}"
             Content="Открыть" />
         <Button
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.Column="1"
+            Command="{Binding CloseWindowCommand}"
             Content="Отмена" />
 
         <!--<Expander Grid.Column="2" Grid.RowSpan="7" ExpandDirection="Right">

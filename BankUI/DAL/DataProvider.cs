@@ -14,7 +14,7 @@ namespace BankUI.DAL
 
         private IList<ClientModel> _clients;
         private IList<PersonModel> _persons;
-        private IList<AccountModel> _accounts;
+        private IList<AccountBaseModel> _accounts;
         //private IDataProcessor _dataProcessor = new DataProcessor();
 
         #endregion Fields
@@ -25,7 +25,7 @@ namespace BankUI.DAL
         {
             _clients = new List<ClientModel>();
             _persons = new List<PersonModel>();
-            _accounts = new List<AccountModel>();
+            _accounts = new List<AccountBaseModel>();
             Load();
         }
 
@@ -35,7 +35,7 @@ namespace BankUI.DAL
 
         public IList<ClientModel> Clients { get => _clients; set => _clients = value; }
         public IList<PersonModel> Persons { get => _persons; set => _persons = value; }
-        public IList<AccountModel> Accounts { get => _accounts; set => _accounts = value; }
+        public IList<AccountBaseModel> Accounts { get => _accounts; set => _accounts = value; }
 
         #endregion Properties
 
@@ -111,7 +111,7 @@ namespace BankUI.DAL
         /// Удаление аккаунта (счета) клиента
         /// </summary>
         /// <param name="account">Аккаунт, который будет удален</param>
-        public void DeleteAccount(AccountModel account)
+        public void DeleteAccount(AccountBaseModel account)
         {
             foreach (var acc in AccountsDBModel.Accounts)
             {
@@ -148,11 +148,11 @@ namespace BankUI.DAL
         {
             // TODO подумать, что лучше: один такой обобщенный метод или 2 отдельных не обощенных.
             // если тип - аккаунт
-            if (typeof(Y) == typeof(AccountModel))
+            if (typeof(Y) == typeof(AccountBaseModel))
             {
                 foreach (var acc in AccountsDBModel.Accounts)
                 {
-                    if (acc.Id == (element as AccountModel).Id)
+                    if (acc.Id == (element as AccountBaseModel).Id)
                     {
                         AccountsDBModel.Remove(acc);
                         foreach (var client in ClientsDBModel.Clients)

@@ -13,7 +13,7 @@ namespace BankUI.Models
         private bool _isVIP;
         private string _name;
         private decimal _totalBalance;
-        private IList<AccountModel> _accountsList;
+        private IList<AccountBaseModel> _accountsList;
         private static int nextId = 1;
 
         private static Random random = new Random();
@@ -37,11 +37,11 @@ namespace BankUI.Models
             _id = nextId++;
             _name = name;
             _isVIP = isVIP;
-            _accountsList = new ObservableCollection<AccountModel>();
-            for (int i = 0; i < random.Next(5); i++)
-            {
-                AddNewAccount(random.Next(1000));
-            }
+            _accountsList = new ObservableCollection<AccountBaseModel>();
+            //for (int i = 0; i < random.Next(5); i++)
+            //{
+            //    AddNewAccount(random.Next(1000));
+            //}
 
             //_balance = balance;
             //_deposit = null;
@@ -57,7 +57,7 @@ namespace BankUI.Models
         public string Name { get => _name; set => _name = value; }
         public decimal TotalBalance { get => _totalBalance; set => _totalBalance = value; }
 
-        public IList<AccountModel> AccountsList { get => _accountsList; set => _accountsList = value; }
+        public IList<AccountBaseModel> AccountsList { get => _accountsList; set => _accountsList = value; }
         //public IList<Account<string>> AccountsList { get => accountsList; set => accountsList = value; }
 
         #endregion Properties
@@ -68,9 +68,10 @@ namespace BankUI.Models
         /// Добавление счета клиенту
         /// </summary>
         /// <param name="balance">Баланс при открытии счета</param>
-        public void AddNewAccount(decimal balance = 0)
+        public void AddNewAccount(AccountBaseModel account, decimal balance = 0)
         {
-            AccountModel account = new AccountModel(this, balance);
+            //Вызывать окно создания аккаунта
+            //AccountBaseModel account = new AccountBaseModel(this, balance); //TODO Создавать конкретный тип аккаунта : регулярный или депозитный
             _accountsList.Add(account);
             if (!AccountsDBModel.Accounts.Contains(account))
                 AccountsDBModel.AddAccount(account);
@@ -82,7 +83,7 @@ namespace BankUI.Models
         /// Удаление счета из списка счетов клиента
         /// </summary>
         /// <param name="account">Счет, который будет удален</param>
-        public void RemoveAccount(AccountModel account)
+        public void RemoveAccount(AccountBaseModel account)
         {
             AccountsList.Remove(account);
             TotalBalanceCalc();

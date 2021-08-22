@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BankUI.Models
 {
-    public class Transaction<T> where T : AccountModel
+    public class Transaction<T> where T : AccountBaseModel
     {
         #region Fields
 

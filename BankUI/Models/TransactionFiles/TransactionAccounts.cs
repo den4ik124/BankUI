@@ -8,13 +8,13 @@ namespace BankUI.Models.TransactionFiles
 {
     public class TransactionAccounts : TransactionBuilder<TransactionAccounts>
     {
-        public TransactionAccounts(AccountModel from, AccountModel to)
+        public TransactionAccounts(AccountBaseModel from, AccountBaseModel to)
         {
             this.from = from;
             this.to = to;
         }
 
-        public Transaction<AccountModel> GetTransaction() => new Transaction<AccountModel>(from, to, amount);
+        public Transaction<AccountBaseModel> GetTransaction() => new Transaction<AccountBaseModel>(from, to, amount);
 
         protected override TransactionAccounts This() => this;
     }

@@ -9,8 +9,8 @@ namespace BankUI.Models.TransactionFiles
     public abstract class TransactionBuilder<Self> where Self : TransactionBuilder<Self>
     {
         protected decimal amount;
-        protected AccountModel to;
-        protected AccountModel from;
+        protected AccountBaseModel to;
+        protected AccountBaseModel from;
 
         public Self WithAmount(decimal amount)
         {
@@ -18,13 +18,13 @@ namespace BankUI.Models.TransactionFiles
             return This();
         }
 
-        public Self To(AccountModel to)
+        public Self To(AccountBaseModel to)
         {
             this.to = to;
             return This();
         }
 
-        public Self From(AccountModel from)
+        public Self From(AccountBaseModel from)
         {
             this.from = from;
             return This();
