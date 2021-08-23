@@ -52,7 +52,7 @@ namespace BankUI.ViewModels
             _dataProvider = new DataProvider();
             _dialogService = new DialogService();
             //TODO проверить на null
-            _client = _dataProvider.GetClients().First(item => item.Id == client.Id);
+            _client = _dataProvider.GetClients().First(item => item.Id == client?.Id);
         }
 
         #endregion Constructors

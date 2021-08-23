@@ -110,10 +110,10 @@ namespace BankUI.ViewModels
             (_addNewClient = new RelayCommand(AddNewClientShow, CanShow));
 
         public RelayCommand AddNewAccount => _addNewAccount ??
-            (_addNewAccount = new RelayCommand(AddNewAcc, CanShow));
+            (_addNewAccount = new RelayCommand(AddNewAcc, () => ConcreteClient != null));
 
         public RelayCommand RemoveAccountCommand => _removeAccountCommand ??
-            (_removeAccountCommand = new RelayCommand(RemoveAccount, CanShow));
+            (_removeAccountCommand = new RelayCommand(RemoveAccount, () => ConcreteClient?.AccountsList.Count > 0));
 
         public RelayCommand ShowVIPOnlyCommand => _showVIPOnly ??
             (_showVIPOnly = new RelayCommand(ShowVIPOnly, CanVIPShow));
@@ -370,7 +370,6 @@ namespace BankUI.ViewModels
         {
             NewAccountView newDepositWindow = new NewAccountView(ConcreteClient);
             _dialogService.ShowDialog(newDepositWindow);
-
             UpdateClients();
         }
 

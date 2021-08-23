@@ -106,30 +106,6 @@ namespace BankUI.ViewModels
             }
         }
 
-        //public Color BackgroundColor
-        //{
-        //    get
-        //    {
-        //        return IsVIP ? Color.FromRgb(255, 215, 0) : Color.FromRgb(0, 0, 0);
-        //    }
-        //}
-        //public string BackgroundColor
-        //{
-        //    get
-        //    {
-        //        return IsVIP ? "LemonChiffon" : "White";
-        //    }
-        //    //set
-        //    //{
-        //    //    if (_client.IsVIP == false)
-        //    //        _backgroundColor = "White";
-        //    //    else
-        //    //        _backgroundColor = "Gold";
-
-        //    //    OnPropertyChanged();
-        //    //}
-        //}
-
         #endregion Properties
 
         #region Methods

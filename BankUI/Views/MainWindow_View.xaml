@@ -158,6 +158,7 @@
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
                         <DataGridTextColumn
+                            IsReadOnly="True"
                             Width="100*"
                             Binding="{Binding Id, Mode=TwoWay}"
                             Header="Id" />
