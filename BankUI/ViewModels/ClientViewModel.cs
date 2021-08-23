@@ -3,6 +3,7 @@ using BankUI.Interfaces;
 using BankUI.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -135,7 +136,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public virtual IList<AccountBaseModel> AccountsList { get; set; }
+        public virtual ObservableCollection<IAccount> AccountsList { get; set; }
 
         public bool IsPerson { get; set; }
         public bool CanBeClosed { get; set; }

@@ -10,7 +10,7 @@ namespace BankUI.Models
     {
         #region Fields
 
-        private static IList<AccountBaseModel> _accounts = new ObservableCollection<AccountBaseModel>();
+        private static ObservableCollection<IAccount> _accounts = new ObservableCollection<IAccount>();
         private readonly static IDataProcessor _dataProcessor = new DataProcessor();
 
         #endregion Fields
@@ -19,7 +19,7 @@ namespace BankUI.Models
 
         public static string FileName { get; set; } = "accountsDB.json";
 
-        public static IList<AccountBaseModel> Accounts { get => _accounts; set => _accounts = value; }
+        public static ObservableCollection<IAccount> Accounts { get => _accounts; set => _accounts = value; }
 
         #endregion Properties
 
@@ -29,7 +29,7 @@ namespace BankUI.Models
         /// Добавление счета в БД
         /// </summary>
         /// <param name="account">Счет, который должен быть добавлен в БД</param>
-        public static void AddAccount(AccountBaseModel account)
+        public static void AddAccount(IAccount account)
         {
             if (_accounts.Contains(account))
                 return;
@@ -40,10 +40,8 @@ namespace BankUI.Models
         /// <summary>
         /// Сериализация счетов в .json файл
         /// </summary>
-        private static void SaveDB()
-        {
+        internal static void SaveDB() =>
             _dataProcessor.Serialization(_accounts, FileName);
-        }
 
         /// <summary>
         /// Перевод средств между счетами
@@ -66,7 +64,7 @@ namespace BankUI.Models
         /// Удаление счета из БД
         /// </summary>
         /// <param name="acc">Счет, который будет удален</param>
-        internal static void Remove(AccountBaseModel acc)
+        internal static void Remove(IAccount acc)
         {
             Accounts.Remove(acc);
             SaveDB();

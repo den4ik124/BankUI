@@ -14,7 +14,7 @@ namespace BankUI.Interfaces
 
         void DeleteClient(ClientViewModel client);
 
-        void DeleteAccount(AccountBaseModel account);
+        void DeleteAccount(IAccount account);
 
         //IEnumerable<Client> GetTestClients();
         void Load();

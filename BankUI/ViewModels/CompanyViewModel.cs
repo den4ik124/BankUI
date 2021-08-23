@@ -1,5 +1,7 @@
-﻿using BankUI.Models;
+﻿using BankUI.Interfaces;
+using BankUI.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BankUI.ViewModels
 {
@@ -71,7 +73,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public override IList<AccountBaseModel> AccountsList
+        public override ObservableCollection<IAccount> AccountsList
         {
             get => _companyModel.AccountsList;
             set

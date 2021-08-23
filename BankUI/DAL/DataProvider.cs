@@ -14,7 +14,7 @@ namespace BankUI.DAL
 
         private IList<ClientModel> _clients;
         private IList<PersonModel> _persons;
-        private IList<AccountBaseModel> _accounts;
+        private IList<IAccount> _accounts;
         //private IDataProcessor _dataProcessor = new DataProcessor();
 
         #endregion Fields
@@ -25,8 +25,8 @@ namespace BankUI.DAL
         {
             _clients = new List<ClientModel>();
             _persons = new List<PersonModel>();
-            _accounts = new List<AccountBaseModel>();
-            Load();
+            _accounts = new List<IAccount>();
+            //Load();
         }
 
         #endregion Constructors
@@ -35,7 +35,7 @@ namespace BankUI.DAL
 
         public IList<ClientModel> Clients { get => _clients; set => _clients = value; }
         public IList<PersonModel> Persons { get => _persons; set => _persons = value; }
-        public IList<AccountBaseModel> Accounts { get => _accounts; set => _accounts = value; }
+        public IList<IAccount> Accounts { get => _accounts; set => _accounts = value; }
 
         #endregion Properties
 
@@ -111,7 +111,7 @@ namespace BankUI.DAL
         /// Удаление аккаунта (счета) клиента
         /// </summary>
         /// <param name="account">Аккаунт, который будет удален</param>
-        public void DeleteAccount(AccountBaseModel account)
+        public void DeleteAccount(IAccount account)
         {
             foreach (var acc in AccountsDBModel.Accounts)
             {
@@ -129,15 +129,15 @@ namespace BankUI.DAL
         /// <summary>
         /// Создание тестового счета
         /// </summary>
-        public void GetTestAccountsData()
-        {
-            _accounts.Clear();
-            foreach (var account in Generator.GetAccountsList())
-            {
-                //AccountsDBModel.AddAccount(account);
-                _accounts.Add(account);
-            }
-        }
+        //public void GetTestAccountsData()
+        //{
+        //    _accounts.Clear();
+        //    foreach (var account in Generator.GetAccountsList())
+        //    {
+        //        //AccountsDBModel.AddAccount(account);
+        //        _accounts.Add(account);
+        //    }
+        //}
 
         /// <summary>
         /// Удаление элемента из БД

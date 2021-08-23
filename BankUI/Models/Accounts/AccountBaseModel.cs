@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BankUI.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.Runtime.CompilerServices;
 namespace BankUI.Models
 {
     //public class  Account<T>
-    public abstract class AccountBaseModel// : INotifyPropertyChanged
+    public abstract class AccountBaseModel : IAccount // : INotifyPropertyChanged
     {
         #region Fields
 
@@ -21,21 +22,19 @@ namespace BankUI.Models
         //private ClientModel _clientData;
         private int _hostID;
 
-        private DepositModel _deposit;
-
         #endregion Fields
 
         #region Constructors
 
-        [JsonConstructor]
-        public AccountBaseModel() { }
+        //[JsonConstructor]
+        //public AccountBaseModel() { }
 
-        public AccountBaseModel(ClientModel client, decimal balance = 0)
+        public AccountBaseModel(int hostId, decimal balance = 0)
         {
             //_id = "_A" + client.Id.ToString() + $"|{_nextId++}";
             this._balance = balance;
             DateOfCreation = DateTime.Now;
-            _hostID = client.Id; //добавлена как замена _clientData = client; из-за проблемы с десериализацией
+            _hostID = hostId; //добавлена как замена _clientData = client; из-за проблемы с десериализацией
             _transactionsList = new List<Transaction<AccountBaseModel>>();
             //_clientData = client;
             //_deposit = null;
@@ -53,17 +52,6 @@ namespace BankUI.Models
 
         //public ClientModel ClientData { get => _clientData; set => _clientData = value; }
         public int HostId { get => _hostID; set => _hostID = value; }
-
-        public DepositModel Deposit
-        {
-            get => _deposit;
-            set
-            {
-                if (_deposit == value)
-                    return;
-                _deposit = value;
-            }
-        }
 
         public IList<Transaction<AccountBaseModel>> TransactionsList
         {

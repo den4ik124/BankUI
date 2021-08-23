@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,15 @@ namespace BankUI.Models.Accounts
 {
     internal class RegularAccountModel : AccountBaseModel
     {
-        public RegularAccountModel(ClientModel client, decimal balance = 0) : base(client, balance)
+        //[JsonConstructor]
+        //public RegularAccountModel()
+        //{
+        //    _nextId++;
+        //}
+
+        public RegularAccountModel(int clientID, decimal balance = 0) : base(clientID, balance)
         {
-            Id = "_R" + client.Id.ToString() + $"|{_nextId++}";
+            Id = $"_R{clientID}|{_nextId++}";
         }
     }
 }

@@ -189,7 +189,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public IList<AccountBaseModel> AccountsList
+        public ObservableCollection<IAccount> AccountsList
         {
             //TODO Можно ли так увязывать Model u ViewModel ?
             get => AccountsDBModel.Accounts;
@@ -440,6 +440,7 @@ namespace BankUI.ViewModels
 
         private void LoadClients()
         {
+            _dataProvider.Load();
             UpdateClients();
         }
 

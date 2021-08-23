@@ -1,5 +1,7 @@
-﻿using BankUI.Models;
+﻿using BankUI.Interfaces;
+using BankUI.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -92,7 +94,7 @@ namespace BankUI.ViewModels
             }
         }
 
-        public override IList<AccountBaseModel> AccountsList
+        public override ObservableCollection<IAccount> AccountsList
         {
             get => _person.AccountsList;
             set

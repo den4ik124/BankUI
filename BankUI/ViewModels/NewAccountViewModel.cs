@@ -14,13 +14,13 @@ namespace BankUI.ViewModels
     {
         #region Fields
 
-        private decimal _balanceAtMonth;
-
         private decimal _startBalance;
         private double _interestRateYear;
         private int _depositDuration;
+        private int _monthCount;
         private DateTime _depositOpened;
         private bool _isCapitalization;
+        private decimal _depositBalanceFinal;
 
         private IDataProvider<ClientModel> _dataProvider;
         private IDialogService _dialogService;
@@ -31,7 +31,7 @@ namespace BankUI.ViewModels
         private RelayCommand _closeWindowCommand;
 
         private Window _currentWindow;
-        private bool _isRegular;
+        private bool _isRegular = true;
         private bool _isDeposit;
         private bool _isCredit;
 
@@ -59,23 +59,85 @@ namespace BankUI.ViewModels
 
         #region Properties
 
-        public decimal StartBalance { get => _startBalance; set => _startBalance = value; }
-        public double InterestRateYear { get => _interestRateYear; set => _interestRateYear = value; }
-        public int DepositDuration { get => _depositDuration; set => _depositDuration = value; }
+        public decimal StartBalance
+        {
+            get => _startBalance;
+            set
+            {
+                if (_startBalance == value)
+                    return;
+                _startBalance = value;
+                DepositBalanceFinal = GetBalanceAtMonth();
+                OnPropertyChanged();
+            }
+        }
+
+        public double InterestRateYear
+        {
+            get => _interestRateYear;
+            set
+            {
+                if (_interestRateYear == value)
+                    return;
+                _interestRateYear = value;
+                DepositBalanceFinal = GetBalanceAtMonth();
+                OnPropertyChanged();
+            }
+        }
+
+        public int DepositDuration
+        {
+            get => _depositDuration;
+            set
+            {
+                if (_depositDuration == value)
+                    return;
+                _depositDuration = value;
+                DepositBalanceFinal = GetBalanceAtMonth();
+                OnPropertyChanged();
+            }
+        }
+
         public DateTime DepositOpened { get => _depositOpened; set => _depositOpened = value; }
-        public bool IsCapitalization { get => _isCapitalization; set => _isCapitalization = value; }
+
+        public bool IsCapitalization
+        {
+            get => _isCapitalization;
+            set
+            {
+                if (_isCapitalization == value)
+                    return;
+                _isCapitalization = value;
+                DepositBalanceFinal = GetBalanceAtMonth();
+                OnPropertyChanged();
+            }
+        }
+
         public bool IsRegular { get => _isRegular; set => _isRegular = value; }
         public bool IsDeposit { get => _isDeposit; set => _isDeposit = value; }
         public bool IsCredit { get => _isCredit; set => _isCredit = value; }
 
-        public decimal BalanceAtMonth
+        public int MonthCount
         {
-            get => _balanceAtMonth;
+            get => _monthCount;
             set
             {
-                if (_balanceAtMonth == value)
+                if (_monthCount == value)
                     return;
-                _balanceAtMonth = value;
+                _monthCount = value;
+                DepositBalanceFinal = GetBalanceAtMonth();
+                OnPropertyChanged();
+            }
+        }
+
+        public decimal DepositBalanceFinal
+        {
+            get => _depositBalanceFinal;
+            set
+            {
+                if (_depositBalanceFinal == value)
+                    return;
+                _depositBalanceFinal = value;
                 OnPropertyChanged();
             }
         }
@@ -90,6 +152,25 @@ namespace BankUI.ViewModels
 
         #region Methods
 
+        public decimal GetBalanceAtMonth() =>
+            _isCapitalization ? Capitalization(_monthCount) : NoCapitalization(_monthCount);
+
+        /// <summary>
+        /// Расчет баланса счета с капитализацией
+        /// </summary>
+        /// <param name="monthCount">Число месяцев</param>
+        /// <returns>Значение баланса счета с капитализацией</returns>
+        private decimal Capitalization(int monthCount) =>
+            StartBalance * (decimal)Math.Pow(1 + _interestRateYear / 12 / 100, monthCount);
+
+        /// <summary>
+        /// Расчет баланса счета без капитализации
+        /// </summary>
+        /// <param name="monthCount">Число месяцев</param>
+        /// <returns>Значение баланса счета с капитализацией</returns>
+        private decimal NoCapitalization(int monthCount) =>
+            monthCount >= 12 ? StartBalance * (decimal)Math.Pow(1 + _interestRateYear / 100, monthCount / 12) : StartBalance;
+
         private void AddNewAccount()
         {
             AccountBaseModel newAcc;
@@ -98,9 +179,9 @@ namespace BankUI.ViewModels
             //TODO прописать создание кредита
             //newAcc = new CreditAccountModel(_client, StartBalance, InterestRateYear, DepositDuration, IsCapitalization);
             else if (_isDeposit)
-                newAcc = new DepositAccountModel(_client, StartBalance, InterestRateYear, DepositDuration, IsCapitalization);
+                newAcc = new DepositAccountModel(_client.Id, StartBalance, InterestRateYear, DepositDuration, IsCapitalization);
             else
-                newAcc = new RegularAccountModel(_client, StartBalance);
+                newAcc = new RegularAccountModel(_client.Id, StartBalance);
 
             //TODO проверить правильность добавления в базу. Сериализацию/Десериализацию
             _dataProvider.GetClients().Where(client => client.Id == _client.Id).FirstOrDefault()?.AddNewAccount(newAcc);

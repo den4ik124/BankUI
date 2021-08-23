@@ -100,22 +100,14 @@ namespace BankUI.Models
                     if (!AccountsDBModel.Accounts.Contains(account))
                         AccountsDBModel.AddAccount(account);
             }
+            //AccountsDBModel.SaveDB();
             UpdateClients();
         }
 
-        public static void UpdateBalance(AccountBaseModel account)
+        public static void UpdateBalance(ClientModel client)
         {
-            //СТАРЫЙ КОД ОБНОВЛЕНИя ДАННЫХ АККАУНТА
-
-            //foreach (var client in Clients)
-            //    if (client.Id == account.HostId)
-            //    {
-            //        foreach (var acc in client.AccountsList)
-            //            if (acc.Id == account.Id)
-            //                acc.Balance = account.Balance;
-            //        client.TotalBalanceCalc();
-            //    }
-            //UpdateClients();
+            if (_clients.Count > 0)
+                _clients[_clients.IndexOf(client)].TotalBalanceCalc();
         }
 
         /// <summary>

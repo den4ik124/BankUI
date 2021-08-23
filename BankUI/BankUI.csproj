@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="DAL\DataProcessor.cs" />
     <Compile Include="HelpClasses\Levenshtein.cs" />
+    <Compile Include="Interfaces\IAccount.cs" />
     <Compile Include="Interfaces\IClient.cs" />
     <Compile Include="Interfaces\IDataSaver.cs" />
     <Compile Include="Interfaces\IDataProcessor.cs" />
