@@ -6,9 +6,9 @@
     xmlns:local="clr-namespace:BankUI.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Open deposit"
-    Width="650"
+    Width="700"
     MinHeight="200"
-    Height="{Binding ElementName=gMain, Path=ActualHeight}"
+    Height="425"
     d:DataContext="{d:DesignInstance local:NewAccountViewModel}"
     mc:Ignorable="d">
 

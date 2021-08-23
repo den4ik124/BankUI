@@ -143,7 +143,15 @@ namespace BankUI.ViewModels
         }
 
         public RelayCommand AddAccountCommand => (_addAccount) ??
-            (_addAccount = new RelayCommand(AddNewAccount, () => true));
+            (_addAccount = new RelayCommand(AddNewAccount, () =>
+            {
+                if (IsRegular)
+                    return StartBalance > 0;
+                else if (IsDeposit)
+                    return StartBalance > 0 && DepositDuration > 0 && InterestRateYear > 0;
+                else
+                    return false;
+            }));
 
         public RelayCommand CloseWindowCommand => (_closeWindowCommand) ??
             (_closeWindowCommand = new RelayCommand(CloseWindow, () => true));
