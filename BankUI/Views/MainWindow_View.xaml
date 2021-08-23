@@ -82,7 +82,7 @@
                         Content="+ Add TEST client" />
                 </StackPanel>
             </GroupBox>
-            <RadioButton
+            <CheckBox
                 Width="Auto"
                 Margin="5"
                 VerticalAlignment="Center"

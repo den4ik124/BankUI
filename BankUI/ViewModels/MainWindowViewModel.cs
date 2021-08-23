@@ -65,6 +65,8 @@ namespace BankUI.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        //public event EventHandler CollectionDataChanged;  // TODO Использовать событие вместо обновления всей коллекции DataToShow
+
         #endregion Events
 
         #region Constructors
@@ -275,8 +277,9 @@ namespace BankUI.ViewModels
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            DataToShow.Refresh();
+
             //UpdateClients();
-            //DataCollectionsRefresh();
         }
 
         private void AddClient()
