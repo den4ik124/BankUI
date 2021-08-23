@@ -15,12 +15,6 @@ namespace BankUI.Models.Accounts
         private int _depositDuration;
         private bool _isCapitalization;
 
-        //[JsonConstructor]
-        //public DepositAccountModel()
-        //{
-        //    _nextId++;
-        //}
-
         public DepositAccountModel(int clientID, decimal balance, double interestRateYear, int depositDuration, bool isCapitalization)
             : base(clientID, balance)
         {

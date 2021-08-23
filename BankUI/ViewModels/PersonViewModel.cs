@@ -18,7 +18,7 @@ namespace BankUI.ViewModels
 
         #region Constructors
 
-        public PersonViewModel(ClientModel person)
+        public PersonViewModel(ClientModel person) : base(person)
         {
             this._person = person as PersonModel;
         }

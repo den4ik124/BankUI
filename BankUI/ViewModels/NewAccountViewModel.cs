@@ -47,11 +47,9 @@ namespace BankUI.ViewModels
 
         public NewAccountViewModel(ClientViewModel client, Window currentWindow)
         {
-            //DepositModel deposit = new DepositModel();
             _currentWindow = currentWindow;
             _dataProvider = new DataProvider();
             _dialogService = new DialogService();
-            //TODO проверить на null
             _client = _dataProvider.GetClients().First(item => item.Id == client?.Id);
         }
 
@@ -196,15 +194,11 @@ namespace BankUI.ViewModels
             CloseWindow();
         }
 
-        private void CloseWindow()
-        {
+        private void CloseWindow() =>
             _dialogService.CloseWindow(_currentWindow);
-        }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         #endregion Methods
     }

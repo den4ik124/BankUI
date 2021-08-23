@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using BankUI.Models.Accounts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BankUI.Models.Tests
 {
@@ -12,7 +13,7 @@ namespace BankUI.Models.Tests
             decimal startBalance = 100;
             int duration = 12;
             double interestRestYear = 12;
-            DepositModel deposit = new DepositModel(startBalance, duration, interestRestYear, true);
+            DepositAccountModel deposit = new DepositAccountModel(-1, startBalance, interestRestYear, duration, true);
 
             decimal expected = 112.6825M;
             double delta = 0.001;
@@ -32,7 +33,7 @@ namespace BankUI.Models.Tests
             decimal startBalance = 100;
             int duration = 12;
             double interestRestYear = 12;
-            DepositModel deposit = new DepositModel(startBalance, duration, interestRestYear);
+            DepositAccountModel deposit = new DepositAccountModel(-1, startBalance, interestRestYear, duration, false);
 
             decimal expected = 100;
             double delta = 0.001;
@@ -52,7 +53,7 @@ namespace BankUI.Models.Tests
             decimal startBalance = 100;
             int duration = 12;
             double interestRestYear = 12;
-            DepositModel deposit = new DepositModel(startBalance, duration, interestRestYear);
+            DepositAccountModel deposit = new DepositAccountModel(-1, startBalance, interestRestYear, duration, false);
 
             decimal expected = 125.44M;
             double delta = 0.01;

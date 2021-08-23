@@ -2,12 +2,10 @@
 using BankUI.Interfaces;
 using BankUI.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Media;
 
 namespace BankUI.ViewModels
 {
@@ -41,15 +39,10 @@ namespace BankUI.ViewModels
 
         #region Constructors
 
-        public ClientViewModel()
-        {
-        }
-
         public ClientViewModel(Window openedWindow)
         {
             _currentDialogWindow = openedWindow;
             _dialogService = new DialogService();
-            //_person = new PersonModel();// ?? throw new ArgumentNullException(nameof(client));
         }
 
         public ClientViewModel(ClientModel client)
@@ -65,7 +58,6 @@ namespace BankUI.ViewModels
 
         public virtual string Name
         {
-            //get => _client.Name;
             get => _name;
             set
             {
@@ -114,7 +106,7 @@ namespace BankUI.ViewModels
 
         public virtual string CompanyCode
         {
-            get => _companyCode;// != null ? (_client as CompanyModel).CompanyCode : null;
+            get => _companyCode;
             set
             {
                 if (_companyCode == value)
@@ -143,10 +135,7 @@ namespace BankUI.ViewModels
 
         public string BackgroundColor
         {
-            get
-            {
-                return (bool)IsVIP ? "LemonChiffon" : "White";
-            }
+            get => IsVIP ? "LemonChiffon" : "White";
         }
 
         public virtual decimal TotalBalance { get; set; }

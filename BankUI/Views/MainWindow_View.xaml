@@ -62,8 +62,6 @@
             <RowDefinition Height="50" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <!--<ToggleButton Grid.Row="0" Margin="5" Width="Auto" Content="Clients / VIP">
-        </ToggleButton>-->
         <StackPanel
             Grid.Row="0"
             VerticalAlignment="Center"
@@ -141,7 +139,6 @@
                     IsSynchronizedWithCurrentItem="False"
                     ItemsSource="{Binding DataToShow}"
                     SelectedItem="{Binding ConcreteClient, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                    <!--  SelectedItem="{Binding DataContext.ConcreteClient, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">  -->
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Command="{Binding ShowFullInfoCommand}" Header="Full info" />
@@ -188,7 +185,6 @@
                         VerticalAlignment="Center"
                         Text="Total: " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding DataToShow.Count}" />
-                    <!--<TextBlock VerticalAlignment="Center" Text="{Binding ElementName=dgClients, Path=Items.Count}" />-->
                 </StackPanel>
                 <StackPanel Grid.Row="3" Orientation="Horizontal">
                     <Label>Input clients name here:</Label>
@@ -199,68 +195,6 @@
                 </StackPanel>
             </Grid>
 
-            <!--<TabControl Grid.Column="0">
-                <TabItem Header="Clients">
-                </TabItem>
-                <TabItem Header="Companies">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="30" />
-                        </Grid.RowDefinitions>
-                        <DataGrid
-                            x:Name="dgCompanies"
-                            Margin="5"
-                            AutoGenerateColumns="False"
-                            ItemsSource="{Binding Companies}">
-                            <DataGrid.RowStyle>
-                                <Style TargetType="DataGridRow">
-                                    <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}" />
-                                </Style>
-                            </DataGrid.RowStyle>
-                            <DataGrid.Columns>
-                                <DataGridTextColumn
-                                    Width="100*"
-                                    Binding="{Binding Id}"
-                                    Header="Id" />
-                                <DataGridTextColumn
-                                    Width="100*"
-                                    Binding="{Binding Name}"
-                                    Header="Name" />
-                                <DataGridTextColumn
-                                    Width="100*"
-                                    Binding="{Binding CompanyCode}"
-                                    Header="Phone" />
-                                <DataGridCheckBoxColumn
-                                    Width="100*"
-                                    Binding="{Binding IsVIP}"
-                                    Header="VIP" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" Text="Total: " />
-                            <TextBlock VerticalAlignment="Center" Text="{Binding ElementName=dgCompanies, Path=Items.Count}" />
-                        </StackPanel>
-                    </Grid>
-                </TabItem>
-            -->
-            <!--<TabItem Header="VIP">
-                    <DataGrid  Margin="5" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="test surName" Binding="{Binding SurName}" />
-                            <DataGridTextColumn Header="test Code" Binding="{Binding PersonalCode}" />
-                            <DataGridTextColumn Header="test Phone" Binding="{Binding PhoneNumber}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </TabItem>-->
-            <!--
-            </TabControl>-->
-            <!--<GridSplitter
-                Grid.Column="1"
-                Width="5"
-                HorizontalAlignment="Stretch"
-                ResizeDirection="Columns" />-->
-            <!--  Переделать UI этого элемента, чтобы не было привязки к dgClients  -->
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                 <Expander
                     Width="Auto"
@@ -268,15 +202,11 @@
                     VerticalAlignment="Stretch"
                     IsExpanded="True"
                     Style="{StaticResource ClientsDataExpanderStyle}">
-                    <!--  Background="SkyBlue">  -->
                     <Expander.Header>
                         <TextBlock Text="Clients data">
                             <TextBlock.LayoutTransform>
                                 <RotateTransform Angle="-90" CenterX="45" CenterY="22" />
                             </TextBlock.LayoutTransform>
-                            <!--<TextBlock.RenderTransform>
-                                <RotateTransform CenterX="45" CenterY="22" Angle="-90" />
-                            </TextBlock.RenderTransform>-->
                         </TextBlock>
                     </Expander.Header>
 
@@ -379,7 +309,6 @@
                                 VerticalAlignment="Center"
                                 ItemsSource="{Binding ElementName=dgClients, Path=SelectedItem.AccountsList, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedItem="{Binding SelectedAccount, UpdateSourceTrigger=PropertyChanged}">
-                                <!--  SelectedValue="{Binding ElementName=dgClients, Path=SelectedItem.AccountsList[0]}">  -->
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -427,7 +356,6 @@
                     VerticalAlignment="Stretch"
                     IsExpanded="True"
                     Style="{StaticResource ClientsDataExpanderStyle}">
-                    <!--  Background="SkyBlue">  -->
                     <Expander.Header>
                         <TextBlock Text="Account data">
                             <TextBlock.LayoutTransform>
@@ -543,11 +471,6 @@
                                     Grid.Row="2"
                                     Grid.Column="0"
                                     Content="На счёт:" />
-                                <!--<TextBox
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Width="50" />-->
-                                <!--  SelectedItem="{Binding AccountsList[0]}"  -->
                                 <ComboBox
                                     Grid.Row="2"
                                     Grid.Column="1"

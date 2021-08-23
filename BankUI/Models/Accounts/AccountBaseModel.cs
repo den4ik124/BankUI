@@ -1,10 +1,7 @@
 ﻿using BankUI.Interfaces;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace BankUI.Models
 {
@@ -19,25 +16,19 @@ namespace BankUI.Models
         private DateTime _dateOfCreation;
         private IList<Transaction<AccountBaseModel>> _transactionsList;
 
-        //private ClientModel _clientData;
         private int _hostID;
 
         #endregion Fields
 
         #region Constructors
 
-        //[JsonConstructor]
-        //public AccountBaseModel() { }
-
         public AccountBaseModel(int hostId, decimal balance = 0)
         {
-            //_id = "_A" + client.Id.ToString() + $"|{_nextId++}";
-            this._balance = balance;
+            _balance = balance;
             DateOfCreation = DateTime.Now;
             _hostID = hostId; //добавлена как замена _clientData = client; из-за проблемы с десериализацией
             _transactionsList = new List<Transaction<AccountBaseModel>>();
             //_clientData = client;
-            //_deposit = null;
             //TODO добавить кредитование
             //_credit = null;
         }
@@ -47,10 +38,9 @@ namespace BankUI.Models
         #region Properties
 
         public virtual string Id { get => _id; set => _id = value; }
-        public decimal Balance { get => _balance;/* set => _balance = value; */}
+        public decimal Balance { get => _balance; }
         public DateTime DateOfCreation { get => _dateOfCreation; set => _dateOfCreation = value; }
 
-        //public ClientModel ClientData { get => _clientData; set => _clientData = value; }
         public int HostId { get => _hostID; set => _hostID = value; }
 
         public IList<Transaction<AccountBaseModel>> TransactionsList
@@ -69,10 +59,8 @@ namespace BankUI.Models
 
         #region Methods
 
-        public void UpdateAccountBalance()
-        {
+        public void UpdateAccountBalance() =>
             _balance = AccountsDBModel.Accounts.Where(item => item.Id == this.Id).FirstOrDefault().Balance;
-        }
 
         /// <summary>
         /// Изменение баланса на счету.
@@ -93,22 +81,6 @@ namespace BankUI.Models
                 _balance -= transaction.Value;          // баланс уменьшается на величину перевода
             _transactionsList.Add(transaction as Transaction<AccountBaseModel>);         //в список переводов добавляется новый перевод.
         }
-
-        /// <summary>
-        /// Открытие вклада
-        /// </summary>
-        /// <param name="startBalance">Начальная сумма вклада</param>
-        /// <param name="duration">Продолжительность депозита</param>
-        /// <param name="interestRateYear">% ставка за год</param>
-        //public void OpenDeposit(decimal startBalance, int duration, double interestRateYear)
-        //{
-        //    _deposit = new DepositModel(startBalance, duration, interestRateYear);
-        //}
-
-        //private void OnPropertyChanged([CallerMemberName] string propName = "")
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        //}
 
         #endregion Methods
     }

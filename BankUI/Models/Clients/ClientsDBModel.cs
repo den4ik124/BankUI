@@ -127,7 +127,6 @@ namespace BankUI.Models
                         foreach (var acc in client.AccountsList)
                             if (acc.Id == senderAccount.Id) // обновляем данные о балансе после перевода (данные из БД)
                             {
-                                //acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
                                 acc.UpdateAccountBalance();
                                 client.TotalBalanceCalc();
                                 break;
@@ -139,7 +138,6 @@ namespace BankUI.Models
                         foreach (var acc in client.AccountsList)
                             if (acc.Id == receiverAccount.Id) // обновляем данные о балансе после перевода (данные из БД)
                             {
-                                //acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
                                 acc.UpdateAccountBalance();
                                 client.TotalBalanceCalc();
                                 break;
@@ -176,11 +174,6 @@ namespace BankUI.Models
                 }
             }
             UpdateClients();
-        }
-
-        private static decimal UpdateAccountBalance(AccountBaseModel account)
-        {
-            return AccountsDBModel.Accounts.Where(item => item.Id == account.Id).FirstOrDefault().Balance;
         }
 
         /// <summary>

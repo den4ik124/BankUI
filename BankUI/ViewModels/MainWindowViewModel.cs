@@ -10,7 +10,6 @@ using System.Windows.Data;
 using System.Collections.ObjectModel;
 using BankUI.Views;
 using BankUI.HelpClasses;
-using System.Diagnostics;
 using BankUI.Models.TransactionFiles;
 
 namespace BankUI.ViewModels
@@ -35,9 +34,6 @@ namespace BankUI.ViewModels
         private string _findClientsByName = string.Empty;
 
         private decimal _transactionValue;
-
-        //private AccountsDBModel _accountsDB;
-        //private IList<Account> _accounts;
 
         private RelayCommand _showTestClients;
         private RelayCommand _addNewClient;
@@ -89,14 +85,6 @@ namespace BankUI.ViewModels
             DataToShow = CollectionViewSource.GetDefaultView(_dataToShow);
 
             LoadClients();
-
-            //_dialogService.OpenFileDialog();
-            //ClientsDBModel.Path = _dialogService.FilePath;
-
-            //_accountsDB = new AccountsDBModel()
-            //{
-            //    Path = "clients.json"
-            //};
         }
 
         #endregion Constructors

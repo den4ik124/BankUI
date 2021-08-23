@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using BankUI.Interfaces;
-using BankUI.HelpClasses;
 
 namespace BankUI.Models
 {
@@ -20,8 +18,6 @@ namespace BankUI.Models
 
         private static Random random = new Random();
 
-        //private IList<Account<string>> accountsList;
-
         #endregion Fields
 
         #region Constructors
@@ -37,9 +33,6 @@ namespace BankUI.Models
             _name = name;
             _isVIP = isVIP;
             _accountsList = new ObservableCollection<IAccount>();
-            //_balance = balance;
-            //_deposit = null;
-            //_accountsList = accounts;
         }
 
         #endregion Constructors
@@ -57,7 +50,6 @@ namespace BankUI.Models
         }
 
         public ObservableCollection<IAccount> AccountsList { get => _accountsList; set => _accountsList = value; }
-        //public IList<Account<string>> AccountsList { get => accountsList; set => accountsList = value; }
 
         #endregion Properties
 
@@ -69,12 +61,9 @@ namespace BankUI.Models
         /// <param name="balance">Баланс при открытии счета</param>
         public void AddNewAccount(IAccount account, decimal balance = 0)
         {
-            //Вызывать окно создания аккаунта
-            //AccountBaseModel account = new AccountBaseModel(this, balance); //TODO Создавать конкретный тип аккаунта : регулярный или депозитный
             _accountsList.Add(account);
             if (!AccountsDBModel.Accounts.Contains(account))
                 AccountsDBModel.AddAccount(account);
-            //AccountsDBModel.Accounts.Add(account); //исправить на это, если появятся проблемы с сохранением счетов в БД
             ClientsDBModel.UpdateBalance(this);
             TotalBalanceCalc();
         }

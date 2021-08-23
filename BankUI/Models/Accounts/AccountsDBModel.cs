@@ -1,7 +1,5 @@
 ﻿using BankUI.DAL;
 using BankUI.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace BankUI.Models

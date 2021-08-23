@@ -15,7 +15,7 @@ namespace BankUI.ViewModels
 
         #region Constructors
 
-        public CompanyViewModel(ClientModel company)
+        public CompanyViewModel(ClientModel company) : base(company)
         {
             _companyModel = company as CompanyModel;
         }

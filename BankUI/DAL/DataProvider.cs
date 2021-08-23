@@ -15,7 +15,6 @@ namespace BankUI.DAL
         private IList<ClientModel> _clients;
         private IList<PersonModel> _persons;
         private IList<IAccount> _accounts;
-        //private IDataProcessor _dataProcessor = new DataProcessor();
 
         #endregion Fields
 
@@ -26,7 +25,6 @@ namespace BankUI.DAL
             _clients = new List<ClientModel>();
             _persons = new List<PersonModel>();
             _accounts = new List<IAccount>();
-            //Load();
         }
 
         #endregion Constructors
@@ -125,19 +123,6 @@ namespace BankUI.DAL
             foreach (var acc in AccountsDBModel.Accounts)
                 _accounts.Add(acc);
         }
-
-        /// <summary>
-        /// Создание тестового счета
-        /// </summary>
-        //public void GetTestAccountsData()
-        //{
-        //    _accounts.Clear();
-        //    foreach (var account in Generator.GetAccountsList())
-        //    {
-        //        //AccountsDBModel.AddAccount(account);
-        //        _accounts.Add(account);
-        //    }
-        //}
 
         /// <summary>
         /// Удаление элемента из БД
