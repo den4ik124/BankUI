@@ -81,8 +81,14 @@ namespace BankUI.DAL
             string json = JsonConvert.SerializeObject(toSerializeObject, jsonSettings);
             if (path == "")
                 path = Environment.CurrentDirectory + $"\\{_defaultName}";
-
-            File.WriteAllText(path, json);
+            try
+            {
+                File.WriteAllText(path, json);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(new string('=', 50) + "\n" + e.Message + "\n" + new string('=', 50));
+            }
             Debug.WriteLine($"\nДанные записаны в файл:\n{path}\n");
         }
 
