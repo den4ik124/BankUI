@@ -58,6 +58,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CorrectDialogService\DialogService.cs" />
+    <Compile Include="CorrectDialogService\ICloseRequest.cs" />
+    <Compile Include="CorrectDialogService\IDialog.cs" />
+    <Compile Include="CorrectDialogService\IDialogService.cs" />
     <Compile Include="DAL\DataProcessor.cs" />
     <Compile Include="HelpClasses\Levenshtein.cs" />
     <Compile Include="Interfaces\IAccount.cs" />
