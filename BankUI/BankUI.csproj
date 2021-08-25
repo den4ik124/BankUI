@@ -62,6 +62,7 @@
     <Compile Include="CorrectDialogService\ICloseRequest.cs" />
     <Compile Include="CorrectDialogService\IDialog.cs" />
     <Compile Include="CorrectDialogService\IDialogService.cs" />
+    <Compile Include="CorrectDialogService\TestViewModel.cs" />
     <Compile Include="DAL\DataProcessor.cs" />
     <Compile Include="HelpClasses\Levenshtein.cs" />
     <Compile Include="Interfaces\IAccount.cs" />

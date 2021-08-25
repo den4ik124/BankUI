@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace BankUI.CorrectDialogService
 {
-    internal interface IDialog
+    public interface IDialog
     {
         object DataContext { get; set; }
 

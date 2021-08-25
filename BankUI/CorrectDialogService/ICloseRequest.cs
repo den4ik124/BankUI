@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BankUI.CorrectDialogService
 {
-    internal interface ICloseRequest
+    public interface ICloseRequest
     {
         event EventHandler<CloseRequestArgs> CloseRequested;
     }
 
-    internal class CloseRequestArgs : EventArgs
+    public class CloseRequestArgs : EventArgs
     {
         public bool? DialogResult { get; set; }
 

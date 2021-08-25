@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace BankUI.CorrectDialogService
 {
-    internal class DialogService : IDialogService
+    public class DialogService : IDialogService
     {
         private Window _owner;
 
