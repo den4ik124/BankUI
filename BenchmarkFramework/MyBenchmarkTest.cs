@@ -12,22 +12,18 @@ namespace Benchmark
     [MemoryDiagnoser]
     [RankColumn]
     [RPlotExporter]
-    public class MyParserBenchmark
+    public class MyBenchmarkTest
     {
-        private BankUI.Models.Accounts.DepositAccountModel depositAccount;
-
         [Benchmark]
         public void CapitalizationTest()
         {
-            depositAccount = new BankUI.Models.Accounts.DepositAccountModel(1, 100, 12, 12, true);
-            depositAccount.GetBalanceAtMonth(5);
+            _ = new BankUI.Models.Accounts.DepositAccountModel(1, 100, 12, 12, true).GetBalanceAtMonth(5);
         }
 
         [Benchmark]
         public void NoCapitalizationTest()
         {
-            depositAccount = new BankUI.Models.Accounts.DepositAccountModel(1, 100, 12, 12, false);
-            depositAccount.GetBalanceAtMonth(5);
+            _ = new BankUI.Models.Accounts.DepositAccountModel(1, 100, 12, 12, false).GetBalanceAtMonth(5);
         }
     }
 }

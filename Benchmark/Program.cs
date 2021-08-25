@@ -1,12 +1,22 @@
-﻿using System;
+﻿using BenchmarkDotNet.Running;
+using System;
+using BankUI.Models.Accounts;
+using System.Diagnostics;
 
 namespace Benchmark
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            try
+            {
+                BenchmarkRunner.Run<DepositAccountModel>();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка:\n{ex.Message}\n");
+            }
         }
     }
 }
