@@ -24,6 +24,14 @@ namespace BankUI.HelpClasses
             return clients;
         }
 
+        public static IList<ClientModel> GetClientsList(int clientsCount)
+        {
+            List<ClientModel> clients = new List<ClientModel>();
+            for (int i = 0; i < clientsCount; i++)
+                clients.Add(GetClient());
+            return clients;
+        }
+
         /// <summary>
         /// Создание коллекции тестовых счетов
         /// </summary>
@@ -53,7 +61,7 @@ namespace BankUI.HelpClasses
             }
         }
 
-        private static ClientModel GetClient()
+        public static ClientModel GetClient()
         {
             switch (random.Next(0, 2))
             {

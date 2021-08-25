@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using BankUI;
+using BankUI.HelpClasses;
 
 namespace Benchmark
 {
@@ -14,16 +15,30 @@ namespace Benchmark
     [RPlotExporter]
     public class MyBenchmarkTest
     {
+        private Levenshtein levenshtein = new Levenshtein();
+
         [Benchmark]
-        public void CapitalizationTest()
+        public void LevenshteinHorVert()
         {
-            _ = new BankUI.Models.Accounts.DepositAccountModel(1, 100, 12, 12, true).GetBalanceAtMonth(5);
+            var test = levenshtein.FindDistance("молоко", "колокол");
         }
 
         [Benchmark]
-        public void NoCapitalizationTest()
+        public void LevenshteinVertHor()
         {
-            _ = new BankUI.Models.Accounts.DepositAccountModel(1, 100, 12, 12, false).GetBalanceAtMonth(5);
+            var test = levenshtein.FindDistance("колокол", "молоко");
         }
+
+        //[Benchmark]
+        //public void CapitalizationTest()
+        //{
+        //    _ = new BankUI.Models.Accounts.DepositAccountModel(1, 100, 12, 12, true).GetBalanceAtMonth(5);
+        //}
+
+        //[Benchmark]
+        //public void NoCapitalizationTest()
+        //{
+        //    _ = new BankUI.Models.Accounts.DepositAccountModel(1, 100, 12, 12, false).GetBalanceAtMonth(5);
+        //}
     }
 }
