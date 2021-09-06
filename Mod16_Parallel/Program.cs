@@ -54,7 +54,7 @@ namespace Mod16_Parallel
                {
                    for (int j = startIndex; j <= endIndex; j++)
                        CheckNumberV2(j);
-                   Console.WriteLine($"Поток {Task.CurrentId}: {startIndex} - {endIndex}");
+                   //Console.WriteLine($"Поток {Task.CurrentId}: {startIndex} - {endIndex}");
                }));
             }
 
