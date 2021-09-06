@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using BankUI.Views;
 using BankUI.HelpClasses;
 using BankUI.Models.TransactionFiles;
+using System.Threading.Tasks;
 
 namespace BankUI.ViewModels
 {
@@ -84,7 +85,11 @@ namespace BankUI.ViewModels
             _dataToShow = new ObservableCollection<ClientViewModel>();
             DataToShow = CollectionViewSource.GetDefaultView(_dataToShow);
 
-            LoadClients();
+            Task.Factory.StartNew(() =>
+            {
+                LoadClients();
+            });
+            //LoadClientsAsync();
         }
 
         #endregion Constructors
@@ -279,18 +284,24 @@ namespace BankUI.ViewModels
 
         private void DataCollectionsRefresh()
         {
-            Persons.Refresh();
-            Clients.Refresh();
-            Companies.Refresh();
-            DataToShow.Refresh();
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                Persons.Refresh();
+                Clients.Refresh();
+                Companies.Refresh();
+                DataToShow.Refresh();
+            });
         }
 
         private void DataCollectionsClear()
         {
-            _clients.Clear();
-            _persons.Clear();
-            _companies.Clear();
-            _dataToShow.Clear();
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                _clients.Clear();
+                _persons.Clear();
+                _companies.Clear();
+                _dataToShow.Clear();
+            });
         }
 
         private bool CanSend()
@@ -425,7 +436,15 @@ namespace BankUI.ViewModels
         {
             _isVIPSeleceted = false;
             OnPropertyChanged();
+            //Task.Factory.StartNew(() =>
+            //{
             UpdateClients(true);
+            //});
+        }
+
+        private async void LoadClientsAsync()
+        {
+            await Task.Run(() => LoadClients());
         }
 
         private void LoadClients()
