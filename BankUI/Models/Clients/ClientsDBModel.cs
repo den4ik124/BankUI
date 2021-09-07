@@ -3,6 +3,8 @@ using BankUI.Interfaces;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BankUI.Models
 {
@@ -11,9 +13,11 @@ namespace BankUI.Models
         #region Fields
 
         private static readonly string defaultFileName = "ClientsDataBase.json";
+
         private static IList<ClientModel> _clients = new ObservableCollection<ClientModel>();
         private static IList<PersonModel> _persons = new ObservableCollection<PersonModel>();
         private static IList<CompanyModel> _companies = new ObservableCollection<CompanyModel>();
+
         private static IDataProcessor _dataProcessor = new DataProcessor();
         //private IDialogService _dialogService;
 
@@ -29,7 +33,7 @@ namespace BankUI.Models
             set
             {
                 _clients = value;
-                UpdateClients();
+                UpdateClientsAsync();
             }
         }
 
@@ -39,7 +43,7 @@ namespace BankUI.Models
             set
             {
                 _persons = value;
-                UpdateClients();
+                UpdateClientsAsync();
             }
         }
 
@@ -49,7 +53,7 @@ namespace BankUI.Models
             set
             {
                 _companies = value;
-                UpdateClients();
+                UpdateClientsAsync();
             }
         }
 
@@ -70,7 +74,7 @@ namespace BankUI.Models
             foreach (var account in client.AccountsList)
                 if (!AccountsDBModel.Accounts.Contains(account))
                     AccountsDBModel.AddAccount(account); //добавление счетов нового клиента в БД счетов
-            UpdateClients();
+            UpdateClientsAsync();
         }
 
         /// <summary>
@@ -80,7 +84,7 @@ namespace BankUI.Models
         public static void RemoveClient(ClientModel client)
         {
             Clients.Remove(client);
-            UpdateClients();
+            UpdateClientsAsync();
         }
 
         /// <summary>
@@ -92,7 +96,9 @@ namespace BankUI.Models
             var deserializedClients = _dataProcessor.DeserializationJSON<ClientModel>();
             if (deserializedClients == null)
                 return;
+
             AccountsDBModel.Accounts.Clear();
+
             foreach (var client in deserializedClients)
             {
                 _clients.Add(client);
@@ -100,8 +106,16 @@ namespace BankUI.Models
                     if (!AccountsDBModel.Accounts.Contains(account))
                         AccountsDBModel.AddAccount(account);
             }
-            //AccountsDBModel.SaveDB();
-            UpdateClients();
+
+            //foreach (var client in deserializedClients)
+            //{
+            //    _clients.Add(client);
+            //    foreach (var account in client.AccountsList)
+            //        if (!AccountsDBModel.Accounts.Contains(account))
+            //            AccountsDBModel.AddAccount(account);
+            //}
+            ////AccountsDBModel.SaveDB();
+            UpdateClientsAsync();
         }
 
         public static void UpdateBalance(ClientModel client)
@@ -173,21 +187,24 @@ namespace BankUI.Models
                     }
                 }
             }
-            UpdateClients();
+            UpdateClientsAsync();
         }
 
         /// <summary>
         /// Обновление списков клиентов физ.лиц и юр.лиц и сохранение в .json файл
         /// </summary>
-        public static void UpdateClients()
+        public static async void UpdateClientsAsync()
         {
-            _persons.Clear();
-            _companies.Clear();
-            _persons = _clients.OfType<PersonModel>().ToList();
-            _companies = _clients.OfType<CompanyModel>().ToList();
-            //TODO убрать сериализацию отсюда, или оставить ???
-            _dataProcessor.Serialization(_clients);
-            //Serialization(_clients);
+            await Task.Run(() =>
+            {
+                _persons.Clear();
+                _companies.Clear();
+                _persons = _clients.OfType<PersonModel>().ToList();
+                _companies = _clients.OfType<CompanyModel>().ToList();
+                //TODO убрать сериализацию отсюда, или оставить ???
+                _dataProcessor.Serialization(_clients);
+                //Serialization(_clients);
+            });
         }
 
         #endregion Methods

@@ -2,6 +2,7 @@
 using BankUI.Interfaces;
 using BankUI.Models;
 using BankUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -44,6 +45,7 @@ namespace BankUI.DAL
         /// </summary>
         public void Load()
         {
+            //App.Current.Dispatcher.Invoke(() => ClientsDBModel.FillDataBase()); //Десериализация данных и заполнение БД.
             ClientsDBModel.FillDataBase(); //Десериализация данных и заполнение БД.
             _clients.Clear();
             foreach (var client in ClientsDBModel.Clients)

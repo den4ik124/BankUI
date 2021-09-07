@@ -20,7 +20,7 @@ namespace BankUI.HelpClasses
         {
             List<ClientModel> clients = new List<ClientModel>();
             //for (int i = 0; i < random.Next(50, 151); i++)
-            for (int i = 0; i < 1_000; i++)
+            for (int i = 0; i < 500; i++)
                 clients.Add(GetClient());
             return clients;
         }

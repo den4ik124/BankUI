@@ -85,11 +85,8 @@ namespace BankUI.ViewModels
             _dataToShow = new ObservableCollection<ClientViewModel>();
             DataToShow = CollectionViewSource.GetDefaultView(_dataToShow);
 
-            Task.Factory.StartNew(() =>
-            {
-                LoadClients();
-            });
             //LoadClientsAsync();
+            LoadClientsSync();
         }
 
         #endregion Constructors
@@ -325,7 +322,7 @@ namespace BankUI.ViewModels
             AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transactionFBQ);
             ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transactionFBQ);
 
-            ClientsDBModel.UpdateClients();
+            ClientsDBModel.UpdateClientsAsync();
         }
 
         private bool CanVIPShow()
@@ -428,8 +425,6 @@ namespace BankUI.ViewModels
                 _dataProvider.Delete(ConcreteClient);
                 UpdateClients();
             }
-            else
-                return;
         }
 
         private void TestClientsShow()
@@ -444,10 +439,13 @@ namespace BankUI.ViewModels
 
         private async void LoadClientsAsync()
         {
-            await Task.Run(() => LoadClients());
+            await Task.Run(() =>
+            {
+                LoadClientsSync();
+            });
         }
 
-        private void LoadClients()
+        private void LoadClientsSync()
         {
             _dataProvider.Load();
             UpdateClients();

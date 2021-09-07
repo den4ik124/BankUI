@@ -1,6 +1,8 @@
 ﻿using BankUI.DAL;
 using BankUI.Interfaces;
+using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace BankUI.Models
 {
@@ -32,7 +34,7 @@ namespace BankUI.Models
             if (_accounts.Contains(account))
                 return;
             _accounts.Add(account);
-            SaveDB();
+            SaveDBAsync();
         }
 
         /// <summary>
@@ -40,6 +42,9 @@ namespace BankUI.Models
         /// </summary>
         internal static void SaveDB() =>
             _dataProcessor.Serialization(_accounts, FileName);
+
+        internal static async void SaveDBAsync() =>
+            await Task.Factory.StartNew(() => _dataProcessor.Serialization(_accounts, FileName));
 
         /// <summary>
         /// Перевод средств между счетами
@@ -51,11 +56,8 @@ namespace BankUI.Models
         {
             _accounts[_accounts.IndexOf(sender)].ChangeBalance(transaction);
             _accounts[_accounts.IndexOf(receiver)].ChangeBalance(transaction);
-
-            SaveDB();
-
-            //_accounts[_accounts.IndexOf(sender)].Balance -= transactionValue;
-            //_accounts[_accounts.IndexOf(receiver)].Balance += transactionValue;
+            SaveDBAsync();
+            //SaveDB();
         }
 
         /// <summary>
@@ -65,7 +67,8 @@ namespace BankUI.Models
         internal static void Remove(IAccount acc)
         {
             Accounts.Remove(acc);
-            SaveDB();
+            SaveDBAsync();
+            //SaveDB();
         }
 
         #endregion Methods
