@@ -9,6 +9,12 @@ namespace BankUI.HelpClasses
 {
     public class Levenshtein : IDistanceMetric
     {
+        /// <summary>
+        /// Расчет "редакционного расстояния"
+        /// </summary>
+        /// <param name="horizontal">Слово по-горизонтали</param>
+        /// <param name="vertical">Слово по-вертикали</param>
+        /// <returns>Значение "редакционного расстояния" = сколько правок нужно сделать, чтобы слова были идентичны</returns>
         public int FindDistance(string horizontal, string vertical)
         {
             horizontal.ToLower();
