@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mod16._3_Matrixes
 {
+    /// <summary>
+    /// Умножение матриц больших размерностей в параллельном режиме
+    /// </summary>
     internal class Program
     {
         private static Random random = new Random();
@@ -28,12 +31,12 @@ namespace Mod16._3_Matrixes
             int i = 0;
             do
             {
-                //Stopwatch sw = new Stopwatch();
-                //sw.Start();
-                //var result = MatrixMultiplicationSync(matrix1, matrix2, matrix1.GetLength(0), matrix2.GetLength(1));
-                ////var result = MatrixMultiplicationSync(new int[2, 3] { { 0, -1, -1 }, { 1, -3, -3 } }, new int[3, 2] { { -1, -1 }, { 2, 3 }, { -2, 0 } }, 2, 2);
-                //sw.Stop();
-                //Console.WriteLine($"Затрачено {sw.ElapsedMilliseconds}");
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var result = MatrixMultiplicationSync(matrix1, matrix2);
+                //var result = MatrixMultiplicationSync(new int[2, 3] { { 0, -1, -1 }, { 1, -3, -3 } }, new int[3, 2] { { -1, -1 }, { 2, 3 }, { -2, 0 } });
+                sw.Stop();
+                Console.WriteLine($"Затрачено {sw.ElapsedMilliseconds}");
                 i++;
             } while (i < count);
 
@@ -42,12 +45,12 @@ namespace Mod16._3_Matrixes
             i = 1;
             do
             {
-                //Stopwatch sw2 = new Stopwatch();
-                //sw2.Start();
-                //var result = MatrixMultiplicationAsync(matrix1, matrix2, matrix1.GetLength(0), matrix2.GetLength(1));
-                ////var result = MatrixMultiplicationAsync(new int[2, 3] { { 0, -1, -1 }, { 1, -3, -3 } }, new int[3, 2] { { -1, -1 }, { 2, 3 }, { -2, 0 } }, 2, 2);
-                //sw2.Stop();
-                //Console.WriteLine($"Затрачено {sw2.ElapsedMilliseconds}");
+                Stopwatch sw2 = new Stopwatch();
+                sw2.Start();
+                var result = MatrixMultiplicationAsync(matrix1, matrix2);
+                //var result = MatrixMultiplicationAsync(new int[2, 3] { { 0, -1, -1 }, { 1, -3, -3 } }, new int[3, 2] { { -1, -1 }, { 2, 3 }, { -2, 0 } });
+                sw2.Stop();
+                Console.WriteLine($"Затрачено {sw2.ElapsedMilliseconds}");
 
                 i++;
             } while (i < count);
@@ -60,8 +63,8 @@ namespace Mod16._3_Matrixes
             {
                 Stopwatch sw2 = new Stopwatch();
                 sw2.Start();
-                var result = MatrixMultiplicationParallel(matrix1, matrix2, matrix1.GetLength(0), matrix2.GetLength(1));
-                //var result = MatrixMultiplicationAsync(new int[2, 3] { { 0, -1, -1 }, { 1, -3, -3 } }, new int[3, 2] { { -1, -1 }, { 2, 3 }, { -2, 0 } }, 2, 2);
+                var result = MatrixMultiplicationParallel(matrix1, matrix2);
+                //var result = MatrixMultiplicationParallel(new int[2, 3] { { 0, -1, -1 }, { 1, -3, -3 } }, new int[3, 2] { { -1, -1 }, { 2, 3 }, { -2, 0 } });
                 sw2.Stop();
                 Console.WriteLine($"Затрачено {sw2.ElapsedMilliseconds}");
 
@@ -72,6 +75,10 @@ namespace Mod16._3_Matrixes
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Заполнение матрицы псевдослучайными числами
+        /// </summary>
+        /// <param name="array">Массив для заполнения</param>
         public static void FillMatrix(int[,] array)
         {
             int rows = array.GetLength(0);
@@ -91,8 +98,10 @@ namespace Mod16._3_Matrixes
         /// <param name="row1">Число строк в матрице 1</param>
         /// <param name="column2">Число столбцов в матрице 2</param>
         /// <returns>Результат умножения двух матриц</returns>
-        private static int[,] MatrixMultiplicationAsync(int[,] array1, int[,] array2, int row1, int column2)
+        private static int[,] MatrixMultiplicationAsync(int[,] array1, int[,] array2)
         {
+            int row1 = array1.GetLength(0);
+            int column2 = array2.GetLength(1);
             int[,] newArray = new int[row1, column2];
             int sum;
             int columnsInitial2 = array2.GetLength(0);
@@ -147,8 +156,10 @@ namespace Mod16._3_Matrixes
         /// <param name="row1">Число строк в матрице 1</param>
         /// <param name="column2">Число столбцов в матрице 2</param>
         /// <returns>Результат умножения двух матриц</returns>
-        private static int[,] MatrixMultiplicationParallel(int[,] array1, int[,] array2, int row1, int column2)
+        private static int[,] MatrixMultiplicationParallel(int[,] array1, int[,] array2)
         {
+            int row1 = array1.GetLength(0);
+            int column2 = array2.GetLength(1);
             int[,] newArray = new int[row1, column2];
             int sum;
             int columnsInitial2 = array2.GetLength(0);
@@ -170,8 +181,10 @@ namespace Mod16._3_Matrixes
             return newArray;    //возврат массива
         }
 
-        private static int[,] MatrixMultiplicationSync(int[,] array1, int[,] array2, int row1, int column2)
+        private static int[,] MatrixMultiplicationSync(int[,] array1, int[,] array2)
         {
+            int row1 = array1.GetLength(0);
+            int column2 = array2.GetLength(1);
             int[,] newArray = new int[row1, column2];
             int sum;
             int columnsInitial2 = array2.GetLength(0);

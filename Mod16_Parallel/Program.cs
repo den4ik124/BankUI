@@ -16,66 +16,65 @@ namespace Mod16_Parallel
 
         private static void Main(string[] args)
         {
-            int start = 1000_000_000;
-            int end = 2000_000_000;
+            int start = 1_000_000_000;
+            int end = 2_000_000_000;
 
             #region TPL try
 
-            int step = 10_000_000;
-            int portions = 100;
-            int indexS = 0;
-            int indexE = 0;
-            rangesStart = new List<int>(portions);
-            rangesEnd = new List<int>(portions);
-            tasks = new List<Task>(portions);
-            for (int i = 0; i < portions; i++)
-            {
-                if (i == 0)
-                {
-                    indexS = start;
-                    indexE = start + step;
-                }
-                else
-                {
-                    indexS = start + i * step + 1;
-                    indexE = rangesEnd[i - 1] + step;
-                }
-                rangesStart.Add(indexS);
-                rangesEnd.Add(indexE);
-            }
+            //int step = 10_000_000;
+            //int portions = 100;
+            //int indexS = 0;
+            //int indexE = 0;
+            //rangesStart = new List<int>(portions);
+            //rangesEnd = new List<int>(portions);
+            //tasks = new List<Task>(portions);
+            //for (int i = 0; i < portions; i++)
+            //{
+            //    if (i == 0)
+            //    {
+            //        indexS = start;
+            //        indexE = start + step;
+            //    }
+            //    else
+            //    {
+            //        indexS = start + i * step + 1;
+            //        indexE = rangesEnd[i - 1] + step;
+            //    }
+            //    rangesStart.Add(indexS);
+            //    rangesEnd.Add(indexE);
+            //}
 
-            Stopwatch sw3 = new Stopwatch();
-            sw3.Start();
-            for (int i = 0; i < portions; i++)
-            {
-                int startIndex = rangesStart[i];
-                int endIndex = rangesEnd[i];
-                tasks.Add(Task.Factory.StartNew(() =>
-               {
-                   for (int j = startIndex; j <= endIndex; j++)
-                       CheckNumberV2(j);
-                   //Console.WriteLine($"Поток {Task.CurrentId}: {startIndex} - {endIndex}");
-               }));
-            }
+            //Stopwatch sw3 = new Stopwatch();
+            //sw3.Start();
+            //for (int i = 0; i < portions; i++)
+            //{
+            //    int startIndex = rangesStart[i];
+            //    int endIndex = rangesEnd[i];
+            //    tasks.Add(Task.Factory.StartNew(() =>
+            //   {
+            //       for (int j = startIndex; j <= endIndex; j++)
+            //           CheckNumberV2(j);
+            //   }));
+            //}
 
-            Task.WaitAll(tasks.ToArray());
-            sw3.Stop();
-            Console.WriteLine($"В диапазоне {start / 1e6} млн - {end / 1e6} млн, нашлось {_count} чисел\n" +
-                 $"Было затрачено: {sw3.ElapsedMilliseconds} ms");
+            //Task.WaitAll(tasks.ToArray());
+            //sw3.Stop();
+            //Console.WriteLine($"В диапазоне {start / 1e6} млн - {end / 1e6} млн, нашлось {_count} чисел\n" +
+            //     $"Было затрачено: {sw3.ElapsedMilliseconds} ms");
 
             #endregion TPL try
 
             #region sync
 
-            //Stopwatch sw = new Stopwatch();
-            //sw.Start();
-            //for (int i = start; i < end; i++)
-            //{
-            //    CheckNumberV2(i);
-            //};
-            //sw.Stop();
-            //Console.WriteLine($"В диапазоне {start / 1e6} млн - {end / 1e6} млн, нашлось {_count} чисел\n" +
-            //    $"Было затрачено: {sw.ElapsedMilliseconds} ms");
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            for (int i = start; i < end; i++)
+            {
+                CheckNumberV2(i);
+            };
+            sw.Stop();
+            Console.WriteLine($"В диапазоне {start / 1e6} млн - {end / 1e6} млн, нашлось {_count} чисел\n" +
+                $"Было затрачено: {sw.ElapsedMilliseconds} ms");
 
             #endregion sync
 
@@ -96,6 +95,10 @@ namespace Mod16_Parallel
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Проверка кратности суммы цифр числа последней цифре числа: ABC...XYZ => (A+B+C+...+X+Y+Z) % Z==0
+        /// </summary>
+        /// <param name="value">Число для анализа</param>
         public static void CheckNumberV2(int value)
         {
             if (value % 10 == 0 || value % 10 == 1)
