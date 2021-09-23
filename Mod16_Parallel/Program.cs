@@ -66,15 +66,15 @@ namespace Mod16_Parallel
 
             #region sync
 
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            for (int i = start; i < end; i++)
-            {
-                CheckNumberV2(i);
-            };
-            sw.Stop();
-            Console.WriteLine($"В диапазоне {start / 1e6} млн - {end / 1e6} млн, нашлось {_count} чисел\n" +
-                $"Было затрачено: {sw.ElapsedMilliseconds} ms");
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
+            //for (int i = start; i < end; i++)
+            //{
+            //    CheckNumberV2(i);
+            //};
+            //sw.Stop();
+            //Console.WriteLine($"В диапазоне {start / 1e6} млн - {end / 1e6} млн, нашлось {_count} чисел\n" +
+            //    $"Было затрачено: {sw.ElapsedMilliseconds} ms");
 
             #endregion sync
 

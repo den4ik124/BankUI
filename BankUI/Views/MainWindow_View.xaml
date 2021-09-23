@@ -112,6 +112,7 @@
                     <RowDefinition />
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
                 <StackPanel
                     Grid.Row="0"
@@ -192,6 +193,30 @@
                         Height="25"
                         MinWidth="150"
                         Text="{Binding FindClientsByName, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                    <!--<Image></Image>-->
+                    <TextBlock
+                        x:Name="MyFadingText"
+                        Height="25"
+                        MinWidth="150"
+                        TextAlignment="Center"
+                        Text="SOME TEST TEXT">
+                        <TextBlock.Triggers>
+                            <EventTrigger RoutedEvent="TextBlock.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="MyFadingText"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:2"
+                                            AutoReverse="True" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
+                    <!--Text="{Binding StateMessage, UpdateSourceTrigger=PropertyChanged}" />-->
                 </StackPanel>
             </Grid>
 

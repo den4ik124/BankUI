@@ -33,6 +33,7 @@ namespace BankUI.ViewModels
         private AccountBaseModel _senderAccount;
 
         private string _findClientsByName = string.Empty;
+        private string _stateMessage = string.Empty;
 
         private decimal _transactionValue;
 
@@ -96,7 +97,9 @@ namespace BankUI.ViewModels
         #region Commands
 
         public RelayCommand ShowTestClients => _showTestClients ??
-            (_showTestClients = new RelayCommand(TestClientsShow, CanShow));
+            (_showTestClients = new RelayCommand(TestClientsShowAsync, CanShow));
+
+        //(_showTestClients = new RelayCommand(TestClientsShow, CanShow));
 
         public RelayCommand AddNewClient => _addNewClient ??
             (_addNewClient = new RelayCommand(AddNewClientShow, CanShow));
@@ -246,6 +249,15 @@ namespace BankUI.ViewModels
                 _findClientsByName = value;
                 UpdateClients();
                 OnPropertyChanged();
+            }
+        }
+
+        public string StateMessage
+        {
+            get => _stateMessage;
+            set
+            {
+                _stateMessage = value;
             }
         }
 
@@ -431,10 +443,25 @@ namespace BankUI.ViewModels
         {
             _isVIPSeleceted = false;
             OnPropertyChanged();
-            //Task.Factory.StartNew(() =>
-            //{
             UpdateClients(true);
-            //});
+        }
+
+        private async void TestClientsShowAsync()
+        {
+            DataCollectionsClear();
+            await Task.Factory.StartNew(() =>
+            {
+                _isVIPSeleceted = false;
+                OnPropertyChanged();
+                try
+                {
+                    UpdateClients(true);
+                }
+                catch (Exception ex)
+                {
+                    _dialogService.MessageBoxShow(ex.Message, "Warning");
+                }
+            });
         }
 
         private async void LoadClientsAsync()
