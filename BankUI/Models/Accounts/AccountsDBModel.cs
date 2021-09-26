@@ -34,7 +34,7 @@ namespace BankUI.Models
             if (_accounts.Contains(account))
                 return;
             _accounts.Add(account);
-            SaveDBAsync();
+            //SaveDBAsync();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace BankUI.Models
         internal static void SaveDB() =>
             _dataProcessor.Serialization(_accounts, FileName);
 
-        internal static async void SaveDBAsync() =>
+        public static async void SaveDBAsync() =>
             await Task.Factory.StartNew(() => _dataProcessor.Serialization(_accounts, FileName));
 
         /// <summary>

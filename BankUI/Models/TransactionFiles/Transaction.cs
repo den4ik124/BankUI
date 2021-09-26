@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BankUI.HelpClasses;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,5 +72,20 @@ namespace BankUI.Models
         public DateTime TransactionTime { get => _transactionTime; set => _transactionTime = value; }
 
         #endregion Properties
+
+        #region Events
+
+        public delegate void TransactionHandler(Transaction<AccountBaseModel> transaction);
+
+        public event TransactionHandler TransactionCreated;
+
+        #endregion Events
+
+        #region Methods
+
+        public override string ToString() =>
+            $"{_value}$ were transeferred from {_senderID} to {_receiverID} at {_transactionTime}";
+
+        #endregion Methods
     }
 }

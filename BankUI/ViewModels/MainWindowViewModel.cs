@@ -97,9 +97,9 @@ namespace BankUI.ViewModels
         #region Commands
 
         public RelayCommand ShowTestClients => _showTestClients ??
-            (_showTestClients = new RelayCommand(TestClientsShowAsync, CanShow));
+        (_showTestClients = new RelayCommand(TestClientsShow, CanShow));
 
-        //(_showTestClients = new RelayCommand(TestClientsShow, CanShow));
+        //(_showTestClients = new RelayCommand(TestClientsShowAsync, CanShow));
 
         public RelayCommand AddNewClient => _addNewClient ??
             (_addNewClient = new RelayCommand(AddNewClientShow, CanShow));
@@ -329,6 +329,7 @@ namespace BankUI.ViewModels
                                                 .WithAmount(TransactionValue)
                                                 .GetTransaction();
 
+            transactionFBQ.TransactionCreated += Logger.OnTransactionCreated;
             //Transaction<AccountModel> transaction = new Transaction<AccountModel>(SenderAccount, ReceiverAccount, TransactionValue);
 
             AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transactionFBQ);

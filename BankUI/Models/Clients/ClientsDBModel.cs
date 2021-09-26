@@ -106,7 +106,7 @@ namespace BankUI.Models
                     if (!AccountsDBModel.Accounts.Contains(account))
                         AccountsDBModel.AddAccount(account);
             }
-
+            AccountsDBModel.SaveDBAsync();
             //foreach (var client in deserializedClients)
             //{
             //    _clients.Add(client);

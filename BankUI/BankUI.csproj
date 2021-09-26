@@ -65,6 +65,7 @@
     <Compile Include="CorrectDialogService\TestViewModel.cs" />
     <Compile Include="DAL\DataProcessor.cs" />
     <Compile Include="HelpClasses\Levenshtein.cs" />
+    <Compile Include="HelpClasses\Logger.cs" />
     <Compile Include="Interfaces\IAccount.cs" />
     <Compile Include="Interfaces\IDataProcessor.cs" />
     <Compile Include="Interfaces\IDistanceMetric.cs" />
