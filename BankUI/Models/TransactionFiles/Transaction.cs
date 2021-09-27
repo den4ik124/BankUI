@@ -1,15 +1,14 @@
-﻿using BankUI.HelpClasses;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankUI.Models
 {
+    public delegate void TransactionHandler();
+
     public class Transaction<T> where T : AccountBaseModel
     {
+        public static event TransactionHandler TransactionCreated;
+
         #region Fields
 
         private int _senderID;
@@ -73,18 +72,15 @@ namespace BankUI.Models
 
         #endregion Properties
 
-        #region Events
-
-        public delegate void TransactionHandler(Transaction<AccountBaseModel> transaction);
-
-        public event TransactionHandler TransactionCreated;
-
-        #endregion Events
-
         #region Methods
 
         public override string ToString() =>
-            $"{_value}$ were transeferred from {_senderID} to {_receiverID} at {_transactionTime}";
+                $"{_value}$ were transeferred from {_senderID} to {_receiverID} at {_transactionTime}";
+
+        public void OnTransactionCreated()
+        {
+            TransactionCreated?.Invoke();
+        }
 
         #endregion Methods
     }

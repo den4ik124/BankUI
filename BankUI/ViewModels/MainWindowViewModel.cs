@@ -1,17 +1,17 @@
 ﻿using BankUI.DAL;
+using BankUI.HelpClasses;
 using BankUI.Interfaces;
 using BankUI.Models;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Data;
-using System.Collections.ObjectModel;
-using BankUI.Views;
-using BankUI.HelpClasses;
 using BankUI.Models.TransactionFiles;
+using BankUI.Views;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace BankUI.ViewModels
 {
@@ -88,6 +88,7 @@ namespace BankUI.ViewModels
 
             //LoadClientsAsync();
             LoadClientsSync();
+            Transaction<AccountBaseModel>.TransactionCreated += Logger.OnTransactionCreated;
         }
 
         #endregion Constructors
@@ -328,14 +329,12 @@ namespace BankUI.ViewModels
             Transaction<AccountBaseModel> transactionFBQ = new TransactionAccounts(SenderAccount, ReceiverAccount)
                                                 .WithAmount(TransactionValue)
                                                 .GetTransaction();
-
-            transactionFBQ.TransactionCreated += Logger.OnTransactionCreated;
             //Transaction<AccountModel> transaction = new Transaction<AccountModel>(SenderAccount, ReceiverAccount, TransactionValue);
-
             AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transactionFBQ);
             ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transactionFBQ);
 
             ClientsDBModel.UpdateClientsAsync();
+            transactionFBQ.OnTransactionCreated();
         }
 
         private bool CanVIPShow()
