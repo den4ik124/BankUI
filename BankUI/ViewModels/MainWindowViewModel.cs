@@ -334,7 +334,9 @@ namespace BankUI.ViewModels
             ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transactionFBQ);
 
             ClientsDBModel.UpdateClientsAsync();
-            transactionFBQ.OnTransactionCreated();
+            //transactionFBQ.OnTransactionCreated();
+
+            Logger.OnTransactionCreated(); //зачем нужно событие, если я могу и так вызвать Logger?
         }
 
         private bool CanVIPShow()
