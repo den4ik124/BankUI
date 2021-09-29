@@ -16,7 +16,7 @@ namespace BankUI.Views
         //TODO ПОДУМАТЬ КАК ВТУЛИТЬ СОБЫТИЕ "закрытие окна" В MVVM !!!
         private void Window_Closed(object sender, System.EventArgs e)
         {
-            ClientsDBModel.UpdateClientsAsync();
+            ClientsDBModel.UpdateClients();
         }
     }
 }

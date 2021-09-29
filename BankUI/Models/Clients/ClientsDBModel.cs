@@ -33,7 +33,7 @@ namespace BankUI.Models
             set
             {
                 _clients = value;
-                UpdateClientsAsync();
+                UpdateClients();
             }
         }
 
@@ -43,7 +43,7 @@ namespace BankUI.Models
             set
             {
                 _persons = value;
-                UpdateClientsAsync();
+                UpdateClients();
             }
         }
 
@@ -53,7 +53,7 @@ namespace BankUI.Models
             set
             {
                 _companies = value;
-                UpdateClientsAsync();
+                UpdateClients();
             }
         }
 
@@ -74,7 +74,7 @@ namespace BankUI.Models
             foreach (var account in client.AccountsList)
                 if (!AccountsDBModel.Accounts.Contains(account))
                     AccountsDBModel.AddAccount(account); //добавление счетов нового клиента в БД счетов
-            UpdateClientsAsync();
+            UpdateClients();
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace BankUI.Models
         public static void RemoveClient(ClientModel client)
         {
             Clients.Remove(client);
-            UpdateClientsAsync();
+            UpdateClients();
         }
 
         /// <summary>
@@ -106,7 +106,8 @@ namespace BankUI.Models
                     if (!AccountsDBModel.Accounts.Contains(account))
                         AccountsDBModel.AddAccount(account);
             }
-            AccountsDBModel.SaveDBAsync();
+            AccountsDBModel.SaveDB();
+            //AccountsDBModel.SaveDBAsync();
             //foreach (var client in deserializedClients)
             //{
             //    _clients.Add(client);
@@ -115,7 +116,7 @@ namespace BankUI.Models
             //            AccountsDBModel.AddAccount(account);
             //}
             ////AccountsDBModel.SaveDB();
-            UpdateClientsAsync();
+            UpdateClients();
         }
 
         public static void UpdateBalance(ClientModel client)
@@ -187,24 +188,36 @@ namespace BankUI.Models
                     }
                 }
             }
-            UpdateClientsAsync();
+            UpdateClients();
         }
 
         /// <summary>
         /// Обновление списков клиентов физ.лиц и юр.лиц и сохранение в .json файл
         /// </summary>
-        public static async void UpdateClientsAsync()
+        public static void UpdateClients()
         {
-            await Task.Run(() =>
-            {
-                _persons.Clear();
-                _companies.Clear();
-                _persons = _clients.OfType<PersonModel>().ToList();
-                _companies = _clients.OfType<CompanyModel>().ToList();
-                //TODO убрать сериализацию отсюда, или оставить ???
-                _dataProcessor.Serialization(_clients);
-                //Serialization(_clients);
-            });
+            _persons.Clear();
+            _companies.Clear();
+            _persons = _clients.OfType<PersonModel>().ToList();
+            _companies = _clients.OfType<CompanyModel>().ToList();
+            //TODO убрать сериализацию отсюда, или оставить ???
+            _dataProcessor.Serialization(_clients);
+            //Serialization(_clients);
+
+            #region Try UpdateAsync
+
+            //await Task.Run(() =>
+            //{
+            //    _persons.Clear();
+            //    _companies.Clear();
+            //    _persons = _clients.OfType<PersonModel>().ToList();
+            //    _companies = _clients.OfType<CompanyModel>().ToList();
+            //    //TODO убрать сериализацию отсюда, или оставить ???
+            //    _dataProcessor.Serialization(_clients);
+            //    //Serialization(_clients);
+            //});
+
+            #endregion Try UpdateAsync
         }
 
         #endregion Methods

@@ -333,7 +333,7 @@ namespace BankUI.ViewModels
             AccountsDBModel.MoneyTransfer(SenderAccount, ReceiverAccount, transactionFBQ);
             ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transactionFBQ);
 
-            ClientsDBModel.UpdateClientsAsync();
+            ClientsDBModel.UpdateClients();
             //transactionFBQ.OnTransactionCreated();
 
             Logger.OnTransactionCreated(); //зачем нужно событие, если я могу и так вызвать Logger?
