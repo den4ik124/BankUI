@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace BankUI.HelpClasses
 {
-    public static class Generator
+    public static class ClientsGenerator
     {
         private readonly static Random random = new Random();
 
@@ -56,6 +56,7 @@ namespace BankUI.HelpClasses
             {
                 case 1:
                     return new DepositAccountModel(client.Id, random.Next(50, 101), 12, 12, isVIP);
+                //TODO реализовать кредитование
                 //case 2:
                 //    return new CreditAccountModel(GetClient());
                 default:
@@ -71,7 +72,7 @@ namespace BankUI.HelpClasses
                     var name = CredentialsGeneratorLibrary.Generator.RandomName();
                     var surName = CredentialsGeneratorLibrary.Generator.RandomSurname();
                     var isVIP = CredentialsGeneratorLibrary.Generator.RandomVIP();
-                    var newPerson = new PersonModel(name, isVIP: isVIP, surName, random.Next(0, 101).ToString(), $"+380({random.Next(10, 100)})-{random.Next(100, 1000)}-{random.Next(10, 100)}-{random.Next(10, 100)}");
+                    var newPerson = new PersonModel(name, isVIP, surName, random.Next(0, 101).ToString(), $"+380({random.Next(10, 100)})-{random.Next(100, 1000)}-{random.Next(10, 100)}-{random.Next(10, 100)}");
                     foreach (var acc in GetAccountsList(newPerson))
                         newPerson.AddNewAccount(acc);
 

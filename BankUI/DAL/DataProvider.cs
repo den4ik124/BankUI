@@ -78,7 +78,7 @@ namespace BankUI.DAL
         private IList<ClientModel> GetTestClientsData()
         {
             _clients.Clear();
-            var genData = Generator.GetClientsList();
+            var genData = ClientsGenerator.GetClientsList();
             foreach (var client in genData)
             {
                 _clients.Add(client);

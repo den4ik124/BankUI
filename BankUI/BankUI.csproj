@@ -82,7 +82,7 @@
     </Compile>
     <Compile Include="DAL\DataProvider.cs" />
     <Compile Include="DAL\DialogService.cs" />
-    <Compile Include="HelpClasses\Generator.cs" />
+    <Compile Include="HelpClasses\ClientsGenerator.cs" />
     <Compile Include="Interfaces\IDataProvider.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Models\Accounts\AccountBaseModel.cs" />
