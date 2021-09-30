@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +7,6 @@ namespace Mod16_Parallel
 {
     internal class Program
     {
-        private static object locker = new object();
         public static int _count = 0;
         //public static List<int> rangesStart;
         //public static List<int> rangesEnd;

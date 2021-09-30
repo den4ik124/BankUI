@@ -2,10 +2,7 @@
 using BankUI.Interfaces;
 using BankUI.Models;
 using BankUI.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace BankUI.DAL
 {

@@ -16,8 +16,6 @@ namespace BankUI.Models
         private ObservableCollection<IAccount> _accountsList;
         private static int nextId = 1;
 
-        private static Random random = new Random();
-
         #endregion Fields
 
         #region Constructors
