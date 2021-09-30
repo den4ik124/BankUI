@@ -147,6 +147,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CredentialsGeneratorLibrary\CredentialsGeneratorLibrary.csproj">
+      <Project>{9f585b32-c85c-4aaa-94a4-1b1b8a9fc73a}</Project>
+      <Name>CredentialsGeneratorLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

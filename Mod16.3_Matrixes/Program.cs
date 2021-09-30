@@ -103,7 +103,6 @@ namespace Mod16._3_Matrixes
             int row1 = array1.GetLength(0);
             int column2 = array2.GetLength(1);
             int[,] newArray = new int[row1, column2];
-            int sum;
             int columnsInitial2 = array2.GetLength(0);
 
             #region Tasks
@@ -161,7 +160,6 @@ namespace Mod16._3_Matrixes
             int row1 = array1.GetLength(0);
             int column2 = array2.GetLength(1);
             int[,] newArray = new int[row1, column2];
-            int sum;
             int columnsInitial2 = array2.GetLength(0);
 
             #region Parallel
@@ -186,7 +184,6 @@ namespace Mod16._3_Matrixes
             int row1 = array1.GetLength(0);
             int column2 = array2.GetLength(1);
             int[,] newArray = new int[row1, column2];
-            int sum;
             int columnsInitial2 = array2.GetLength(0);
 
             for (int i = 0; i < row1; i++) //проход цикла по строкам матрицы 1
@@ -196,10 +193,8 @@ namespace Mod16._3_Matrixes
                     newArray[i, j] = 0;    // обнуление суммы
                     for (int k = 0; k < columnsInitial2; k++)   //проход цикла по столбцам матрицы 2
                         newArray[i, j] += array1[i, k] * array2[k, j];  //прибавление к сумме расчитанного значения
-                    //newArray[i, j] = sum;   //присвоение элементу результирующей матрицы значения суммы
                 }
             }
-
             return newArray;    //возврат массива
         }
     }

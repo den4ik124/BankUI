@@ -20,7 +20,7 @@ namespace BankUI.HelpClasses
         {
             List<ClientModel> clients = new List<ClientModel>();
             //for (int i = 0; i < random.Next(50, 151); i++)
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 200; i++)
                 clients.Add(GetClient());
             return clients;
         }
@@ -51,10 +51,11 @@ namespace BankUI.HelpClasses
         /// <returns>Новый аккаунт</returns>
         private static IAccount GetAccount(ClientModel client)
         {
+            var isVIP = CredentialsGeneratorLibrary.Generator.RandomVIP();
             switch (random.Next(0, 3))
             {
                 case 1:
-                    return new DepositAccountModel(client.Id, random.Next(50, 101), 12, 12, RandomVIP());
+                    return new DepositAccountModel(client.Id, random.Next(50, 101), 12, 12, isVIP);
                 //case 2:
                 //    return new CreditAccountModel(GetClient());
                 default:
@@ -67,7 +68,10 @@ namespace BankUI.HelpClasses
             switch (random.Next(0, 2))
             {
                 case 0:
-                    var newPerson = new PersonModel(RandomName(), isVIP: RandomVIP(), RandomSurname(), random.Next(0, 101).ToString(), $"+380({random.Next(10, 100)})-{random.Next(100, 1000)}-{random.Next(10, 100)}-{random.Next(10, 100)}");
+                    var name = CredentialsGeneratorLibrary.Generator.RandomName();
+                    var surName = CredentialsGeneratorLibrary.Generator.RandomSurname();
+                    var isVIP = CredentialsGeneratorLibrary.Generator.RandomVIP();
+                    var newPerson = new PersonModel(name, isVIP: isVIP, surName, random.Next(0, 101).ToString(), $"+380({random.Next(10, 100)})-{random.Next(100, 1000)}-{random.Next(10, 100)}-{random.Next(10, 100)}");
                     foreach (var acc in GetAccountsList(newPerson))
                         newPerson.AddNewAccount(acc);
 
@@ -80,32 +84,6 @@ namespace BankUI.HelpClasses
 
                     return newCompany;
             }
-        }
-
-        private static bool RandomVIP() =>
-            random.Next(0, 2) == 1;
-
-        private static string RandomName()
-        {
-            string[] names = { "Юрий","Богдан","Оскар","Родион","Филипп","Макар","Йошка","Лука","Цефас","Владлен","Йомер","Цицерон",
-                                "Йоган","Яков","Нестор","Адам","Роман","Степан","Елисей","Даниил","Сергей","Максим","Станислав","Георгий",
-                                "Дмитрий","Артём","Фёдор","Михаил","Леон","Лев","Александр","Захар","Иван","Роберт","Алексей","Давид",
-                                "Владимир","Лука","Глеб","Матвей","Никита","Егор","Марк","Руслан","Вячеслав","Тимофей","Мирон","Виктор",
-                                "Илья","Савелий","Андрей","Кирилл","Даниэль","Эмиль","Павел","Константин","Денис","Игорь","Арсений",
-                                "Владислав","Семён","Филипп","Николай","Юрий","Демид","Гордей","Евгений","Святослав","Родион","Пётр",
-                                "Богдан","Билал","Вадим","Платон","Олег","Тихон","Демьян","Данил","Артемий","Всеволод","Ярослав",
-                                "Леонид","Али","Марат","Данила","Антон","Тимур","Дамир","Макар","Василий","Григорий","Анатолий","Ян",
-                                "Герман","Артур","Валерий","Назар","Савва","Борис","Ибрагим","Эмир","Эрик","Данис","Виталий","Арсен",
-                                "Камиль","Марсель","Мирослав","Яков","Эмин","Ростислав","Тигран","Рустам","Мартин","Серафим"};
-            return names[random.Next(0, names.Length - 1)];
-        }
-
-        private static string RandomSurname()
-        {
-            string[] surnames = { "Недбайло","Зайцев","Назаров","Кличко","Молчанов",
-                                    "Лукашенко","Шарапов","Панов","Логинов","Дементьев",
-                                    "Владимиров","Спивак","Мишин","Семёнов","Гребневский" };
-            return surnames[random.Next(0, surnames.Length - 1)];
         }
 
         #endregion Methods

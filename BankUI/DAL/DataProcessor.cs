@@ -5,6 +5,7 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using BankUI.DAL;
 
 namespace BankUI.DAL
 {
@@ -59,6 +60,15 @@ namespace BankUI.DAL
                     return JsonConvert.DeserializeObject<IList<T>>(json, jsonSettings);
                 }
             }
+            catch (FileFormatException fileEx)
+            {
+                Debug.WriteLine(new string('=', 50) + "\n" + fileEx.Message + "\n" + new string('=', 50));
+                _dialogService.MessageBoxShow(fileEx.Message + "\n" + fileEx.Source + "\n" + fileEx.TargetSite,
+                                              "Load canceled",
+                                              MessageBoxButton.OK,
+                                              MessageBoxImage.Stop);
+                return null;
+            }
             catch (Exception e)
             {
                 Debug.WriteLine(new string('=', 50) + "\n" + e.Message + "\n" + new string('=', 50));
@@ -87,6 +97,7 @@ namespace BankUI.DAL
             }
             catch (Exception e)
             {
+                _dialogService.MessageBoxShow(e.Message, "Serialization failed");
                 Debug.WriteLine(new string('=', 50) + "\n" + e.Message + "\n" + new string('=', 50));
             }
             Debug.WriteLine($"\nДанные записаны в файл:\n{path}\n");

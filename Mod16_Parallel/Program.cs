@@ -10,9 +10,9 @@ namespace Mod16_Parallel
     {
         private static object locker = new object();
         public static int _count = 0;
-        public static List<int> rangesStart;
-        public static List<int> rangesEnd;
-        public static List<Task> tasks;
+        //public static List<int> rangesStart;
+        //public static List<int> rangesEnd;
+        //public static List<Task> tasks;
 
         private static void Main(string[] args)
         {
