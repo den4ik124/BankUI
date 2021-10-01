@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace BankUI.ViewModels
@@ -86,8 +87,8 @@ namespace BankUI.ViewModels
             _dataToShow = new ObservableCollection<ClientViewModel>();
             DataToShow = CollectionViewSource.GetDefaultView(_dataToShow);
 
-            //LoadClientsAsync();
-            LoadClientsSync();
+            LoadClientsAsync();
+            //LoadClientsSync();
             Transaction<AccountBaseModel>.TransactionCreated += Logger.OnTransactionCreated;
         }
 
@@ -185,7 +186,8 @@ namespace BankUI.ViewModels
             }
         }
 
-        public ObservableCollection<IAccount> AccountsList
+        //public ObservableCollection<IAccount> AccountsList
+        public List<IAccount> AccountsList
         {
             //TODO Можно ли так увязывать Model u ViewModel ?
             get => AccountsDBModel.Accounts;
@@ -456,15 +458,8 @@ namespace BankUI.ViewModels
             {
                 _isVIPSeleceted = false;
                 OnPropertyChanged();
-                try
-                {
-                    UpdateClients(true);
-                }
-                catch (Exception ex)
-                {
-                    _dialogService.MessageBoxShow(ex.Message, "Warning");
-                }
             });
+            UpdateClients(true);
         }
 
         private async void LoadClientsAsync()
@@ -473,12 +468,12 @@ namespace BankUI.ViewModels
             {
                 LoadClientsSync();
             });
+            UpdateClients();
         }
 
         private void LoadClientsSync()
         {
             _dataProvider.Load();
-            UpdateClients();
         }
 
         /// <summary>
@@ -503,15 +498,22 @@ namespace BankUI.ViewModels
                 companies = clients.OfType<CompanyModel>();
             }
 
-            if (IsPersonsSelected)
-                foreach (var person in persons)
-                    _dataToShow.Add(new PersonViewModel(person));
-            else
-                foreach (var company in companies)
-                    _dataToShow.Add(new CompanyViewModel(company));
+            try
+            {
+                if (IsPersonsSelected)
+                    foreach (var person in persons)
+                        _dataToShow.Add(new PersonViewModel(person));
+                else
+                    foreach (var company in companies)
+                        _dataToShow.Add(new CompanyViewModel(company));
 
-            foreach (var client in clients)
-                _clients.Add(new ClientViewModel(client));
+                foreach (var client in clients)
+                    _clients.Add(new ClientViewModel(client));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "PROBLEM");
+            }
             DataCollectionsRefresh();
         }
 

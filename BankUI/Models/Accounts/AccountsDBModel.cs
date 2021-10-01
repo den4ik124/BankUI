@@ -2,6 +2,8 @@
 using BankUI.Interfaces;
 using DataProcessorLibrary;
 using System.Collections.ObjectModel;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace BankUI.Models
 {
@@ -9,7 +11,9 @@ namespace BankUI.Models
     {
         #region Fields
 
-        private static ObservableCollection<IAccount> _accounts = new ObservableCollection<IAccount>();
+        //private static ObservableCollection<IAccount> _accounts = new ObservableCollection<IAccount>();
+        private static List<IAccount> _accounts = new List<IAccount>();
+
         private readonly static IDataProcessor _dataProcessor = new DataProcessor();
 
         #endregion Fields
@@ -17,8 +21,8 @@ namespace BankUI.Models
         #region Properties
 
         public static string FileName { get; set; } = "accountsDB.json";
-
-        public static ObservableCollection<IAccount> Accounts { get => _accounts; set => _accounts = value; }
+        public static List<IAccount> Accounts { get => _accounts; set => _accounts = value; }
+        //public static ObservableCollection<IAccount> Accounts { get => _accounts; set => _accounts = value; }
 
         #endregion Properties
 
