@@ -1,12 +1,8 @@
-﻿using BankUI.DAL;
-using BankUI.HelpClasses;
-using BankUI.Interfaces;
+﻿using BankUI.HelpClasses;
 using DataProcessorLibrary;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BankUI.Models
 {
@@ -16,14 +12,21 @@ namespace BankUI.Models
 
         private static readonly string defaultFileName = "ClientsDataBase.json";
 
-        private static IList<ClientModel> _clients = new ObservableCollection<ClientModel>();
-        private static IList<PersonModel> _persons = new ObservableCollection<PersonModel>();
-        private static IList<CompanyModel> _companies = new ObservableCollection<CompanyModel>();
+        private static IList<ClientModel> _clients;
+        private static IList<PersonModel> _persons;
+        private static IList<CompanyModel> _companies;
 
         private static IDataProcessor _dataProcessor = new DataProcessor();
         //private IDialogService _dialogService;
 
         #endregion Fields
+
+        static ClientsDBModel()
+        {
+            _clients = new ObservableCollection<ClientModel>();
+            _persons = new ObservableCollection<PersonModel>();
+            _companies = new ObservableCollection<CompanyModel>();
+        }
 
         #region Properties
 
@@ -67,29 +70,6 @@ namespace BankUI.Models
         #region Methods
 
         /// <summary>
-        /// Добавление нового клиента в БД
-        /// </summary>
-        /// <param name="client">Клиент, который будет добавлен в БД</param>
-        //public static void AddClient(ClientModel client)
-        //{
-        //    _clients.Add(client);
-        //    foreach (var account in client.AccountsList)
-        //        if (!AccountsDBModel.Accounts.Contains(account))
-        //            AccountsDBModel.AddAccount(account); //добавление счетов нового клиента в БД счетов
-        //    UpdateClients();
-        //}
-
-        /// <summary>
-        /// Удаление клиента из БД
-        /// </summary>
-        /// <param name="client">Клиент, который будет удален</param>
-        //public static void RemoveClient(ClientModel client)
-        //{
-        //    Clients.Remove(client);
-        //    UpdateClients();
-        //}
-
-        /// <summary>
         /// Заполнение БД клиентов
         /// </summary>
         public static void FillDataBase()
@@ -98,28 +78,10 @@ namespace BankUI.Models
             var deserializedClients = _dataProcessor.DeserializationJSON<ClientModel>(defaultFileName);
             if (deserializedClients == null)
                 return;
-
             AccountsDBModel.Accounts.Clear();
 
             foreach (var client in deserializedClients)
-            {
                 client.AddClientToDB();
-                //_clients.Add(client);
-                //foreach (var account in client.AccountsList)
-                //    if (!AccountsDBModel.Accounts.Contains(account))
-                //        AccountsDBModel.AddAccount(account);
-            }
-            //AccountsDBModel.SaveDB();
-            ////AccountsDBModel.SaveDBAsync();
-            ////foreach (var client in deserializedClients)
-            ////{
-            ////    _clients.Add(client);
-            ////    foreach (var account in client.AccountsList)
-            ////        if (!AccountsDBModel.Accounts.Contains(account))
-            ////            AccountsDBModel.AddAccount(account);
-            ////}
-            //////AccountsDBModel.SaveDB();
-            //UpdateClients();
         }
 
         public static void UpdateBalance(ClientModel client)
@@ -174,14 +136,12 @@ namespace BankUI.Models
                         {
                             if (acc.Id == senderAccount.Id)
                             {
-                                //acc.Balance = UpdateAccountBalance(acc); //AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
                                 acc.UpdateAccountBalance();
                                 client.TotalBalanceCalc();
                                 continue;
                             }
                             else if (acc.Id == receiverAccount.Id)
                             {
-                                //acc.Balance = UpdateAccountBalance(acc); // AccountsDBModel.Accounts.Where(item => item.Id == acc.Id).FirstOrDefault().Balance;
                                 acc.UpdateAccountBalance();
                                 client.TotalBalanceCalc();
                                 continue;
