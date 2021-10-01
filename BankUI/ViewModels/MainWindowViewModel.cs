@@ -428,7 +428,8 @@ namespace BankUI.ViewModels
                 _companies.Add(clientVM as CompanyViewModel);
             }
             _clients.Add(clientVM);
-            ClientsDBModel.AddClient(client);
+            client.AddClientToDB();
+            //ClientsDBModel.AddClient(client);
             DataCollectionsRefresh();
         }
 

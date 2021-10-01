@@ -1,5 +1,7 @@
 ﻿using BankUI.DAL;
+using BankUI.HelpClasses;
 using BankUI.Interfaces;
+using DataProcessorLibrary;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -68,24 +70,24 @@ namespace BankUI.Models
         /// Добавление нового клиента в БД
         /// </summary>
         /// <param name="client">Клиент, который будет добавлен в БД</param>
-        public static void AddClient(ClientModel client)
-        {
-            _clients.Add(client);
-            foreach (var account in client.AccountsList)
-                if (!AccountsDBModel.Accounts.Contains(account))
-                    AccountsDBModel.AddAccount(account); //добавление счетов нового клиента в БД счетов
-            UpdateClients();
-        }
+        //public static void AddClient(ClientModel client)
+        //{
+        //    _clients.Add(client);
+        //    foreach (var account in client.AccountsList)
+        //        if (!AccountsDBModel.Accounts.Contains(account))
+        //            AccountsDBModel.AddAccount(account); //добавление счетов нового клиента в БД счетов
+        //    UpdateClients();
+        //}
 
         /// <summary>
         /// Удаление клиента из БД
         /// </summary>
         /// <param name="client">Клиент, который будет удален</param>
-        public static void RemoveClient(ClientModel client)
-        {
-            Clients.Remove(client);
-            UpdateClients();
-        }
+        //public static void RemoveClient(ClientModel client)
+        //{
+        //    Clients.Remove(client);
+        //    UpdateClients();
+        //}
 
         /// <summary>
         /// Заполнение БД клиентов
@@ -93,7 +95,7 @@ namespace BankUI.Models
         public static void FillDataBase()
         {
             _clients.Clear();
-            var deserializedClients = _dataProcessor.DeserializationJSON<ClientModel>();
+            var deserializedClients = _dataProcessor.DeserializationJSON<ClientModel>(defaultFileName);
             if (deserializedClients == null)
                 return;
 
@@ -101,22 +103,23 @@ namespace BankUI.Models
 
             foreach (var client in deserializedClients)
             {
-                _clients.Add(client);
-                foreach (var account in client.AccountsList)
-                    if (!AccountsDBModel.Accounts.Contains(account))
-                        AccountsDBModel.AddAccount(account);
+                client.AddClientToDB();
+                //_clients.Add(client);
+                //foreach (var account in client.AccountsList)
+                //    if (!AccountsDBModel.Accounts.Contains(account))
+                //        AccountsDBModel.AddAccount(account);
             }
-            AccountsDBModel.SaveDB();
-            //AccountsDBModel.SaveDBAsync();
-            //foreach (var client in deserializedClients)
-            //{
-            //    _clients.Add(client);
-            //    foreach (var account in client.AccountsList)
-            //        if (!AccountsDBModel.Accounts.Contains(account))
-            //            AccountsDBModel.AddAccount(account);
-            //}
-            ////AccountsDBModel.SaveDB();
-            UpdateClients();
+            //AccountsDBModel.SaveDB();
+            ////AccountsDBModel.SaveDBAsync();
+            ////foreach (var client in deserializedClients)
+            ////{
+            ////    _clients.Add(client);
+            ////    foreach (var account in client.AccountsList)
+            ////        if (!AccountsDBModel.Accounts.Contains(account))
+            ////            AccountsDBModel.AddAccount(account);
+            ////}
+            //////AccountsDBModel.SaveDB();
+            //UpdateClients();
         }
 
         public static void UpdateBalance(ClientModel client)
@@ -201,8 +204,8 @@ namespace BankUI.Models
             _persons = _clients.OfType<PersonModel>().ToList();
             _companies = _clients.OfType<CompanyModel>().ToList();
             //TODO убрать сериализацию отсюда, или оставить ???
-            _dataProcessor.Serialization(_clients);
-            //Serialization(_clients);
+            _clients.Save(defaultFileName);
+            //_dataProcessor.Serialization(_clients);
 
             #region Try UpdateAsync
 

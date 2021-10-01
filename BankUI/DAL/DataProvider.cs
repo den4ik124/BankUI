@@ -63,7 +63,10 @@ namespace BankUI.DAL
             }
             _clients.Clear();
             foreach (var client in ClientsDBModel.Clients)
+            {
+                client.AddClientToDB();
                 _clients.Add(client);
+            }
 
             return isTestData ? GetTestClientsData() : _clients;
         }
@@ -79,7 +82,8 @@ namespace BankUI.DAL
             foreach (var client in genData)
             {
                 _clients.Add(client);
-                ClientsDBModel.AddClient(client); //добавление клиента в БД
+                client.AddClientToDB();
+                //ClientsDBModel.AddClient(client); //добавление клиента в БД
             }
             return _clients;
         }
@@ -95,7 +99,8 @@ namespace BankUI.DAL
             {
                 if (client.Id == clientVM.Id)
                 {
-                    ClientsDBModel.RemoveClient(client); //Если клиент найден - он удаляется из БД.
+                    client.RemoveClientFromDB();
+                    //ClientsDBModel.RemoveClient(client); //Если клиент найден - он удаляется из БД.
                     break;
                 }
             }
@@ -114,7 +119,8 @@ namespace BankUI.DAL
             {
                 if (acc.Id == account.Id)
                 {
-                    AccountsDBModel.Remove(acc); //удаление счета из БД счетов.
+                    acc.RemoveAccountFromDB();
+                    //AccountsDBModel.Remove(acc); //удаление счета из БД счетов.
                     break;
                 }
             }
@@ -138,15 +144,16 @@ namespace BankUI.DAL
                 {
                     if (acc.Id == (element as AccountBaseModel).Id)
                     {
-                        AccountsDBModel.Remove(acc);
-                        foreach (var client in ClientsDBModel.Clients)
-                        {
-                            if (client.Id == acc.HostId)
-                            {
-                                client.RemoveAccount(acc);
-                                break;
-                            }
-                        }
+                        acc.RemoveAccountFromDB();
+                        //AccountsDBModel.Remove(acc);
+                        //foreach (var client in ClientsDBModel.Clients)
+                        //{
+                        //    if (client.Id == acc.HostId)
+                        //    {
+                        //        client.RemoveAccount(acc);
+                        //        break;
+                        //    }
+                        //}
                         break;
                     }
                 }
@@ -161,7 +168,8 @@ namespace BankUI.DAL
                 {
                     if (client.Id == (element as ClientViewModel).Id)
                     {
-                        ClientsDBModel.RemoveClient(client);
+                        client.RemoveClientFromDB();
+                        //ClientsDBModel.RemoveClient(client);
                         break;
                     }
                 }

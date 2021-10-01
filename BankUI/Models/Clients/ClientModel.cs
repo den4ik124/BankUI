@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using BankUI.Interfaces;
+using BankUI.HelpClasses;
 
 namespace BankUI.Models
 {
@@ -59,9 +60,10 @@ namespace BankUI.Models
         /// <param name="balance">Баланс при открытии счета</param>
         public void AddNewAccount(IAccount account, decimal balance = 0)
         {
+            account.AddAccountToDB();
             _accountsList.Add(account);
-            if (!AccountsDBModel.Accounts.Contains(account))
-                AccountsDBModel.AddAccount(account);
+            //if (!AccountsDBModel.Accounts.Contains(account))
+            //    AccountsDBModel.AddAccount(account);
             ClientsDBModel.UpdateBalance(this);
             TotalBalanceCalc();
         }
@@ -70,11 +72,11 @@ namespace BankUI.Models
         /// Удаление счета из списка счетов клиента
         /// </summary>
         /// <param name="account">Счет, который будет удален</param>
-        public void RemoveAccount(IAccount account)
-        {
-            AccountsList.Remove(account);
-            TotalBalanceCalc();
-        }
+        //public void RemoveAccount(IAccount account)
+        //{
+        //    AccountsList.Remove(account);
+        //    TotalBalanceCalc();
+        //}
 
         /// <summary>
         /// Пересчет суммарного баланса клиентов.

@@ -63,12 +63,10 @@
     <Compile Include="CorrectDialogService\IDialog.cs" />
     <Compile Include="CorrectDialogService\IDialogService.cs" />
     <Compile Include="CorrectDialogService\TestViewModel.cs" />
-    <Compile Include="DAL\DataProcessor.cs" />
     <Compile Include="HelpClasses\Extentions.cs" />
     <Compile Include="HelpClasses\Levenshtein.cs" />
     <Compile Include="HelpClasses\Logger.cs" />
     <Compile Include="Interfaces\IAccount.cs" />
-    <Compile Include="Interfaces\IDataProcessor.cs" />
     <Compile Include="Interfaces\IDistanceMetric.cs" />
     <Compile Include="Models\Accounts\DepositAccountModel.cs" />
     <Compile Include="Models\Accounts\RegularAccountModel.cs" />
@@ -152,6 +150,10 @@
     <ProjectReference Include="..\CredentialsGeneratorLibrary\CredentialsGeneratorLibrary.csproj">
       <Project>{9f585b32-c85c-4aaa-94a4-1b1b8a9fc73a}</Project>
       <Name>CredentialsGeneratorLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProcessorLibrary\DataProcessorLibrary.csproj">
+      <Project>{df214720-301b-402f-aa47-489e3db1f73d}</Project>
+      <Name>DataProcessorLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

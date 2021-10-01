@@ -1,4 +1,5 @@
 ﻿using BankUI.DAL;
+using BankUI.HelpClasses;
 using BankUI.Interfaces;
 using BankUI.Models;
 using System;
@@ -164,7 +165,8 @@ namespace BankUI.ViewModels
                 concreteClient = new PersonModel(Name, IsVIP, SurName, PersonalCode, PhoneNumber);
             else
                 concreteClient = new CompanyModel(Name, CompanyCode, IsVIP);
-            ClientsDBModel.AddClient(concreteClient);
+            concreteClient.AddClientToDB();
+            //ClientsDBModel.AddClient(concreteClient);
             _dialogService.CloseWindow(_currentDialogWindow);
         }
 

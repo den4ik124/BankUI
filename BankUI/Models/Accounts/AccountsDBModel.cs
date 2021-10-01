@@ -1,5 +1,6 @@
 ﻿using BankUI.DAL;
 using BankUI.Interfaces;
+using DataProcessorLibrary;
 using System.Collections.ObjectModel;
 
 namespace BankUI.Models
@@ -38,7 +39,7 @@ namespace BankUI.Models
         /// <summary>
         /// Сериализация счетов в .json файл
         /// </summary>
-        internal static void SaveDB() =>
+        public static void SaveDB() =>
             _dataProcessor.Serialization(_accounts, FileName);
 
         //public static async void SaveDBAsync() =>

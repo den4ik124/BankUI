@@ -1,12 +1,13 @@
-﻿using BankUI.Interfaces;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Windows;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BankUI.DAL
+namespace DataProcessorLibrary
 {
     public class DataProcessor : IDataProcessor
     {
@@ -20,19 +21,9 @@ namespace BankUI.DAL
             TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All
         };
 
-        private readonly string _defaultName = "defaultFileName.json";
-        private IDialogService _dialogService;
+        private readonly string _defaultName = "ClientsDataBase.json";
 
         #endregion Fields
-
-        #region Constructors
-
-        public DataProcessor()
-        {
-            _dialogService = new DialogService();
-        }
-
-        #endregion Constructors
 
         #region Methods
 
@@ -62,19 +53,11 @@ namespace BankUI.DAL
             catch (FileFormatException fileEx)
             {
                 Debug.WriteLine(new string('=', 50) + "\n" + fileEx.Message + "\n" + new string('=', 50));
-                _dialogService.MessageBoxShow(fileEx.Message + "\n" + fileEx.Source + "\n" + fileEx.TargetSite,
-                                              "Load canceled",
-                                              MessageBoxButton.OK,
-                                              MessageBoxImage.Stop);
                 return null;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(new string('=', 50) + "\n" + e.Message + "\n" + new string('=', 50));
-                _dialogService.MessageBoxShow(e.Message + "\n" + e.Source + "\n" + e.TargetSite,
-                                              "Load canceled",
-                                              MessageBoxButton.OK,
-                                              MessageBoxImage.Stop);
                 return null;
             }
         }
@@ -96,7 +79,6 @@ namespace BankUI.DAL
             }
             catch (Exception e)
             {
-                _dialogService.MessageBoxShow(e.Message, "Serialization failed");
                 Debug.WriteLine(new string('=', 50) + "\n" + e.Message + "\n" + new string('=', 50));
             }
             Debug.WriteLine($"\nДанные записаны в файл:\n{path}\n");
