@@ -69,40 +69,5 @@ namespace BankUI.HelpClasses
         {
             _dataProcessor.Serialization(toSerializeObject, path);
         }
-
-        public static IList<T> LoadData<T>(string path)
-        {
-            try
-            {
-                if (!File.Exists(path))
-                {
-                    //_dialogService.MessageBoxShow("File does not exist!", "Warning!");
-                    return null;
-                }
-                else
-                {
-                    string json = File.ReadAllText(path);
-                    return JsonConvert.DeserializeObject<IList<T>>(json, jsonSettings);
-                }
-            }
-            catch (FileFormatException fileEx)
-            {
-                Debug.WriteLine(new string('=', 50) + "\n" + fileEx.Message + "\n" + new string('=', 50));
-                _dialogService.MessageBoxShow(fileEx.Message + "\n" + fileEx.Source + "\n" + fileEx.TargetSite,
-                                              "Load canceled",
-                                              MessageBoxButton.OK,
-                                              MessageBoxImage.Stop);
-                return null;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(new string('=', 50) + "\n" + e.Message + "\n" + new string('=', 50));
-                _dialogService.MessageBoxShow(e.Message + "\n" + e.Source + "\n" + e.TargetSite,
-                                              "Load canceled",
-                                              MessageBoxButton.OK,
-                                              MessageBoxImage.Stop);
-                return null;
-            }
-        }
     }
 }
