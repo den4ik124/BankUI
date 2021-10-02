@@ -22,7 +22,6 @@ namespace BankUI.HelpClasses
         };
 
         private static IDataProcessor _dataProcessor = new DataProcessor();
-        private static IDialogService _dialogService = new DialogService();
 
         public static void AddClientToDB(this ClientModel client)
         {
@@ -31,14 +30,14 @@ namespace BankUI.HelpClasses
                 ClientsDBModel.Clients.Add(client);
                 foreach (var account in client.AccountsList)
                     account.AddAccountToDB();
-                ClientsDBModel.UpdateClients();
+                //ClientsDBModel.UpdateClients();
             }
         }
 
         public static void RemoveClientFromDB(this ClientModel client)
         {
             ClientsDBModel.Clients.Remove(client);
-            ClientsDBModel.UpdateClients();
+            //ClientsDBModel.UpdateClients();
         }
 
         public static void RemoveAccountFromDB(this IAccount account)
@@ -51,7 +50,7 @@ namespace BankUI.HelpClasses
                         client.TotalBalanceCalc();
                     }
             AccountsDBModel.Accounts.Remove(account);
-            account.Save(AccountsDBModel.FileName);
+            //account.Save(AccountsDBModel.FileName);
             //AccountsDBModel.SaveDB();
         }
 
@@ -60,7 +59,7 @@ namespace BankUI.HelpClasses
             if (!AccountsDBModel.Accounts.Contains(account))
             {
                 AccountsDBModel.Accounts.Add(account);
-                account.Save(AccountsDBModel.FileName);
+                //account.Save(AccountsDBModel.FileName);
                 //AccountsDBModel.SaveDB();
             }
         }

@@ -78,8 +78,7 @@ namespace BankUI.Models
             var deserializedClients = _dataProcessor.DeserializationJSON<ClientModel>(defaultFileName);
             if (deserializedClients == null)
                 return;
-            App.Current.Dispatcher.Invoke(()=> 
-            AccountsDBModel.Accounts.Clear());
+            AccountsDBModel.Accounts.Clear();
             
 
             foreach (var client in deserializedClients)
@@ -167,7 +166,6 @@ namespace BankUI.Models
             _companies = _clients.OfType<CompanyModel>().ToList();
             //TODO убрать сериализацию отсюда, или оставить ???
             _clients.Save(defaultFileName);
-            //_dataProcessor.Serialization(_clients);
 
             #region Try UpdateAsync
 

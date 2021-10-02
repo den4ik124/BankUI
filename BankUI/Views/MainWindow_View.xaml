@@ -137,6 +137,7 @@
                     Margin="5"
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
+                    EnableRowVirtualization="True"
                     IsSynchronizedWithCurrentItem="False"
                     ItemsSource="{Binding DataToShow}"
                     SelectedItem="{Binding ConcreteClient, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -156,10 +157,10 @@
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                            IsReadOnly="True"
                             Width="100*"
                             Binding="{Binding Id, Mode=TwoWay}"
-                            Header="Id" />
+                            Header="Id"
+                            IsReadOnly="True" />
                         <DataGridTextColumn
                             Width="100*"
                             Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -180,13 +181,39 @@
                             Header="VIP" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <StackPanel Grid.Row="2" Orientation="Horizontal">
-                    <TextBlock
-                        Margin="10,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="Total: " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding DataToShow.Count}" />
-                </StackPanel>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="Total: " />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding DataToShow.Count}" />
+                    </StackPanel>
+                    <GroupBox
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        VerticalContentAlignment="Center">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <!--  //TODO добавить обработку увеличения/уменьшения номера страницы  -->
+                            <Button
+                                Height="20"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Content="&lt;" />
+                            <Label Content="{Binding CurrentPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='{}Page {0}'}" />
+                            <Button
+                                Height="20"
+                                VerticalContentAlignment="Center"
+                                Content="&gt;" />
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
                 <StackPanel Grid.Row="3" Orientation="Horizontal">
                     <Label>Input clients name here:</Label>
                     <TextBox
@@ -200,23 +227,26 @@
                         x:Name="MyFadingText"
                         Height="25"
                         MinWidth="150"
-                        TextAlignment="Center"
-                        Text="SOME TEST TEXT">
+                        Text="SOME TEST TEXT"
+                        TextAlignment="Center">
                         <TextBlock.Triggers>
                             <EventTrigger RoutedEvent="TextBlock.Loaded">
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"
                                             Storyboard.TargetName="MyFadingText"
                                             Storyboard.TargetProperty="Opacity"
-                                            From="1.0" To="0.0" Duration="0:0:2"
-                                            AutoReverse="True" RepeatBehavior="Forever" />
+                                            From="1.0"
+                                            To="0.0"
+                                            Duration="0:0:2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                         </TextBlock.Triggers>
                     </TextBlock>
-                    <!--Text="{Binding StateMessage, UpdateSourceTrigger=PropertyChanged}" />-->
+                    <!--  Text="{Binding StateMessage, UpdateSourceTrigger=PropertyChanged}" />  -->
                 </StackPanel>
             </Grid>
 

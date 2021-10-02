@@ -22,6 +22,7 @@ namespace BankUI.HelpClasses
             //for (int i = 0; i < random.Next(50, 151); i++)
             for (int i = 0; i < 1000; i++)
                 clients.Add(GetClient());
+            
             return clients;
         }
 

@@ -58,6 +58,7 @@ namespace BankUI.ViewModels
         private static Random random = new Random();
         private IDistanceMetric _distanceMetric = new Levenshtein();
 
+        private int _currentPage = 1;
         #endregion Fields
 
         #region Events
@@ -99,9 +100,9 @@ namespace BankUI.ViewModels
         #region Commands
 
         public RelayCommand ShowTestClients => _showTestClients ??
-        (_showTestClients = new RelayCommand(TestClientsShow, CanShow));
+        (_showTestClients = new RelayCommand(TestClientsShowAsync, CanShow));
+        //(_showTestClients = new RelayCommand(TestClientsShow, CanShow));
 
-        //(_showTestClients = new RelayCommand(TestClientsShowAsync, CanShow));
 
         public RelayCommand AddNewClient => _addNewClient ??
             (_addNewClient = new RelayCommand(AddNewClientShow, CanShow));
@@ -250,7 +251,8 @@ namespace BankUI.ViewModels
             set
             {
                 _findClientsByName = value;
-                UpdateClients();
+                //UpdateClients();
+                UpdateClientsAsync();
                 OnPropertyChanged();
             }
         }
@@ -274,6 +276,16 @@ namespace BankUI.ViewModels
             get => _distanceMetric;
             set => _distanceMetric = value;
         }
+        public int CurrentPage 
+        {
+            get => _currentPage; 
+            set 
+            { 
+                if(_currentPage == value || value <=0)
+                    _currentPage = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion Properties
 
@@ -282,7 +294,7 @@ namespace BankUI.ViewModels
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            DataToShow.Refresh();
+                App.Current.Dispatcher.Invoke(()=> DataToShow.Refresh());
 
             //UpdateClients();
         }
@@ -291,7 +303,8 @@ namespace BankUI.ViewModels
         {
             NewClientsView newClientWindow = new NewClientsView();
             _dialogService.ShowDialog(newClientWindow);
-            UpdateClients();
+            UpdateClientsAsync();
+            //UpdateClients();
         }
 
         private void DataCollectionsRefresh()
@@ -336,9 +349,7 @@ namespace BankUI.ViewModels
             ClientsDBModel.UpdateBalances(SenderAccount, ReceiverAccount, transactionFBQ);
 
             ClientsDBModel.UpdateClients();
-            //transactionFBQ.OnTransactionCreated();
-
-            Logger.OnTransactionCreated(); //зачем нужно событие, если я могу и так вызвать Logger?
+            transactionFBQ.OnTransactionCreated();
         }
 
         private bool CanVIPShow()
@@ -351,12 +362,13 @@ namespace BankUI.ViewModels
             return true;
         }
 
-        private void ShowVIPOnly()
+        private async void ShowVIPOnly()
         {
             if (_isVIPSeleceted == true)
             {
                 DataCollectionsClear();
-                IEnumerable<ClientModel> clients = _dataProvider.GetClients().Where(client => client.IsVIP == true);
+                IEnumerable<ClientModel> clients = await Task.Factory.StartNew(()=> _dataProvider.GetClients().Where(client => client.IsVIP == true)) ;
+                //IEnumerable<ClientModel> clients = _dataProvider.GetClients().Where(client => client.IsVIP == true);
                 var persons = clients.OfType<PersonModel>().Where(person => person.IsVIP == true);
                 var companies = clients.OfType<CompanyModel>().Where(company => company.IsVIP == true);
 
@@ -378,14 +390,16 @@ namespace BankUI.ViewModels
                 DataCollectionsRefresh();
             }
             else
-                UpdateClients();
+                UpdateClientsAsync();
+                //UpdateClients();
         }
 
         private void AddNewAcc()
         {
             NewAccountView newDepositWindow = new NewAccountView(ConcreteClient);
             _dialogService.ShowDialog(newDepositWindow);
-            UpdateClients();
+             UpdateClientsAsync();
+            //UpdateClients();
         }
 
         private void RemoveAccount()
@@ -397,7 +411,8 @@ namespace BankUI.ViewModels
                     return;
 
                 _dataProvider.Delete(SelectedAccount);
-                UpdateClients();
+                UpdateClientsAsync();
+                //UpdateClients();
             }
             else
                 return;
@@ -405,12 +420,14 @@ namespace BankUI.ViewModels
 
         private void ShowCompaniesOnly()
         {
-            UpdateClients();
+                UpdateClientsAsync();
+            //UpdateClients();
         }
 
         private void ShowPersonsOnly()
         {
-            UpdateClients();
+                UpdateClientsAsync();
+            //UpdateClients();
         }
 
         private void AddNewClientShow()
@@ -440,7 +457,8 @@ namespace BankUI.ViewModels
             if (_dialogService.DeleteClientWindow())
             {
                 _dataProvider.Delete(ConcreteClient);
-                UpdateClients();
+                UpdateClientsAsync();
+                //UpdateClients();
             }
         }
 
@@ -448,18 +466,17 @@ namespace BankUI.ViewModels
         {
             _isVIPSeleceted = false;
             OnPropertyChanged();
-            UpdateClients(true);
+                UpdateClientsAsync(true);
+            //UpdateClients(true);
         }
 
-        private async void TestClientsShowAsync()
+        private void TestClientsShowAsync()
         {
-            DataCollectionsClear();
-            await Task.Factory.StartNew(() =>
-            {
-                _isVIPSeleceted = false;
-                OnPropertyChanged();
-            });
-            UpdateClients(true);
+            _dataToShow.Clear();
+            DataToShow.Refresh();
+            _isVIPSeleceted = false;
+            UpdateClientsAsync(true);
+            OnPropertyChanged();
         }
 
         private async void LoadClientsAsync()
@@ -468,7 +485,8 @@ namespace BankUI.ViewModels
             {
                 LoadClientsSync();
             });
-            UpdateClients();
+                UpdateClientsAsync();
+            //UpdateClients();
         }
 
         private void LoadClientsSync()
@@ -480,9 +498,45 @@ namespace BankUI.ViewModels
         /// Обновляет список всех клиентов банка
         /// </summary>
         /// <param name="isTestData">Загрузить новые тестовые данные или нет</param>
-        private void UpdateClients(bool isTestData = false)
+        //private void UpdateClients(bool isTestData = false)
+        //{
+        //    IEnumerable<ClientModel> clients = GetClients(DistanceMetric, isTestData);
+
+        //    DataCollectionsClear();
+        //    IEnumerable<PersonModel> persons;
+        //    IEnumerable<CompanyModel> companies;
+        //    if (IsVIPSeleceted)
+        //    {
+        //        persons = clients.OfType<PersonModel>().Where(client => client.IsVIP == true);
+        //        companies = clients.OfType<CompanyModel>().Where(client => client.IsVIP == true);
+        //    }
+        //    else
+        //    {
+        //        persons = clients.OfType<PersonModel>();
+        //        companies = clients.OfType<CompanyModel>();
+        //    }
+
+        //    try
+        //    {
+        //        if (IsPersonsSelected)
+        //            foreach (var person in persons)
+        //                _dataToShow.Add(new PersonViewModel(person));
+        //        else
+        //            foreach (var company in companies)
+        //                _dataToShow.Add(new CompanyViewModel(company));
+
+        //        foreach (var client in clients)
+        //            _clients.Add(new ClientViewModel(client));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message, "PROBLEM");
+        //    }
+        //    DataCollectionsRefresh();
+        //} 
+        private async void UpdateClientsAsync(bool isTestData = false)
         {
-            IEnumerable<ClientModel> clients = GetClients(DistanceMetric, isTestData);
+            IEnumerable<ClientModel> clients = await Task.Factory.StartNew(()=> GetClients(DistanceMetric, isTestData) ) ;
 
             DataCollectionsClear();
             IEnumerable<PersonModel> persons;

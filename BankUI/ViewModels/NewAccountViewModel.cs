@@ -191,6 +191,7 @@ namespace BankUI.ViewModels
 
             //TODO проверить правильность добавления в базу. Сериализацию/Десериализацию
             _dataProvider.GetClients().Where(client => client.Id == _client.Id).FirstOrDefault()?.AddNewAccount(newAcc);
+            AccountsDBModel.SaveDB();
             CloseWindow();
         }
 

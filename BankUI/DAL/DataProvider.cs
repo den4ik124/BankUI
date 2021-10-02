@@ -3,6 +3,7 @@ using BankUI.Interfaces;
 using BankUI.Models;
 using BankUI.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BankUI.DAL
 {
@@ -11,6 +12,7 @@ namespace BankUI.DAL
         #region Fields
 
         private IList<ClientModel> _clients;
+        private IList<ClientModel> _testClients;
         private IList<PersonModel> _persons;
         private IList<IAccount> _accounts;
 
@@ -21,6 +23,7 @@ namespace BankUI.DAL
         public DataProvider()
         {
             _clients = new List<ClientModel>();
+            _testClients = new List<ClientModel>();
             _persons = new List<PersonModel>();
             _accounts = new List<IAccount>();
         }
@@ -60,6 +63,7 @@ namespace BankUI.DAL
             {
                 ClientsDBModel.Clients.Clear();
                 AccountsDBModel.Accounts.Clear();
+                GetTestClientsData();
             }
             _clients.Clear();
             foreach (var client in ClientsDBModel.Clients)
@@ -67,25 +71,38 @@ namespace BankUI.DAL
                 client.AddClientToDB();
                 _clients.Add(client);
             }
-
-            return isTestData ? GetTestClientsData() : _clients;
+            //TODO подумать как убрать обновление БД при каждом клике на Person / Company
+            ClientsDBModel.UpdateClients();
+            return isTestData ?  _testClients : _clients;
         }
 
         /// <summary>
         /// Получение тестовых клиентов из генератора.
         /// </summary>
         /// <returns>Коллекцию тестовых клиентов</returns>
-        private IList<ClientModel> GetTestClientsData()
+        private void GetTestClientsData()
         {
-            _clients.Clear();
+            _testClients.Clear();
             var genData = ClientsGenerator.GetClientsList();
             foreach (var client in genData)
             {
-                _clients.Add(client);
+                _testClients.Add(client);
                 client.AddClientToDB();
-                //ClientsDBModel.AddClient(client); //добавление клиента в БД
             }
-            return _clients;
+        }
+        private async void GetTestClientsDataAsync()
+        {
+            _clients.Clear();
+            await Task.Factory.StartNew(()=> { 
+            var genData = ClientsGenerator.GetClientsList();
+            foreach (var client in genData)
+            {
+                _testClients.Add(client);
+                client.AddClientToDB();
+            }
+            });
+            ClientsDBModel.UpdateClients();
+            AccountsDBModel.SaveDB();
         }
 
         /// <summary>
@@ -100,10 +117,10 @@ namespace BankUI.DAL
                 if (client.Id == clientVM.Id)
                 {
                     client.RemoveClientFromDB();
-                    //ClientsDBModel.RemoveClient(client); //Если клиент найден - он удаляется из БД.
                     break;
                 }
             }
+            ClientsDBModel.UpdateClients();
             _clients.Clear();
             foreach (var client in ClientsDBModel.Clients)
                 _clients.Add(client);
@@ -120,10 +137,10 @@ namespace BankUI.DAL
                 if (acc.Id == account.Id)
                 {
                     acc.RemoveAccountFromDB();
-                    //AccountsDBModel.Remove(acc); //удаление счета из БД счетов.
                     break;
                 }
             }
+            AccountsDBModel.SaveDB();
             _accounts.Clear();
             foreach (var acc in AccountsDBModel.Accounts)
                 _accounts.Add(acc);
@@ -145,18 +162,10 @@ namespace BankUI.DAL
                     if (acc.Id == (element as AccountBaseModel).Id)
                     {
                         acc.RemoveAccountFromDB();
-                        //AccountsDBModel.Remove(acc);
-                        //foreach (var client in ClientsDBModel.Clients)
-                        //{
-                        //    if (client.Id == acc.HostId)
-                        //    {
-                        //        client.RemoveAccount(acc);
-                        //        break;
-                        //    }
-                        //}
                         break;
                     }
                 }
+                AccountsDBModel.SaveDB();
                 _accounts.Clear();
                 foreach (var acc in AccountsDBModel.Accounts)
                     _accounts.Add(acc);
@@ -169,10 +178,10 @@ namespace BankUI.DAL
                     if (client.Id == (element as ClientViewModel).Id)
                     {
                         client.RemoveClientFromDB();
-                        //ClientsDBModel.RemoveClient(client);
                         break;
                     }
                 }
+                ClientsDBModel.UpdateClients();
             }
             else
                 return;

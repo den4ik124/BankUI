@@ -26,6 +26,8 @@ namespace BankUI.Models
 
         #endregion Properties
 
+
+
         #region Methods
 
         /// <summary>
@@ -37,7 +39,6 @@ namespace BankUI.Models
             if (_accounts.Contains(account))
                 return;
             _accounts.Add(account);
-            //SaveDBAsync();
         }
 
         /// <summary>

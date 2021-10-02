@@ -166,7 +166,7 @@ namespace BankUI.ViewModels
             else
                 concreteClient = new CompanyModel(Name, CompanyCode, IsVIP);
             concreteClient.AddClientToDB();
-            //ClientsDBModel.AddClient(concreteClient);
+            ClientsDBModel.UpdateClients();
             _dialogService.CloseWindow(_currentDialogWindow);
         }
 
