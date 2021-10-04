@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Core\BaseViewModel.cs" />
     <Compile Include="CorrectDialogService\DialogService.cs" />
     <Compile Include="CorrectDialogService\ICloseRequest.cs" />
     <Compile Include="CorrectDialogService\IDialog.cs" />
@@ -74,8 +75,12 @@
     <Compile Include="Models\TransactionFiles\TransactionBuilder.cs" />
     <Compile Include="Models\TransactionFiles\TransactionAccounts.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\NewAccountViewModel.cs" />
     <Compile Include="ViewModels\PersonViewModel.cs" />
+    <Compile Include="Views\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow_View.xaml.cs">
       <DependentUpon>MainWindow_View.xaml</DependentUpon>
     </Compile>
@@ -95,14 +100,34 @@
     <Compile Include="Models\Clients\CompanyModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Views\ModernBankMainView.xaml.cs">
+      <DependentUpon>ModernBankMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ModernBankMainViewModel.cs" />
     <Compile Include="Views\NewClientsView.xaml.cs">
       <DependentUpon>NewClientsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewAccountView.xaml.cs">
       <DependentUpon>NewAccountView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Sources\Theme\MenuButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sources\Theme\TextBoxTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow_View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModernBankMainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,6 +180,15 @@
       <Project>{df214720-301b-402f-aa47-489e3db1f73d}</Project>
       <Name>DataProcessorLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sources\Fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sources\Images\DBBankLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sources\Images\WorldLeaderLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,13 +1,10 @@
 ﻿using BankUI.Interfaces;
 using BankUI.Models;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace BankUI.ViewModels
 {
-    internal class PersonViewModel : ClientViewModel//, INotifyPropertyChanged
+    internal class PersonViewModel : ClientViewModel
     {
         #region Fields
 
@@ -24,12 +21,6 @@ namespace BankUI.ViewModels
         }
 
         #endregion Constructors
-
-        #region Events
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion Events
 
         #region Properties
 
@@ -107,14 +98,5 @@ namespace BankUI.ViewModels
         }
 
         #endregion Properties
-
-        #region Methods
-
-        //private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        //}
-
-        #endregion Methods
     }
 }

@@ -1,4 +1,5 @@
-﻿using BankUI.DAL;
+﻿using BankUI.Core;
+using BankUI.DAL;
 using BankUI.HelpClasses;
 using BankUI.Interfaces;
 using BankUI.Models;
@@ -10,7 +11,7 @@ using System.Windows;
 
 namespace BankUI.ViewModels
 {
-    public class ClientViewModel : INotifyPropertyChanged
+    public class ClientViewModel : BaseViewModel
     {
         #region Fields
 
@@ -31,12 +32,6 @@ namespace BankUI.ViewModels
         private RelayCommand _closeWindowCommand;
 
         #endregion Fields
-
-        #region Events
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion Events
 
         #region Constructors
 
@@ -173,11 +168,6 @@ namespace BankUI.ViewModels
         private bool CanAddNewClient()
         {
             return true;
-        }
-
-        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion Methods
