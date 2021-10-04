@@ -10,28 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BankUI.Views
 {
     /// <summary>
-    /// Interaction logic for ModernBankMainView.xaml
+    /// Interaction logic for DiscoveryView.xaml
     /// </summary>
-    public partial class ModernBankMainView : Window
+    public partial class DiscoveryView : UserControl
     {
-        public ModernBankMainView()
+        public DiscoveryView()
         {
             InitializeComponent();
-        }
-
-        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void Ellipse_MouseDown_2(object sender, MouseButtonEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
         }
     }
 }
