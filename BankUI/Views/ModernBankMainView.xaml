@@ -88,6 +88,7 @@
                 Margin="0,10,0,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
+                Panel.ZIndex="99"
                 Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Ellipse}">
@@ -138,6 +139,16 @@
                         </Style>
                     </Ellipse.Style>-->
             </StackPanel>
+            <Rectangle
+                Grid.ColumnSpan="2"
+                Width="804"
+                Height="75"
+                Margin="116,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Panel.ZIndex="1"
+                Fill="Pink"
+                MouseDown="OnDragMoveWindow" />
 
             <!--<Image Source="C:\Users\BDV\source\repos\BankUI\BankUI\Sources\Images\DBBankLogo.png" />-->
         </Grid>

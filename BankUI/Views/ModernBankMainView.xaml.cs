@@ -33,5 +33,10 @@ namespace BankUI.Views
         {
             this.WindowState = WindowState.Minimized;
         }
+
+        private void OnDragMoveWindow(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
     }
 }
