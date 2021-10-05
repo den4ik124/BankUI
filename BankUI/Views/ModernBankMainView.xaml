@@ -13,6 +13,7 @@
     ResizeMode="CanMinimize"
     WindowStyle="None"
     mc:Ignorable="d">
+    <!--d:DataContext="{d:DesignInstance local:ModernBankMainView}"-->
     <Window.Resources>
         <Style TargetType="Ellipse">
             <Style.Triggers>
@@ -33,10 +34,20 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
                 <RowDefinition Height="75" />
                 <RowDefinition />
             </Grid.RowDefinitions>
+            <Rectangle
+                Grid.ColumnSpan="2"
+                Height="35"
+                Panel.ZIndex="-1"
+                Fill="Transparent"
+                MouseDown="OnDragMoveWindow"
+                RadiusX="10"
+                RadiusY="10" />
             <TextBlock
+                Grid.Row="1"
                 Margin="20,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -44,7 +55,7 @@
                 Foreground="White"
                 Text="DBBank" />
 
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="2">
                 <RadioButton
                     Height="50"
                     Command="{Binding HomeViewCommand}"
@@ -56,7 +67,7 @@
                 <RadioButton
                     Height="50"
                     Command="{Binding DiscoveryViewCommand}"
-                    Content="Discovery"
+                    Content="Clients list"
                     FontSize="14"
                     Foreground="White"
                     Style="{StaticResource MenuButtonTheme}" />
@@ -69,33 +80,35 @@
             </StackPanel>
 
             <TextBox
+                Grid.Row="1"
                 Grid.Column="1"
                 Width="250"
                 Height="40"
                 Margin="5"
                 HorizontalAlignment="Left"
                 VerticalContentAlignment="Center"
-                Style="{StaticResource ModernTextBox}" />
+                Style="{StaticResource SearchTextBoxTheme}" />
 
             <ContentControl
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1"
                 Margin="10"
                 Content="{Binding CurrentView}" />
 
             <StackPanel
+                Grid.Row="0"
                 Grid.Column="1"
-                Margin="0,10,0,0"
+                Margin="0,0,10,0"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Top"
+                VerticalAlignment="Center"
                 Panel.ZIndex="99"
                 Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Ellipse}">
                         <Setter Property="Opacity" Value="0.3" />
                         <Setter Property="Margin" Value="0,0,10,0" />
-                        <Setter Property="Width" Value="30" />
-                        <Setter Property="Height" Value="30" />
+                        <Setter Property="Width" Value="25" />
+                        <Setter Property="Height" Value="25" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Trigger.EnterActions>
@@ -127,7 +140,10 @@
 
                 <Ellipse Fill="Green" MouseDown="Ellipse_MouseDown_2" />
                 <Ellipse Fill="Yellow" />
-                <Ellipse Fill="Red" MouseDown="Ellipse_MouseDown" />
+                <Ellipse
+                    Margin="0"
+                    Fill="Red"
+                    MouseDown="Ellipse_MouseDown" />
                 <!--<Ellipse.Style>
                         <Style TargetType="{x:Type Ellipse}">
                             <Setter Property="Fill" Value="Red" />
@@ -139,16 +155,6 @@
                         </Style>
                     </Ellipse.Style>-->
             </StackPanel>
-            <Rectangle
-                Grid.ColumnSpan="2"
-                Width="804"
-                Height="75"
-                Margin="116,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Panel.ZIndex="1"
-                Fill="Pink"
-                MouseDown="OnDragMoveWindow" />
 
             <!--<Image Source="C:\Users\BDV\source\repos\BankUI\BankUI\Sources\Images\DBBankLogo.png" />-->
         </Grid>

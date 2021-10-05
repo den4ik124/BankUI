@@ -7,7 +7,70 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Background="YellowGreen"
+    Background="Transparent"
     mc:Ignorable="d">
-    <Grid />
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+
+    <ListBox>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <!--  Some Item template here  -->
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+    <!--<DataGrid
+        x:Name="dgClients"
+        Grid.Row="1"
+        Margin="5"
+        AutoGenerateColumns="False"
+        CanUserAddRows="False"
+        EnableRowVirtualization="True"
+        IsSynchronizedWithCurrentItem="False"
+        ItemsSource="{Binding DataToShow}"
+        SelectedItem="{Binding ConcreteClient, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+    -->
+    <!--  Style="{StaticResource DataGridTheme}">  -->
+    <!--
+        <DataGrid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Command="{Binding ShowFullInfoCommand}" Header="Full info" />
+            </ContextMenu>
+        </DataGrid.ContextMenu>
+        <DataGrid.InputBindings>
+            <KeyBinding Key="Delete" Command="{Binding DeleteClientCommand}" />
+            <KeyBinding Key="DbeEnterWordRegisterMode" />
+        </DataGrid.InputBindings>
+        <DataGrid.RowStyle>
+            <Style TargetType="DataGridRow">
+                <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}" />
+            </Style>
+        </DataGrid.RowStyle>
+        <DataGrid.Columns>
+            <DataGridTextColumn
+                Width="100*"
+                Binding="{Binding Id, Mode=TwoWay}"
+                Header="Id"
+                IsReadOnly="True" />
+            <DataGridTextColumn
+                Width="100*"
+                Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                Header="Name" />
+            <DataGridTextColumn
+                Width="100*"
+                Binding="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                Header="Phone"
+                Visibility="{Binding ElementName=rbtnIsPersons, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
+            <DataGridTextColumn
+                Width="100*"
+                Binding="{Binding CompanyCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                Header="Company code"
+                Visibility="{Binding ElementName=rbtnIsCompanies, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
+            <DataGridCheckBoxColumn
+                Width="100*"
+                Binding="{Binding IsVIP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Header="VIP" />
+        </DataGrid.Columns>
+    </DataGrid>-->
 </UserControl>
