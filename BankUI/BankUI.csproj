@@ -119,7 +119,7 @@
     <Compile Include="Views\NewAccountView.xaml.cs">
       <DependentUpon>NewAccountView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Sources\Theme\DataGridTheme.xaml">
+    <Page Include="Sources\Theme\ListViewTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

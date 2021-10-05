@@ -17,6 +17,12 @@
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <!--  Some Item template here  -->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Id" />
+                    <TextBlock Text="Name" />
+                    <TextBlock Text="Surname" />
+                    <TextBlock Text="Balance" />
+                </StackPanel>
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>
