@@ -5,8 +5,6 @@ using BankUI.Interfaces;
 using BankUI.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace BankUI.ViewModels
@@ -19,11 +17,12 @@ namespace BankUI.ViewModels
         private ClientModel _client;
         private IDialogService _dialogService;
 
-        private string _name;
-        private string _surName;
-        private string _phoneNumber;
-        private string _personalCode;
-        private string _companyCode;
+        //private string _name;
+        //private string _surName;
+        //private string _phoneNumber;
+
+        //private string _personalCode;
+        //private string _companyCode;
 
         private bool _isVIP;
 
@@ -50,69 +49,77 @@ namespace BankUI.ViewModels
 
         #region Properties
 
-        public virtual int Id { get; set; }
-
-        public virtual string Name
+        public int Id
         {
-            get => _name;
+            get => _client.Id;
             set
             {
-                if (_name == value)
+                if (_client.Id == value)
                     return;
-                _name = value;
+                _client.Id = value;
                 OnPropertyChanged();
             }
         }
 
-        public virtual string SurName
+        public string Name
         {
-            get => _surName;
+            get => _client.Name;
             set
             {
-                if (_surName == value)
+                if (_client.Name == value)
                     return;
-                _surName = value;
+                _client.Name = value;
                 OnPropertyChanged();
             }
+            //get => _name;
+            //set
+            //{
+            //    if (_name == value)
+            //        return;
+            //    _name = value;
+            //    OnPropertyChanged();
+            //}
         }
 
-        public virtual string PhoneNumber
-        {
-            get => _phoneNumber;
-            set
-            {
-                if (_phoneNumber == value)
-                    return;
-                _phoneNumber = value;
-                OnPropertyChanged();
-            }
-        }
+        public virtual string SurName { get; set; }
+        //{
+        //    get => _surName;
+        //    set
+        //    {
+        //        if (_surName == value)
+        //            return;
+        //        _surName = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
-        public virtual string PersonalCode
-        {
-            get => _personalCode;
-            set
-            {
-                if (_personalCode == value)
-                    return;
-                _personalCode = value;
-                OnPropertyChanged();
-            }
-        }
+        public virtual string PhoneNumber { get; set; }
+        //{
+        //    get => _phoneNumber;
+        //    set
+        //    {
+        //        if (_phoneNumber == value)
+        //            return;
+        //        _phoneNumber = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
-        public virtual string CompanyCode
-        {
-            get => _companyCode;
-            set
-            {
-                if (_companyCode == value)
-                    return;
-                _companyCode = value;
-                OnPropertyChanged();
-            }
-        }
+        public virtual string PersonalCode { get; set; }
 
-        public virtual bool IsVIP
+        public virtual string CompanyCode { get; set; }
+        //{
+        //    get => _companyCode;
+        //    set
+        //    {
+        //        if (_companyCode == value)
+        //            return;
+        //        _companyCode = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
+        public bool IsVIP
         {
             get => _isVIP;
             set
@@ -121,6 +128,7 @@ namespace BankUI.ViewModels
                     return;
                 _isVIP = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(BackgroundColor));
             }
         }
 
@@ -131,10 +139,25 @@ namespace BankUI.ViewModels
 
         public string BackgroundColor
         {
-            get => IsVIP ? "LemonChiffon" : "White";
+            get => IsVIP ? "#FF738D00" : "Transparent";
         }
 
-        public virtual decimal TotalBalance { get; set; }
+        public string FontColor
+        {
+            get => IsVIP ? "Black" : "White";
+        }
+
+        public decimal TotalBalance// { get; set; }
+        {
+            get => _client.TotalBalance;
+            set
+            {
+                if (_client.TotalBalance == value)
+                    return;
+                _client.TotalBalance = value;
+                OnPropertyChanged();
+            }
+        }
 
         public RelayCommand AddNewClient => (_addNewClient) ??
             (_addNewClient = new RelayCommand(NewClientAdd, CanAddNewClient));

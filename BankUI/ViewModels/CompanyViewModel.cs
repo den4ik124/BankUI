@@ -1,7 +1,4 @@
-﻿using BankUI.Interfaces;
-using BankUI.Models;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using BankUI.Models;
 
 namespace BankUI.ViewModels
 {
@@ -20,17 +17,17 @@ namespace BankUI.ViewModels
             _companyModel = company as CompanyModel;
         }
 
-        public override string Name
-        {
-            get => _companyModel.Name;
-            set
-            {
-                if (_companyModel.Name == value)
-                    return;
-                _companyModel.Name = value;
-                OnPropertyChanged();
-            }
-        }
+        //public override string Name
+        //{
+        //    get => _companyModel.Name;
+        //    set
+        //    {
+        //        if (_companyModel.Name == value)
+        //            return;
+        //        _companyModel.Name = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         public override string CompanyCode
         {
@@ -48,54 +45,54 @@ namespace BankUI.ViewModels
 
         #region Properties
 
-        public override int Id
-        {
-            get => _companyModel.Id;
-            set
-            {
-                if (_companyModel.Id == value)
-                    return;
-                _companyModel.Id = value;
-                OnPropertyChanged();
-            }
-        }
+        //public override int Id
+        //{
+        //    get => _companyModel.Id;
+        //    set
+        //    {
+        //        if (_companyModel.Id == value)
+        //            return;
+        //        _companyModel.Id = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
-        public override bool IsVIP
-        {
-            get => _companyModel.IsVIP;
-            set
-            {
-                if (_companyModel.IsVIP == value)
-                    return;
+        //public override bool IsVIP
+        //{
+        //    get => _companyModel.IsVIP;
+        //    set
+        //    {
+        //        if (_companyModel.IsVIP == value)
+        //            return;
 
-                _companyModel.IsVIP = value;
-                OnPropertyChanged();
-            }
-        }
+        //        _companyModel.IsVIP = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
-        public override ObservableCollection<IAccount> AccountsList
-        {
-            get => _companyModel.AccountsList;
-            set
-            {
-                if (_companyModel.AccountsList == value)
-                    return;
-                _companyModel.AccountsList = value;
-                OnPropertyChanged();
-            }
-        }
+        //public override ObservableCollection<IAccount> AccountsList
+        //{
+        //    get => _companyModel.AccountsList;
+        //    set
+        //    {
+        //        if (_companyModel.AccountsList == value)
+        //            return;
+        //        _companyModel.AccountsList = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
-        public override decimal TotalBalance
-        {
-            get => _companyModel.TotalBalance;
-            set
-            {
-                if (_companyModel.TotalBalance == value)
-                    return;
-                _companyModel.TotalBalance = value;
-                OnPropertyChanged();
-            }
-        }
+        //public override decimal TotalBalance
+        //{
+        //    get => _companyModel.TotalBalance;
+        //    set
+        //    {
+        //        if (_companyModel.TotalBalance == value)
+        //            return;
+        //        _companyModel.TotalBalance = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         #endregion Properties
     }

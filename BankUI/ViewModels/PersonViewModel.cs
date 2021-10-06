@@ -1,6 +1,4 @@
-﻿using BankUI.Interfaces;
-using BankUI.Models;
-using System.Collections.ObjectModel;
+﻿using BankUI.Models;
 
 namespace BankUI.ViewModels
 {
@@ -9,7 +7,6 @@ namespace BankUI.ViewModels
         #region Fields
 
         private PersonModel _person;
-        //private string _backgroundColor;
 
         #endregion Fields
 
@@ -24,39 +21,38 @@ namespace BankUI.ViewModels
 
         #region Properties
 
-        public override int Id
+        //public override int Id
+        //{
+        //    get => _person.Id;
+        //    set
+        //    {
+        //        if (_person.Id == value)
+        //            return;
+        //        _person.Id = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
+        //public override string Name
+        //{
+        //    get => _person.Name;
+        //    set
+        //    {
+        //        if (_person.Name == value)
+        //            return;
+        //        _person.Name = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
+        public override string SurName
         {
-            get => _person.Id;
+            get => _person.SurName;
             set
             {
-                if (_person.Id == value)
+                if (_person.SurName == value)
                     return;
-                _person.Id = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public override string Name
-        {
-            get => _person.Name;
-            set
-            {
-                if (_person.Name == value)
-                    return;
-                _person.Name = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public override bool IsVIP
-        {
-            get => _person.IsVIP;
-            set
-            {
-                if (_person.IsVIP == value)
-                    return;
-
-                _person.IsVIP = value;
+                _person.SurName = value;
                 OnPropertyChanged();
             }
         }
@@ -73,29 +69,57 @@ namespace BankUI.ViewModels
             }
         }
 
-        public override decimal TotalBalance
+        public override string PersonalCode
         {
-            get => _person.TotalBalance;
+            get => _person.PersonalCode;
             set
             {
-                if (_person.TotalBalance == value)
+                if (_person.PersonalCode == value)
                     return;
-                _person.TotalBalance = value;
+                _person.PersonalCode = value;
                 OnPropertyChanged();
             }
         }
 
-        public override ObservableCollection<IAccount> AccountsList
-        {
-            get => _person.AccountsList;
-            set
-            {
-                if (_person.AccountsList == value)
-                    return;
-                _person.AccountsList = value;
-                OnPropertyChanged();
-            }
-        }
+        /// <summary>
+        /// Расскомментировать в случае работы со старым UI
+        /// </summary>
+        //public override bool IsVIP
+        //{
+        //    get => _person.IsVIP;
+        //    set
+        //    {
+        //        if (_person.IsVIP == value)
+        //            return;
+
+        //        _person.IsVIP = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
+        //public override decimal TotalBalance
+        //{
+        //    get => _person.TotalBalance;
+        //    set
+        //    {
+        //        if (_person.TotalBalance == value)
+        //            return;
+        //        _person.TotalBalance = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
+        //public override ObservableCollection<IAccount> AccountsList
+        //{
+        //    get => _person.AccountsList;
+        //    set
+        //    {
+        //        if (_person.AccountsList == value)
+        //            return;
+        //        _person.AccountsList = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         #endregion Properties
     }

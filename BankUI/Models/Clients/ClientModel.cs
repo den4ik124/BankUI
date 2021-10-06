@@ -1,8 +1,7 @@
-﻿using System;
+﻿using BankUI.HelpClasses;
+using BankUI.Interfaces;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-using BankUI.Interfaces;
-using BankUI.HelpClasses;
 
 namespace BankUI.Models
 {
@@ -65,7 +64,6 @@ namespace BankUI.Models
             ClientsDBModel.UpdateBalance(this);
             TotalBalanceCalc();
         }
-
 
         /// <summary>
         /// Пересчет суммарного баланса клиентов.

@@ -134,9 +134,7 @@
         </Style.Triggers>
     </Style>-->
 
-<!--<BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />
-
--->
+<!--<BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />-->
 <!--  Style and template for the button in the upper left corner of the DataGrid.  -->
 <!--
     <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
@@ -200,9 +198,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
--->
+    </Style>-->
 <!--  Style and template for the DataGrid.  -->
 <!--
     <Style TargetType="{x:Type DataGrid}">
@@ -320,9 +316,7 @@
                 <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
             </Trigger>
         </Style.Triggers>
-    </Style>
-
--->
+    </Style>-->
 <!--  Style and template for the DataGridCell.  -->
 <!--
     <Style TargetType="{x:Type DataGridCell}">
@@ -356,9 +350,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
--->
+    </Style>-->
 <!--  Style and template for the DataGridRow.  -->
 <!--
     <Style TargetType="{x:Type DataGridRow}">
@@ -420,9 +412,7 @@
                         </SelectiveScrollingGrid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-
--->
+                                <VisualState x:Name="Normal" />-->
 <!--  Provide a different appearance for every other row.  -->
 <!--
                                 <VisualState x:Name="Normal_AlternatingRow">
@@ -435,9 +425,7 @@
                                             <EasingColorKeyFrame KeyTime="0" Value="{StaticResource ContentAreaColorDark}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
-                                </VisualState>
-
--->
+                                </VisualState>-->
 <!--
     In this example, a row in Editing or selected mode has an
     identical appearances. In other words, the states
@@ -521,9 +509,7 @@
                                             <EasingColorKeyFrame KeyTime="0" Value="{StaticResource ControlMouseOverColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
-                                </VisualState>
-
--->
+                                </VisualState>-->
 <!--
     In this example, the appearance of a selected row
     that has the mouse over it is the same regardless of
@@ -558,9 +544,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
--->
+    </Style>-->
 <!--  Style and template for the resize control on the DataGridRowHeader.  -->
 <!--
     <Style x:Key="RowHeaderGripperStyle" TargetType="{x:Type Thumb}">
@@ -574,9 +558,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
--->
+    </Style>-->
 <!--  Style and template for the DataGridRowHeader.  -->
 <!--
     <Style TargetType="{x:Type DataGridRowHeader}">
@@ -617,8 +599,7 @@
                             x:Name="PART_BottomHeaderGripper"
                             VerticalAlignment="Bottom"
                             Style="{StaticResource RowHeaderGripperStyle}" />
-                        <VisualStateManager.VisualStateGroups>
--->
+                        <VisualStateManager.VisualStateGroups>-->
 <!--
     This example does not specify an appearance for every
     state.  You can add storyboard to the states that are listed
@@ -655,9 +636,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
--->
+    </Style>-->
 <!--  Style and template for the resize control on the DataGridColumnHeader.  -->
 <!--
     <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
@@ -671,9 +650,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
--->
+    </Style>-->
 <!--  Style and template for the DataGridColumnHeader.  -->
 <!--
     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -724,9 +701,7 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-    </Style>
-
--->
+    </Style>-->
 <!--  Style and template for the DataGridColumnHeadersPresenter.  -->
 <!--
     <Style TargetType="{x:Type DataGridColumnHeadersPresenter}">
@@ -740,9 +715,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
--->
+    </Style>-->
 <!--  Control colors.  -->
 <!--
     <Color x:Key="WindowColor">#FFE8EDF9</Color>
@@ -764,9 +737,7 @@
     <Color x:Key="ControlPressedColor">#FF211AA9</Color>
 
     <Color x:Key="GlyphColor">#FF444444</Color>
-    <Color x:Key="GlyphMouseOver">sc#1, 0.004391443, 0.002428215, 0.242281124</Color>
-
--->
+    <Color x:Key="GlyphMouseOver">sc#1, 0.004391443, 0.002428215, 0.242281124</Color>-->
 <!--  Border colors  -->
 <!--
     <Color x:Key="BorderLightColor">#FFCCCCCC</Color>
@@ -779,9 +750,7 @@
     <Color x:Key="DisabledBorderLightColor">#FFAAAAAA</Color>
     <Color x:Key="DisabledBorderDarkColor">#FF888888</Color>
 
-    <Color x:Key="DefaultBorderBrushDarkColor">Black</Color>
-
--->
+    <Color x:Key="DefaultBorderBrushDarkColor">Black</Color>-->
 <!--  Control-specific resources.  -->
 <!--
     <Color x:Key="HeaderTopColor">#FFC5CBF9</Color>
