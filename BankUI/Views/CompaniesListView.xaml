@@ -28,6 +28,7 @@
                     </StackPanel.Resources>
                     <TextBlock Width="Auto" Text="{Binding Id}" />
                     <TextBlock Text="{Binding Name}" />
+                    <CheckBox Margin="20,0,0,20" IsChecked="{Binding IsVIP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <Image Width="30" Source="/Sources/Images/money.png" />
                     <TextBlock Text="{Binding TotalBalance, StringFormat='{}{0} $'}" />
                     <StackPanel

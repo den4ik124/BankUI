@@ -27,7 +27,6 @@ namespace BankUI.ViewModels
 
         public ClientsPageViewModel()
         {
-            CurrentClientsView = new PersonsListViewModel(false);
         }
 
         #endregion Constructors
@@ -101,7 +100,7 @@ namespace BankUI.ViewModels
 
         private void ShowPersonsOnly()
         {
-            CurrentClientsView = new PersonsListViewModel(_isVIPSeleceted);
+            CurrentClientsView = new PersonsListViewModel();
         }
 
         private void ShowCompaniesOnly()

@@ -32,7 +32,8 @@ namespace BankUI.ViewModels
 
         public List<ClientModel> Clients
         {
-            get => _clients.Where(item => item.IsVIP == _isVIP).ToList();
+            get => _clients;
+            //get => _clients.Where(item => item.IsVIP == _isVIP).ToList();
         }
 
         public bool IsVIP { get => _isVIP; set => _isVIP = value; }

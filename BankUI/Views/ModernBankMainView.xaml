@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:BankUI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:BankUI.ViewModels"
-    Width="920"
+    Width="1200"
     Height="600"
     AllowsTransparency="True"
     Background="Transparent"
