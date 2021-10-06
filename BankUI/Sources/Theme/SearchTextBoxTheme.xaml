@@ -3,11 +3,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border
-                        Width="200"
-                        Height="40"
-                        Background="#FF474D4B"
-                        CornerRadius="10">
+                    <Border Background="#FF474D4B" CornerRadius="10">
                         <Grid>
                             <Rectangle StrokeThickness="1" />
                             <TextBox
@@ -27,7 +23,7 @@
                                 FontSize="11"
                                 Foreground="DarkGray"
                                 IsHitTestVisible="False"
-                                Text="Search">
+                                Text="Search by name">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

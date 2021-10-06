@@ -11,10 +11,10 @@ namespace BankUI.ViewModels
     {
         private object _currentView;
         public RelayCommand HomeViewCommand { get; set; }
-        public RelayCommand DiscoveryViewCommand { get; set; }
+        public RelayCommand ClientsListViewCommand { get; set; }
 
         public HomeViewModel HomeVM { get; set; }
-        public DiscoveryViewModel DiscoveryVM { get; set; }
+        public ClientsPageViewModel ClientsListVM { get; set; }
 
         public object CurrentView
         {
@@ -29,16 +29,16 @@ namespace BankUI.ViewModels
         public ModernBankMainViewModel()
         {
             HomeVM = new HomeViewModel();
-            DiscoveryVM = new DiscoveryViewModel();
+            ClientsListVM = new ClientsPageViewModel();
             CurrentView = HomeVM;
 
             HomeViewCommand = new RelayCommand(() =>
             {
                 CurrentView = HomeVM;
             });
-            DiscoveryViewCommand = new RelayCommand(() =>
+            ClientsListViewCommand = new RelayCommand(() =>
             {
-                CurrentView = DiscoveryVM;
+                CurrentView = ClientsListVM;
             });
         }
     }

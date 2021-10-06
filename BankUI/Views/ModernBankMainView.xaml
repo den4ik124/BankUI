@@ -35,7 +35,6 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35" />
-                <RowDefinition Height="75" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Rectangle
@@ -47,7 +46,7 @@
                 RadiusX="10"
                 RadiusY="10" />
             <TextBlock
-                Grid.Row="1"
+                Grid.Row="0"
                 Margin="20,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -55,42 +54,35 @@
                 Foreground="White"
                 Text="DBBank" />
 
-            <StackPanel Grid.Row="2">
+            <StackPanel Grid.Row="1">
+                <StackPanel.Resources>
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource MenuButtonTheme}" />
+                </StackPanel.Resources>
                 <RadioButton
                     Height="50"
                     Command="{Binding HomeViewCommand}"
                     Content="Home"
                     FontSize="14"
                     Foreground="White"
-                    IsChecked="True"
-                    Style="{StaticResource MenuButtonTheme}" />
+                    IsChecked="True" />
+                <!--Style="{StaticResource MenuButtonTheme}" />-->
                 <RadioButton
                     Height="50"
-                    Command="{Binding DiscoveryViewCommand}"
+                    Command="{Binding ClientsListViewCommand}"
                     Content="Clients list"
                     FontSize="14"
-                    Foreground="White"
-                    Style="{StaticResource MenuButtonTheme}" />
+                    Foreground="White" />
+                <!--Style="{StaticResource MenuButtonTheme}" />-->
                 <RadioButton
                     Height="50"
                     Content="Feature"
                     FontSize="14"
-                    Foreground="White"
-                    Style="{StaticResource MenuButtonTheme}" />
+                    Foreground="White" />
+                <!--Style="{StaticResource MenuButtonTheme}" />-->
             </StackPanel>
 
-            <TextBox
-                Grid.Row="1"
-                Grid.Column="1"
-                Width="250"
-                Height="40"
-                Margin="5"
-                HorizontalAlignment="Left"
-                VerticalContentAlignment="Center"
-                Style="{StaticResource SearchTextBoxTheme}" />
-
             <ContentControl
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="1"
                 Margin="10"
                 Content="{Binding CurrentView}" />

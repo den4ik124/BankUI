@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace BankUI.ViewModels
 {
-    internal class PersonViewModel : ClientViewModel
+    public class PersonViewModel : ClientViewModel
     {
         #region Fields
 

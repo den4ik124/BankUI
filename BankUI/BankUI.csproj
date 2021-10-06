@@ -75,16 +75,24 @@
     <Compile Include="Models\TransactionFiles\TransactionBuilder.cs" />
     <Compile Include="Models\TransactionFiles\TransactionAccounts.cs" />
     <Compile Include="ViewModels\ClientsDataViewModel.cs" />
+    <Compile Include="ViewModels\CompaniesListViewModel.cs" />
+    <Compile Include="ViewModels\PersonsListViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
-    <Compile Include="ViewModels\DiscoveryViewModel.cs" />
+    <Compile Include="ViewModels\ClientsPageViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\NewAccountViewModel.cs" />
     <Compile Include="ViewModels\PersonViewModel.cs" />
     <Compile Include="Views\ClientsDataView.xaml.cs">
       <DependentUpon>ClientsDataView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DiscoveryView.xaml.cs">
-      <DependentUpon>DiscoveryView.xaml</DependentUpon>
+    <Compile Include="Views\CompaniesListView.xaml.cs">
+      <DependentUpon>CompaniesListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PersonsListView.xaml.cs">
+      <DependentUpon>PersonsListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientsPageView.xaml.cs">
+      <DependentUpon>ClientsPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -119,6 +127,10 @@
     <Compile Include="Views\NewAccountView.xaml.cs">
       <DependentUpon>NewAccountView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Sources\Theme\ClientSwitcherButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Sources\Theme\ListViewTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -139,11 +151,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Sources\Theme\ToggleVipButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ClientsDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DiscoveryView.xaml">
+    <Page Include="Views\CompaniesListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PersonsListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientsPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,6 +241,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Sources\Images\WorldLeaderLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sources\Images\money.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sources\Images\add.png" />
+    <Resource Include="Sources\Images\delete.png" />
+    <Resource Include="Sources\Images\info.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

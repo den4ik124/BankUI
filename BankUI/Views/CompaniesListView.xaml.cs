@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace BankUI.Views
 {
     /// <summary>
-    /// Interaction logic for DiscoveryView.xaml
+    /// Interaction logic for CompaniesListView.xaml
     /// </summary>
-    public partial class DiscoveryView : UserControl
+    public partial class CompaniesListView : UserControl
     {
-        public DiscoveryView()
+        public CompaniesListView()
         {
             InitializeComponent();
         }

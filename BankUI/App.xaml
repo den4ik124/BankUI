@@ -10,6 +10,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Sources/Theme/MenuButtonTheme.xaml" />
+                <ResourceDictionary Source="Sources/Theme/ToggleVipButtonTheme.xaml" />
+                <ResourceDictionary Source="Sources/Theme/ClientSwitcherButtonTheme.xaml" />
                 <ResourceDictionary Source="Sources/Theme/SearchTextBoxTheme.xaml" />
                 <ResourceDictionary Source="Sources/Theme/TextBoxMainTheme.xaml" />
                 <ResourceDictionary Source="Sources/Theme/EllipseButtonTheme.xaml" />
@@ -19,8 +21,14 @@
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
                 <view:HomeView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:DiscoveryViewModel}">
-                <view:DiscoveryView />
+            <DataTemplate DataType="{x:Type viewModel:ClientsPageViewModel}">
+                <view:ClientsPageView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:PersonsListViewModel}">
+                <view:PersonsListView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:CompaniesListViewModel}">
+                <view:CompaniesListView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
